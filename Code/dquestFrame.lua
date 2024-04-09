@@ -74,12 +74,21 @@ end
 function DQuestFrameDetailPanel()
     ClearBackgroundTextures(QuestFrameDetailPanel, 4)
     ScrollFrameCorrection(QuestDetailScrollFrame)
+
+
+    QuestDetailScrollFrameScrollBarScrollUpButton:SetNormalTexture(nil)
+    QuestDetailScrollFrameScrollBarScrollUpButton:SetPushedTexture(nil)
+    QuestDetailScrollFrameScrollBarScrollUpButton:SetDisabledTexture(nil)
+    QuestDetailScrollFrameScrollBarScrollDownButton:SetNormalTexture(nil)
+    QuestDetailScrollFrameScrollBarScrollDownButton:SetDisabledTexture(nil)
+    QuestDetailScrollFrameScrollBarThumbTexture:SetTexture(nil)
 end
 
 function DQuestFrameGreetingPanel()
     ClearBackgroundTextures(QuestFrameGreetingPanel, 4)
     ClearArtworkTextures(QuestFrameGreetingPanel)
     ScrollFrameCorrection(QuestGreetingScrollFrame)
+    QuestGreetingScrollFrameScrollBar:Hide()
 
     for index, value in ipairs({ QuestGreetingScrollChildFrame:GetRegions() }) do
         if value:GetDrawLayer() == "ARTWORK" then
@@ -93,22 +102,13 @@ end
 function DQuestFrameProgressPanel()
     ClearBackgroundTextures(QuestFrameProgressPanel, 4)
     ScrollFrameCorrection(QuestProgressScrollFrame)
+    QuestProgressScrollFrameScrollBar:Hide()
 end
 
 function DQuestFrameRewardPanel()
     ClearBackgroundTextures(QuestFrameRewardPanel, 4)
     ScrollFrameCorrection(QuestRewardScrollFrame)
 end
-
-DQuestFrame()
-DQuestFrameDetailPanel()
-DQuestFrameGreetingPanel()
-DQuestFrameProgressPanel()
-DQuestFrameRewardPanel()
-
-
-
-
 
 -----------------------------Buttons--------------------------------
 
@@ -179,34 +179,59 @@ QuestFrameNpcNameText:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.t
 SetFontColor(QuestFrameNpcNameText, "DarkBrown")
 SetFontColor(GreetingText, "DarkBrown")
 
+
+
+
+---------------Event Handlers-------------------
+
 QuestNpcNameFrame:SetScript("OnShow",
     function(self)
         QuestFrameNpcNameText:SetText(GetTitleText())
         QuestFrameNpcNameText:SetFontObject(GameFontNormal)
-        QuestFrameNpcNameText:SetShadowColor(COLORS.LightBrown[1], COLORS.LightBrown[2], COLORS.LightBrown[3], 1)
-        QuestFrameNpcNameText:SetShadowOffset(-1.2, -1)
+        QuestFrameNpcNameText:SetShadowColor(0, 0, 0, 1)
+        QuestFrameNpcNameText:SetShadowOffset(-1, -1)
         QuestFrameNpcNameText:SetPoint("TOP", QuestNpcNameFrame, "TOPLEFT", 120, -10)
         QuestTitleText:Hide()
         QuestProgressTitleText:Hide()
-
     end)
 
+QuestFrame:SetScript("OnShow",
+    function(self)
+        DQuestFrame()
+        DQuestFrameDetailPanel()
+        DQuestFrameGreetingPanel()
+        DQuestFrameProgressPanel()
+        DQuestFrameRewardPanel()
+    end
+
+)
 
 
+local oldOnShow = QuestFrameGreetingPanel_OnShow;
+QuestFrameGreetingPanel_OnShow = function()
+    oldOnShow();
 
+    for i = 1, MAX_NUM_QUESTS do
+        local titleLine = getglobal("QuestTitleButton" .. i);
+        if (titleLine:IsVisible()) then
+            local bulletPointTexture = titleLine:GetRegions();
+            if (titleLine.isActive == 1) then
+                -- bulletPointTexture:SetTexture("Interface\\GossipFrame\\ActiveQuestIcon");
+                titleLine:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 14)
+                SetFontColor(titleLine, "Ivory")
 
-
------------------------------ScrollBars--------------------------------
-QuestGreetingScrollFrameScrollBar:Hide()
-QuestProgressScrollFrameScrollBar:Hide()
-
-QuestDetailScrollFrameScrollBarScrollUpButton:SetNormalTexture(nil)
-QuestDetailScrollFrameScrollBarScrollUpButton:SetPushedTexture(nil)
-QuestDetailScrollFrameScrollBarScrollUpButton:SetDisabledTexture(nil)
-
-QuestDetailScrollFrameScrollBarScrollDownButton:SetNormalTexture(nil)
-QuestDetailScrollFrameScrollBarScrollDownButton:SetDisabledTexture(nil)
-QuestDetailScrollFrameScrollBarThumbTexture:SetTexture(nil)
-
-
--- QuestTitleButton1:SetFont("Interface\\addons\\DialogUI\\Font\\frizqt___cyr.ttf", 14) -- solo los botones de cada mision, faltna hacer 31 mas
+                titleLine:SetNormalTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
+                titleLine:SetHighlightTexture("Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Gossip")
+                titleLine:SetPushedTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
+                local ActiveQuestIcon = titleLine:CreateTexture(nil, "ARTWORK")
+                ActiveQuestIcon:SetTexture("Interface\\GossipFrame\\ActiveQuestIcon")
+                ActiveQuestIcon:SetWidth(16)
+                ActiveQuestIcon:SetHeight(16)
+                ActiveQuestIcon:SetPoint("LEFT", titleLine, "LEFT", 0, 0)
+            else
+                bulletPointTexture:SetTexture("Interface\\GossipFrame\\AvailableQuestIcon");
+                titleLine:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 14)
+            end
+        end
+    end
+end
