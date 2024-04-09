@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: DialogUI
+## Author: Sxus
+## Version: 0.0.1
+## DefaultState: Enabled
+## LoadOnDemand: 0
+Code\dquestFrame.lua
+DialogUI.xml
+DialogUIForm.xml
