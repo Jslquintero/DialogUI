@@ -11,41 +11,57 @@ function SetFontColor(fontObject, key)
     fontObject:SetTextColor(color[1], color[2], color[3]);
 end
 
-QuestFrame:SetWidth(512)
-QuestFrame:SetHeight(512)
-
-
-
-QuestFrameCloseButton:Hide()
-
-
 function ScrollFrameCorrection(frame)
     -- local childFrame = QuestGreetingScrollFrame
-    frame:SetPoint("TOPLEFT", QuestFrame, 100, -100)
+    frame:SetPoint("TOPLEFT", QuestFrame, 120, -55)
+    frame:SetWidth(512)
 end
 
-QuestFrame:SetBackdrop({
-    bgFile = "Interface\\AddOns\\DialogUI\\UI\\Parchment",
-    edgeFile = nil,
-    tile = false,
-    tileEdge = false,
-    tileSize = 0,
-    edgeSize = 0,
-    insets = {
-        left = 0,
-        right = 0,
-        top = 0,
-        bottom = 0
-    }
-})
+local function ClearBackgroundTextures(frame, maxCount)
+    local count = 0
+    for _, value in ipairs({ frame:GetRegions() }) do
+        if value:GetDrawLayer() == "BACKGROUND" then
+            count = count + 1
+            if count <= maxCount then
+                value:SetTexture(nil)
+            else
+                break
+            end
+        end
+    end
+end
 
-function DQuestFrame()
-    local frame = QuestFrame;
-    for index, value in ipairs({ frame:GetRegions() }) do
+local function ClearArtworkTextures(frame)
+    for _, value in ipairs({ frame:GetRegions() }) do
         if value:GetDrawLayer() == "ARTWORK" then
             value:SetTexture(nil)
         end
     end
+end
+
+function DQuestFrame()
+    local frame = QuestFrame
+
+    frame:SetBackdrop({
+        bgFile = "Interface\\AddOns\\DialogUI\\UI\\Parchment",
+        edgeFile = nil,
+        tile = false,
+        tileEdge = false,
+        tileSize = 0,
+        edgeSize = 0,
+        insets = {
+            left = 0,
+            right = 0,
+            top = 0,
+            bottom = 0
+        }
+    })
+
+    frame:SetWidth(512)
+    frame:SetHeight(512)
+    QuestFrameCloseButton:Hide()
+
+    ClearArtworkTextures(frame)
 
     local dquestFramePortrait = CreateFrame("Frame", nil, QuestFrame)
     QuestFramePortrait:SetParent(dquestFramePortrait)
@@ -56,81 +72,32 @@ function DQuestFrame()
 end
 
 function DQuestFrameDetailPanel()
-    local frame = QuestFrameDetailPanel;
-    local count = 0
-    for index, value in ipairs({ frame:GetRegions() }) do
-        if value:GetDrawLayer() == "BACKGROUND" then -- Check if the region is a background layer
-            count = count + 1
-            if count <= 4 then
-                value:SetTexture(nil) -- Remove existing texture
-            else
-                break                 -- Exit the loop after changing the texture of the first four background layers
-            end
-        end
-    end
+    ClearBackgroundTextures(QuestFrameDetailPanel, 4)
+    ScrollFrameCorrection(QuestDetailScrollFrame)
 end
 
 function DQuestFrameGreetingPanel()
-    local frame = QuestFrameGreetingPanel;
-    local count = 0
-    for index, value in ipairs({ frame:GetRegions() }) do
-        if value:GetDrawLayer() == "BACKGROUND" then -- Check if the region is a background layer
-            count = count + 1
-            if count <= 4 then
-                value:SetTexture(nil) -- Remove existing texture
-            else
-                break                 -- Exit the loop after changing the texture of the first four background layers
-            end
-        end
+    ClearBackgroundTextures(QuestFrameGreetingPanel, 4)
+    ClearArtworkTextures(QuestFrameGreetingPanel)
+    ScrollFrameCorrection(QuestGreetingScrollFrame)
 
-        if value:GetDrawLayer() == "ARTWORK" then
-            value:SetTexture(nil)
-        end
-    end
-
-
-    local childFrame = QuestGreetingScrollChildFrame
-
-    for index, value in ipairs({ childFrame:GetRegions() }) do
+    for index, value in ipairs({ QuestGreetingScrollChildFrame:GetRegions() }) do
         if value:GetDrawLayer() == "ARTWORK" then
             if value:GetName() == "QuestGreetingFrameHorizontalBreak" then
                 value:SetTexture(nil)
             end
         end
     end
-
-
-    -- Define other functions like QuestFrameGreetingPanel_OnShow() if needed
 end
 
 function DQuestFrameProgressPanel()
-    local frame = QuestFrameProgressPanel;
-    local count = 0
-    for index, value in ipairs({ frame:GetRegions() }) do
-        if value:GetDrawLayer() == "BACKGROUND" then -- Check if the region is a background layer
-            count = count + 1
-            if count <= 4 then
-                value:SetTexture(nil) -- Remove existing texture
-            else
-                break                 -- Exit the loop after changing the texture of the first four background layers
-            end
-        end
-    end
+    ClearBackgroundTextures(QuestFrameProgressPanel, 4)
+    ScrollFrameCorrection(QuestProgressScrollFrame)
 end
 
 function DQuestFrameRewardPanel()
-    local frame = QuestFrameRewardPanel;
-    local count = 0
-    for index, value in ipairs({ frame:GetRegions() }) do
-        if value:GetDrawLayer() == "BACKGROUND" then -- Check if the region is a background layer
-            count = count + 1
-            if count <= 4 then
-                value:SetTexture(nil) -- Remove existing texture
-            else
-                break                 -- Exit the loop after changing the texture of the first four background layers
-            end
-        end
-    end
+    ClearBackgroundTextures(QuestFrameRewardPanel, 4)
+    ScrollFrameCorrection(QuestRewardScrollFrame)
 end
 
 DQuestFrame()
@@ -145,85 +112,69 @@ DQuestFrameRewardPanel()
 
 -----------------------------Buttons--------------------------------
 
---Accept Button
+local function SetButtonProperties(button, normalTexture, highlightTexture, pushedTexture, width, height, pointA, pointB,
+                                   pointX, pointY,
+                                   fontColor)
+    button:SetNormalTexture(normalTexture)
+    button:SetHighlightTexture(highlightTexture)
+    button:SetPushedTexture(pushedTexture)
+    button:SetWidth(width)
+    button:SetHeight(height)
+    button:SetPoint(pointA, QuestFrame, pointB, pointX, pointY)
+    SetFontColor(button:GetFontString(), fontColor)
 
-QuestFrameAcceptButton:SetNormalTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
-QuestFrameAcceptButton:SetHighlightTexture("Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front")
-QuestFrameAcceptButton:SetPushedTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
-QuestFrameAcceptButton:SetWidth(128)
-QuestFrameAcceptButton:SetHeight(32)
-QuestFrameAcceptButton:SetPoint("BOTTOMLEFT", QuestFrame, "BOTTOMLEFT", 20, 60)
-SetFontColor(QuestFrameAcceptButton:GetFontString(), "Ivory")
+    if button == QuestFrameCompleteButton then
+        button:SetDisabledTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey")
+    end
+end
 
---Decline Button
+-- Accept Button
+SetButtonProperties(QuestFrameAcceptButton, "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common",
+    "Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front", "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common",
+    128, 32, "BOTTOMLEFT", "BOTTOMLEFT", 80, 50, "Ivory")
 
-QuestFrameDeclineButton:SetNormalTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey")
-QuestFrameDeclineButton:SetHighlightTexture("Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front")
-QuestFrameDeclineButton:SetPushedTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey")
-QuestFrameDeclineButton:SetWidth(128)
-QuestFrameDeclineButton:SetHeight(32)
-QuestFrameDeclineButton:SetPoint("BOTTOMRIGHT", QuestFrame, "BOTTOMRIGHT", -30, 60)
-SetFontColor(QuestFrameDeclineButton:GetFontString(), "Ivory")
+-- -- Decline Button
+SetButtonProperties(QuestFrameDeclineButton, "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey",
+    "Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front", "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey",
+    128, 32, "BOTTOMRIGHT", "BOTTOMRIGHT", -80, 50, "Ivory")
 
---Complete Button
-QuestFrameCompleteQuestButton:SetNormalTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey")
-QuestFrameCompleteQuestButton:SetHighlightTexture("Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front")
-QuestFrameCompleteQuestButton:SetPushedTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey")
-QuestFrameCompleteQuestButton:SetWidth(128)
-QuestFrameCompleteQuestButton:SetHeight(32)
-QuestFrameCompleteQuestButton:SetPoint("BOTTOMRIGHT", QuestFrame, "BOTTOMRIGHT", -30, 60)
-SetFontColor(QuestFrameCompleteQuestButton:GetFontString(), "Ivory")
+-- Complete Button
+SetButtonProperties(QuestFrameCompleteQuestButton, "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey",
+    "Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front", "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey",
+    128, 32, "BOTTOMRIGHT", "BOTTOMRIGHT", -80, 50, "Ivory")
 
---Cancel Button
-QuestFrameCancelButton:SetNormalTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey")
-QuestFrameCancelButton:SetHighlightTexture("Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front")
-QuestFrameCancelButton:SetPushedTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey")
-QuestFrameCancelButton:SetWidth(128)
-QuestFrameCancelButton:SetHeight(32)
-QuestFrameCancelButton:SetPoint("BOTTOMRIGHT", QuestFrame, "BOTTOMRIGHT", -30, 60)
-SetFontColor(QuestFrameCancelButton:GetFontString(), "Ivory")
+-- Cancel Button
+SetButtonProperties(QuestFrameCancelButton, "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey",
+    "Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front", "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey",
+    128, 32, "BOTTOMRIGHT", "BOTTOMRIGHT", -80, 50, "Ivory")
 
---Goodbye Button
+-- Goodbye Button
+SetButtonProperties(QuestFrameGoodbyeButton, "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common",
+    "Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front", "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common",
+    128, 32, "BOTTOMRIGHT", "BOTTOMRIGHT", -80, 50, "Ivory")
 
-QuestFrameGoodbyeButton:SetNormalTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
-QuestFrameGoodbyeButton:SetHighlightTexture("Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front")
-QuestFrameGoodbyeButton:SetPushedTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
-QuestFrameGoodbyeButton:SetWidth(128)
-QuestFrameGoodbyeButton:SetHeight(32)
-QuestFrameGoodbyeButton:SetPoint("BOTTOMRIGHT", QuestFrame, "BOTTOMRIGHT", -20, 60)
-SetFontColor(QuestFrameGoodbyeButton:GetFontString(), "Ivory")
+-- GreetingGoodbye Button
+SetButtonProperties(QuestFrameGreetingGoodbyeButton, "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common",
+    "Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front", "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common",
+    128, 32, "BOTTOMRIGHT", "BOTTOMRIGHT", -80, 50, "Ivory")
 
---GreetingGoodbye Button
-
-QuestFrameGreetingGoodbyeButton:SetNormalTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
-QuestFrameGreetingGoodbyeButton:SetHighlightTexture("Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front")
-QuestFrameGreetingGoodbyeButton:SetPushedTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
-QuestFrameGreetingGoodbyeButton:SetWidth(128)
-QuestFrameGreetingGoodbyeButton:SetHeight(32)
-QuestFrameGreetingGoodbyeButton:SetPoint("BOTTOMRIGHT", QuestFrame, "BOTTOMRIGHT", -20, 60)
-SetFontColor(QuestFrameGreetingGoodbyeButton:GetFontString(), "Ivory")
-
---Continue Button
-
-QuestFrameCompleteButton:SetDisabledTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey")
-QuestFrameCompleteButton:SetHighlightTexture("Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front")
-QuestFrameCompleteButton:SetPushedTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
-QuestFrameCompleteButton:SetWidth(128)
-QuestFrameCompleteButton:SetHeight(32)
-QuestFrameCompleteButton:SetPoint("BOTTOMLEFT", QuestFrame, "BOTTOMLEFT", 20, 60)
-SetFontColor(QuestFrameCompleteButton:GetFontString(), "DarkBrown")
-
---Fonts
+-- Continue Button
+SetButtonProperties(QuestFrameCompleteButton, "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey",
+    "Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front", "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common",
+    128, 32, "BOTTOMLEFT", "BOTTOMLEFT", 80, 50, "DarkBrown")
 
 
-CurrentQuestsText:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 18)      -- Current quest text  "Current Quests"
-AvailableQuestsText:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 18)    -- Available quest text "Available Quests"
-GreetingText:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 18)           --Quest Greeting Text
-QuestTitleFont:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 18)         --Quest Title Text in the detail panel
-QuestDescription:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 18)       --Quest Description Text in the detail panel
-QuestObjectiveText:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 18)     --Quest Objective Text in the detail panel
-QuestProgressTitleText:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 18) --Quest Progress Title Text in the progress panel
-QuestProgressText:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 18)      --Quest Progress Text in the progress panel
+
+-----------------------------Fonts--------------------------------
+
+CurrentQuestsText:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 16)      -- Current quest text  "Current Quests"
+AvailableQuestsText:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 16)    -- Available quest text "Available Quests"
+GreetingText:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 14)           --Quest Greeting Text
+QuestTitleFont:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 16)         --Quest Title Text in the detail panel
+QuestDescription:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 14)       --Quest Description Text in the detail panel
+QuestObjectiveText:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 14)     --Quest Objective Text in the detail panel
+QuestProgressTitleText:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 16) --Quest Progress Title Text in the progress panel
+QuestProgressText:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 14)      --Quest Progress Text in the progress panel
 QuestFrameNpcNameText:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 18)  --Quest NPC Name Text (it's been replaced with the title of the quest)
 SetFontColor(QuestFrameNpcNameText, "DarkBrown")
 SetFontColor(GreetingText, "DarkBrown")
@@ -231,8 +182,13 @@ SetFontColor(GreetingText, "DarkBrown")
 QuestNpcNameFrame:SetScript("OnShow",
     function(self)
         QuestFrameNpcNameText:SetText(GetTitleText())
+        QuestFrameNpcNameText:SetFontObject(GameFontNormal)
+        QuestFrameNpcNameText:SetShadowColor(COLORS.LightBrown[1], COLORS.LightBrown[2], COLORS.LightBrown[3], 1)
+        QuestFrameNpcNameText:SetShadowOffset(-1.2, -1)
+        QuestFrameNpcNameText:SetPoint("TOP", QuestNpcNameFrame, "TOPLEFT", 120, -10)
         QuestTitleText:Hide()
         QuestProgressTitleText:Hide()
+
     end)
 
 
@@ -240,7 +196,7 @@ QuestNpcNameFrame:SetScript("OnShow",
 
 
 
---ScrollBars
+-----------------------------ScrollBars--------------------------------
 QuestGreetingScrollFrameScrollBar:Hide()
 QuestProgressScrollFrameScrollBar:Hide()
 
