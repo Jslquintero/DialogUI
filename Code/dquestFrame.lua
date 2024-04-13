@@ -135,10 +135,10 @@ function QuestFrameButtons()
         128, 32, "BOTTOMRIGHT", "BOTTOMRIGHT", -80, 50, "Ivory")
 
     -- Complete Button
-    SetButtonProperties(QuestFrameCompleteQuestButton, "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey",
+    SetButtonProperties(QuestFrameCompleteQuestButton, "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-common",
         "Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Front",
-        "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey",
-        128, 32, "BOTTOMRIGHT", "BOTTOMRIGHT", -80, 50, "Ivory")
+        "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-common",
+        128, 32, "BOTTOMLEFT", "BOTTOMLEFT", 80, 50, "Ivory")
 
     -- Cancel Button
     SetButtonProperties(QuestFrameCancelButton, "Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Grey",
@@ -222,31 +222,31 @@ QuestFrame:SetScript("OnShow",
     end
 )
 
-local oldOnShow = QuestFrameGreetingPanel_OnShow;
-QuestFrameGreetingPanel_OnShow = function()
-    oldOnShow();
+-- local oldOnShow = QuestFrameGreetingPanel_OnShow;
+-- QuestFrameGreetingPanel_OnShow = function()
+--     oldOnShow();
 
-    for i = 1, MAX_NUM_QUESTS do
-        local titleLine = getglobal("QuestTitleButton" .. i);
-        if (titleLine:IsVisible()) then
-            local bulletPointTexture = titleLine:GetRegions();
-            if (titleLine.isActive == 1) then
-                -- bulletPointTexture:SetTexture("Interface\\GossipFrame\\ActiveQuestIcon");
-                titleLine:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 14)
-                SetFontColor(titleLine, "Ivory")
+--     for i = 1, MAX_NUM_QUESTS do
+--         local titleLine = getglobal("QuestTitleButton" .. i);
+--         if (titleLine:IsVisible()) then
+--             local bulletPointTexture = titleLine:GetRegions();
+--             if (titleLine.isActive == 1) then
+--                 -- bulletPointTexture:SetTexture("Interface\\GossipFrame\\ActiveQuestIcon");
+--                 titleLine:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 14)
+--                 SetFontColor(titleLine, "Ivory")
 
-                titleLine:SetNormalTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
-                titleLine:SetHighlightTexture("Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Gossip")
-                titleLine:SetPushedTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
-                local ActiveQuestIcon = titleLine:CreateTexture(nil, "ARTWORK")
-                ActiveQuestIcon:SetTexture("Interface\\GossipFrame\\ActiveQuestIcon")
-                ActiveQuestIcon:SetWidth(16)
-                ActiveQuestIcon:SetHeight(16)
-                ActiveQuestIcon:SetPoint("LEFT", titleLine, "LEFT", 0, 0)
-            else
-                bulletPointTexture:SetTexture("Interface\\GossipFrame\\AvailableQuestIcon");
-                titleLine:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 14)
-            end
-        end
-    end
-end
+--                 titleLine:SetNormalTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
+--                 titleLine:SetHighlightTexture("Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Gossip")
+--                 titleLine:SetPushedTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
+--                 local ActiveQuestIcon = titleLine:CreateTexture(nil, "ARTWORK")
+--                 ActiveQuestIcon:SetTexture("Interface\\GossipFrame\\ActiveQuestIcon")
+--                 ActiveQuestIcon:SetWidth(16)
+--                 ActiveQuestIcon:SetHeight(16)
+--                 ActiveQuestIcon:SetPoint("LEFT", titleLine, "LEFT", 0, 0)
+--             else
+--                 bulletPointTexture:SetTexture("Interface\\GossipFrame\\AvailableQuestIcon");
+--                 titleLine:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 14)
+--             end
+--         end
+--     end
+-- end
