@@ -123,6 +123,15 @@ end
 SetFontColor(GossipFrameNpcNameText, "DarkBrown")
 SetFontColor(GossipGreetingText, "DarkBrown")
 
+local function getTableLength(table)
+    local i = 1
+    local num = 0
+    while table[i] do
+        num = num + 1
+        i = i + 4
+    end
+    return num
+end
 
 
 function GossipOptions()
@@ -137,34 +146,95 @@ function GossipOptions()
         i = i + 2 -- Skip to the next pair
     end
 
-    -- Now numOptions holds the count of gossip options
+    local optionIndex = 1
+    for i = 1, numOptions * 2, 2 do         -- Increment by 2 to skip titles
+        local titleLine = getglobal("GossipTitleButton" .. optionIndex)
+        local gossip = gossipOptions[i + 1] -- Get the gossip text
 
-    -- -- Iterate through the options
-    -- for i = 1, numOptions do
-    --     local titleLine = getglobal("GossipTitleButton" .. i)
-    --     local option = gossipOptions[i]
+        --Available
+        --Active
 
-    --     -- Create the icon texture
-    --     local iconTexture = titleLine:CreateTexture(nil, "ARTWORK")
-    --     iconTexture:SetWidth(20)
-    --     iconTexture:SetHeight(20)
-    --     iconTexture:SetPoint("LEFT", 0, 0)
+        -- Get or create the icon texture
+        local iconTexture = titleLine.iconTexture
+        if not iconTexture then
+            iconTexture = titleLine:CreateTexture(nil, "ARTWORK")
+            iconTexture:SetWidth(20)
+            iconTexture:SetHeight(20)
+            iconTexture:SetPoint("LEFT", 0, 0)
+            titleLine.iconTexture = iconTexture -- Store the texture in the button for future use
+        end
 
 
-    --     if math.mod(i, 2) == 0 then -- if i is even then the gossip option is a type
-    --         iconTexture:SetTexture(SetGossipIcon(option))
-    --     end
+        -- Update the texture's source image
+        iconTexture:SetTexture(SetGossipIcon(gossip))
 
-    --     -- Hide the original icon
-    --     local originalIcon = getglobal("GossipTitleButton" .. i .. "GossipIcon")
-    --     originalIcon:Hide()
+        -- Hide the original icon
+        local originalIcon = getglobal("GossipTitleButton" .. optionIndex .. "GossipIcon")
+        originalIcon:Hide()
 
-    --     -- Set properties for the gossip button
-    --     SetGossipTitleButtonProperties(titleLine)
-    -- end
+        titleLine:GetObjectType()
+
+
+        -- Set properties for the gossip button
+        SetGossipTitleButtonProperties(titleLine)
+
+        optionIndex = optionIndex + 1
+    end
+end
+
+local function IsGossipQuestCompleted(index)
+    local quests = { GetGossipActiveQuests() }
+    return not not quests[((index * 5) - 5) + 4]
+end
+
+function GossipQuestOptions()
+    local availableQuests = GetGossipAvailableQuests()
+    local activeQuests = GetGossipActiveQuests()
+
+    local gossipTable = { GetGossipActiveQuests() }
+    local numOptions = table.getn(gossipTable) / 4
+
+
+    local active = numOptions
+    if (active > 0) then
+        for index = 1, active do
+            if (IsGossipQuestCompleted(index)) then
+                local titleLine = getglobal("GossipTitleButton" .. index)
+                SetGossipTitleButtonProperties(titleLine)
+                local iconTexture = titleLine.iconTexture
+                if not iconTexture then
+                    iconTexture = titleLine:CreateTexture(nil, "ARTWORK")
+                    iconTexture:SetWidth(20)
+                    iconTexture:SetHeight(20)
+                    iconTexture:SetPoint("LEFT", 0, 0)
+                    titleLine.iconTexture = iconTexture -- Store the texture in the button for future use
+                end
+
+
+                -- Update the texture's source image
+                iconTexture:SetTexture(SetGossipIcon("completeQuest"))
+
+                -- Hide the original icon
+                local originalIcon = getglobal("GossipTitleButton" .. index .. "GossipIcon")
+                originalIcon:Hide()
+            else --Active Quest
+                local titleLine = getglobal("GossipTitleButton" .. index)
+                SetGossipTitleButtonProperties(titleLine)
+                local iconTexture = titleLine.iconTexture
+                if not iconTexture then
+                    iconTexture = titleLine:CreateTexture(nil, "ARTWORK")
+                    iconTexture:SetWidth(20)
+                    iconTexture:SetHeight(20)
+                    iconTexture:SetPoint("LEFT", 0, 0)
+                    titleLine.iconTexture = iconTexture -- Store the texture in the button for future use
+                end
+            end
+        end
+    end
 end
 
 function SetGossipIcon(gossipType)
+    print(gossipType)
     -- Define a table to map gossip types to icons
     local iconMapping = {
         ["banker"] = "Interface\\AddOns\\DialogUI\\UI\\Icons\\Buy",
@@ -177,7 +247,10 @@ function SetGossipIcon(gossipType)
         ["taxi"] = "Interface/gossipframe/taxigossipicon",
         ["trainer"] = "Interface\\AddOns\\DialogUI\\UI\\Icons\\Trainer",
         ["unlearn"] = "Interface\\AddOns\\DialogUI\\UI\\Icons\\Gossip",
-        ["vendor"] = "Interface\\AddOns\\DialogUI\\UI\\Icons\\Buy"
+        ["vendor"] = "Interface\\AddOns\\DialogUI\\UI\\Icons\\Buy",
+        ["availableQuest"] = "Interface\\AddOns\\DialogUI\\UI\\Icons\\AvailableQuest",
+        ["activeQuest"] = "Interface\\AddOns\\DialogUI\\UI\\Icons\\ActiveQuest",
+        ["completeQuest"] = "Interface\\AddOns\\DialogUI\\UI\\Icons\\CompleteQuest",
     }
 
     -- Check if the gossip type exists in the mapping
@@ -209,5 +282,6 @@ GossipFrame:SetScript("OnShow",
         DGossipFrame()
         DGossipFrameGreetingPanel()
         GossipOptions()
+        GossipQuestOptions()
     end
 )

@@ -65,12 +65,13 @@ function DQuestFrameDetailPanel()
     ScrollFrameCorrection(QuestDetailScrollFrame)
 
 
-    QuestDetailScrollFrameScrollBarScrollUpButton:SetNormalTexture(nil)
-    QuestDetailScrollFrameScrollBarScrollUpButton:SetPushedTexture(nil)
-    QuestDetailScrollFrameScrollBarScrollUpButton:SetDisabledTexture(nil)
-    QuestDetailScrollFrameScrollBarScrollDownButton:SetNormalTexture(nil)
-    QuestDetailScrollFrameScrollBarScrollDownButton:SetDisabledTexture(nil)
-    QuestDetailScrollFrameScrollBarThumbTexture:SetTexture(nil)
+    -- QuestDetailScrollFrameScrollBarScrollUpButton:SetNormalTexture(nil)
+    -- QuestDetailScrollFrameScrollBarScrollUpButton:SetPushedTexture(nil)
+    -- QuestDetailScrollFrameScrollBarScrollUpButton:SetDisabledTexture(nil)
+    -- QuestDetailScrollFrameScrollBarScrollDownButton:SetNormalTexture(nil)
+    -- QuestDetailScrollFrameScrollBarScrollDownButton:SetDisabledTexture(nil)
+    -- QuestDetailScrollFrameScrollBarThumbTexture:SetTexture(nil)
+    QuestDetailScrollFrameScrollBar:Hide()
 end
 
 function DQuestFrameGreetingPanel()
@@ -97,6 +98,7 @@ end
 function DQuestFrameRewardPanel()
     ClearBackgroundTextures(QuestFrameRewardPanel, 4)
     ScrollFrameCorrection(QuestRewardScrollFrame)
+    QuestRewardScrollFrameScrollBar:Hide()
 end
 
 -----------------------------Buttons--------------------------------
