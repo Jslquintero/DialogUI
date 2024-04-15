@@ -8,9 +8,32 @@ function NpcPortraitFrame()
 end
 
 function ScrollFrameCorrection(frame)
-    -- local childFrame = QuestGreetingScrollFrame
     frame:SetPoint("TOPLEFT", QuestFrame, 120, -55)
     frame:SetWidth(512)
+end
+
+function HideScrollFrameBar(frameName)
+    if frameName then
+        local frameScrollBar = getglobal(frameName)
+        if frameScrollBar then
+            local frameScrollBarScrollUpButton = getglobal(frameName .. "ScrollUpButton")
+            local frameScrollBarScrollDownButton = getglobal(frameName .. "ScrollDownButton")
+            local frameScrollBarThumbTexture = getglobal(frameName .. "ThumbTexture")
+
+            if frameScrollBarScrollUpButton then
+                frameScrollBarScrollUpButton:SetNormalTexture(nil)
+                frameScrollBarScrollUpButton:SetDisabledTexture(nil)
+            end
+            if frameScrollBarScrollDownButton then
+                frameScrollBarScrollDownButton:SetNormalTexture(nil)
+                frameScrollBarScrollDownButton:SetDisabledTexture(nil)
+            end
+            if frameScrollBarThumbTexture then
+                frameScrollBarThumbTexture:SetTexture(nil)
+            end
+            frameScrollBar:SetWidth(0)
+        end
+    end
 end
 
 local function ClearBackgroundTextures(frame, maxCount)
@@ -56,49 +79,66 @@ function DQuestFrame()
     frame:SetWidth(512)
     frame:SetHeight(512)
     QuestFrameCloseButton:Hide()
-
     ClearArtworkTextures(frame)
 end
 
-function DQuestFrameDetailPanel()
-    ClearBackgroundTextures(QuestFrameDetailPanel, 4)
-    ScrollFrameCorrection(QuestDetailScrollFrame)
+local panels = {
+    {
+        panel = QuestFrameDetailPanel,
+        scrollFrame = QuestDetailScrollFrame,
+        scrollBarName = QuestDetailScrollFrameScrollBar:GetName(),
+        hideRegions = false,
+        clearArtwork = false
+    },
+    {
+        panel = QuestFrameGreetingPanel,
+        scrollFrame = QuestGreetingScrollFrame,
+        scrollBarName = QuestGreetingScrollFrameScrollBar:GetName(),
+        hideRegions = true,
+        clearArtwork = true
+    },
+    {
+        panel = QuestFrameProgressPanel,
+        scrollFrame = QuestProgressScrollFrame,
+        scrollBarName = QuestProgressScrollFrameScrollBar:GetName(),
+        hideRegions = false,
+        clearArtwork = false
+    },
+    {
+        panel = QuestFrameRewardPanel,
+        scrollFrame = QuestRewardScrollFrame,
+        scrollBarName = QuestRewardScrollFrameScrollBar:GetName(),
+        hideRegions = false,
+        clearArtwork = false
+    }
+}
 
+-- Generic function to handle panels
+local function handlePanel(panelInfo)
+    ClearBackgroundTextures(panelInfo.panel, 4)
+    ScrollFrameCorrection(panelInfo.scrollFrame)
+    HideScrollFrameBar(panelInfo.scrollBarName)
 
-    -- QuestDetailScrollFrameScrollBarScrollUpButton:SetNormalTexture(nil)
-    -- QuestDetailScrollFrameScrollBarScrollUpButton:SetPushedTexture(nil)
-    -- QuestDetailScrollFrameScrollBarScrollUpButton:SetDisabledTexture(nil)
-    -- QuestDetailScrollFrameScrollBarScrollDownButton:SetNormalTexture(nil)
-    -- QuestDetailScrollFrameScrollBarScrollDownButton:SetDisabledTexture(nil)
-    -- QuestDetailScrollFrameScrollBarThumbTexture:SetTexture(nil)
-    QuestDetailScrollFrameScrollBar:Hide()
-end
-
-function DQuestFrameGreetingPanel()
-    ClearBackgroundTextures(QuestFrameGreetingPanel, 4)
-    ClearArtworkTextures(QuestFrameGreetingPanel)
-    ScrollFrameCorrection(QuestGreetingScrollFrame)
-    QuestGreetingScrollFrameScrollBar:Hide()
-
-    for index, value in ipairs({ QuestGreetingScrollChildFrame:GetRegions() }) do
-        if value:GetDrawLayer() == "ARTWORK" then
-            if value:GetName() == "QuestGreetingFrameHorizontalBreak" then
-                value:SetTexture(nil)
+    if panelInfo.hideRegions then
+        for index, value in ipairs({ panelInfo.panel:GetRegions() }) do
+            if value:GetDrawLayer() == "ARTWORK" then
+                if value:GetName() == "QuestGreetingFrameHorizontalBreak" then
+                    value:SetTexture(nil)
+                end
             end
         end
     end
+
+    if panelInfo.clearArtwork then
+        ClearArtworkTextures(panelInfo.panel)
+    end
 end
 
-function DQuestFrameProgressPanel()
-    ClearBackgroundTextures(QuestFrameProgressPanel, 4)
-    ScrollFrameCorrection(QuestProgressScrollFrame)
-    QuestProgressScrollFrameScrollBar:Hide()
-end
-
-function DQuestFrameRewardPanel()
-    ClearBackgroundTextures(QuestFrameRewardPanel, 4)
-    ScrollFrameCorrection(QuestRewardScrollFrame)
-    QuestRewardScrollFrameScrollBar:Hide()
+-- Function to handle all panels
+function HandleAllPanels()
+    for _, panelInfo in ipairs(panels) do
+        handlePanel(panelInfo)
+    end
 end
 
 -----------------------------Buttons--------------------------------
@@ -208,7 +248,7 @@ QuestNpcNameFrame:SetScript("OnShow",
         QuestFrameNpcNameText:SetFontObject(GameFontNormal)
         QuestFrameNpcNameText:SetShadowColor(0, 0, 0, 1)
         QuestFrameNpcNameText:SetShadowOffset(-1, -1)
-        QuestFrameNpcNameText:SetPoint("TOP", QuestNpcNameFrame, "TOPLEFT", 120, -10)
+        QuestFrameNpcNameText:SetPoint("TOP", QuestNpcNameFrame, "TOPLEFT", 125, -10)
         QuestTitleText:Hide()
         QuestProgressTitleText:Hide()
         NpcPortraitFrame()
@@ -217,10 +257,7 @@ QuestNpcNameFrame:SetScript("OnShow",
 QuestFrame:SetScript("OnShow",
     function(self)
         DQuestFrame()
-        DQuestFrameDetailPanel()
-        DQuestFrameGreetingPanel()
-        DQuestFrameProgressPanel()
-        DQuestFrameRewardPanel()
+        HandleAllPanels()
     end
 )
 
@@ -241,12 +278,12 @@ QuestFrame:SetScript("OnShow",
 --                 titleLine:SetHighlightTexture("Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Gossip")
 --                 titleLine:SetPushedTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
 --                 local ActiveQuestIcon = titleLine:CreateTexture(nil, "ARTWORK")
---                 ActiveQuestIcon:SetTexture("Interface\\GossipFrame\\ActiveQuestIcon")
+--                 ActiveQuestIcon:SetTexture("Interface\\AddOns\\DialogUI\\UI\\Icons\\IncompleteQuest")
 --                 ActiveQuestIcon:SetWidth(16)
 --                 ActiveQuestIcon:SetHeight(16)
 --                 ActiveQuestIcon:SetPoint("LEFT", titleLine, "LEFT", 0, 0)
 --             else
---                 bulletPointTexture:SetTexture("Interface\\GossipFrame\\AvailableQuestIcon");
+--                 bulletPointTexture:SetTexture("Interface\\AddOns\\DialogUI\\UI\\Icons\\AvailableQuest");
 --                 titleLine:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 14)
 --             end
 --         end
