@@ -31,7 +31,7 @@ function HideScrollFrameBar(frameName)
             if frameScrollBarThumbTexture then
                 frameScrollBarThumbTexture:SetTexture(nil)
             end
-            frameScrollBar:SetWidth(0)
+            -- frameScrollBar:SetWidth(0)
         end
     end
 end
@@ -248,10 +248,12 @@ QuestNpcNameFrame:SetScript("OnShow",
         QuestFrameNpcNameText:SetFontObject(GameFontNormal)
         QuestFrameNpcNameText:SetShadowColor(0, 0, 0, 1)
         QuestFrameNpcNameText:SetShadowOffset(-1, -1)
-        QuestFrameNpcNameText:SetPoint("TOP", QuestNpcNameFrame, "TOPLEFT", 125, -10)
+        QuestFrameNpcNameText:SetPoint("TOP", QuestNpcNameFrame, "TOPLEFT", 160, 5)
         QuestTitleText:Hide()
         QuestProgressTitleText:Hide()
         NpcPortraitFrame()
+        QuestFrameNpcNameText:SetWidth(300)
+        QuestFrameNpcNameText:SetHeight(50)
     end)
 
 QuestFrame:SetScript("OnShow",
@@ -260,32 +262,3 @@ QuestFrame:SetScript("OnShow",
         HandleAllPanels()
     end
 )
-
--- local oldOnShow = QuestFrameGreetingPanel_OnShow;
--- QuestFrameGreetingPanel_OnShow = function()
---     oldOnShow();
-
---     for i = 1, MAX_NUM_QUESTS do
---         local titleLine = getglobal("QuestTitleButton" .. i);
---         if (titleLine:IsVisible()) then
---             local bulletPointTexture = titleLine:GetRegions();
---             if (titleLine.isActive == 1) then
---                 -- bulletPointTexture:SetTexture("Interface\\GossipFrame\\ActiveQuestIcon");
---                 titleLine:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 14)
---                 SetFontColor(titleLine, "Ivory")
-
---                 titleLine:SetNormalTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
---                 titleLine:SetHighlightTexture("Interface\\AddOns\\DialogUI\\UI\\ButtonHighlight-Gossip")
---                 titleLine:SetPushedTexture("Interface\\AddOns\\DialogUI\\UI\\OptionBackground-Common")
---                 local ActiveQuestIcon = titleLine:CreateTexture(nil, "ARTWORK")
---                 ActiveQuestIcon:SetTexture("Interface\\AddOns\\DialogUI\\UI\\Icons\\IncompleteQuest")
---                 ActiveQuestIcon:SetWidth(16)
---                 ActiveQuestIcon:SetHeight(16)
---                 ActiveQuestIcon:SetPoint("LEFT", titleLine, "LEFT", 0, 0)
---             else
---                 bulletPointTexture:SetTexture("Interface\\AddOns\\DialogUI\\UI\\Icons\\AvailableQuest");
---                 titleLine:SetFont("Interface\\AddOns\\DialogUI\\Font\\frizqt___cyr.ttf", 14)
---             end
---         end
---     end
--- end
