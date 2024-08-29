@@ -1,18 +1,452 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-    <Script file="src\frames\gossipFrame.lua" />
-    <Frame name="DGossipFrameTemplate" parent="UIParent">
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Script file="src\frames\DGossipFrame.lua" />
+    <Frame name="DGossipFramePanelTemplate" virtual="true">
         <Size x="512" y="512" />
         <Anchors>
             <Anchor point="TOPLEFT" />
         </Anchors>
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture file="Interface\AddOns\DialogUI\src\assets\images\Parchment">
+                <Texture file="Interface\AddOns\DialogUI\src\assets\art\Parchment">
                     <Size x="512" y="512" />
                 </Texture>
             </Layer>
         </Layers>
     </Frame>
 
+    <Button name="DGossipTitleButtonTemplate" virtual="true" hidden="false">
+        <Size x="300" y="16" />
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture name="$parentGossipIcon"
+                    file="Interface\AddOns\DialogUI\src\assets\art\gossipIcons\AvailableQuestIcon">
+                    <Size x="16" y="16" />
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <Size x="0" y="0" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnClick>
+                <!-- GossipTitleButton_OnClick(); -->
+            </OnClick>
+        </Scripts>
+        <HighlightTexture
+            file="Interface\AddOns\DialogUI\src\assets\art\button\ButtonHighlight-Gossip"
+            alphaMode="ADD" />
+        <ButtonText>
+            <Size x="275" y="0" />
+            <Anchors>
+                <Anchor point="LEFT">
+                    <Offset>
+                        <Size x="20" y="0" />
+                    </Offset>
+                </Anchor>
+            </Anchors>
+        </ButtonText>
+        <NormalFont inherits="QuestFont" justifyH="LEFT" />
+    </Button>
+
+
+    <Frame name="DGossipFrame" toplevel="true" parent="UIParent" movable="true" enableMouse="true"
+        hidden="true">
+        <Size>
+            <AbsDimension x="512" y="512" />
+        </Size>
+        <Anchors>
+            <Anchor point="TOPLEFT">
+                <Offset>
+                    <AbsDimension x="0" y="-104" />
+                </Offset>
+            </Anchor>
+        </Anchors>
+        <HitRectInsets>
+            <AbsInset left="0" right="30" top="0" bottom="70" />
+        </HitRectInsets>
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture name="DGossipFramePortrait">
+                    <Size>
+                        <AbsDimension x="60" y="60" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="7" y="-6" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Frames>
+            <Frame name="GossipNpcNameFrame">
+                <Size>
+                    <AbsDimension x="300" y="14" />
+                </Size>
+                <Anchors>
+                    <Anchor point="TOP" relativeTo="DGossipFrame" relativePoint="TOP">
+                        <Offset>
+                            <AbsDimension x="0" y="-23" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <FontString name="DGossipFrameNpcNameText" inherits="GameFontHighlight" />
+                    </Layer>
+                </Layers>
+                <Scripts>
+                    <OnLoad>
+                        this:SetFrameLevel(this:GetFrameLevel() + 2);
+                    </OnLoad>
+                </Scripts>
+            </Frame>
+            <Button name="DGossipFrameCloseButton" inherits="UIPanelCloseButton">
+                <Anchors>
+                    <Anchor point="CENTER" relativeTo="DGossipFrame" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-42" y="-31" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Frame name="DGossipFrameGreetingPanel" inherits="DGossipFramePanelTemplate"
+                hidden="false">
+                <Frames>
+                    <Button name="DDGossipFrameGreetingGoodbyeButton"
+                        inherits="UIPanelButtonTemplate"
+                        text="GOODBYE">
+                        <Size>
+                            <AbsDimension x="78" y="22" />
+                        </Size>
+                        <Anchors>
+                            <Anchor point="BOTTOMRIGHT" relativeTo="DGossipFrame"
+                                relativePoint="BOTTOMRIGHT">
+                                <Offset>
+                                    <AbsDimension x="-39" y="73" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                HideUIPanel(DGossipFrame);
+                            </OnClick>
+                        </Scripts>
+                    </Button>
+                    <ScrollFrame name="DGossipGreetingScrollFrame"
+                        inherits="UIPanelScrollFrameTemplate">
+                        <Size>
+                            <AbsDimension x="300" y="334" />
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="DGossipFrame">
+                                <Offset>
+                                    <!-- move content from inside the panel -->
+                                    <AbsDimension x="100" y="-81" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <ScrollChild>
+                            <Frame name="DGossipGreetingScrollChildFrame">
+                                <Size>
+                                    <AbsDimension x="512" y="334" />
+                                </Size>
+                                <Layers>
+                                    <Layer>
+                                        <FontString name="DGossipGreetingText" inherits="QuestFont"
+                                            text="Filler Text" justifyH="LEFT">
+                                            <Size>
+                                                <AbsDimension x="270" y="0" />
+                                            </Size>
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT">
+                                                    <Offset>
+                                                        <AbsDimension x="10" y="-10" />
+                                                    </Offset>
+                                                </Anchor>
+                                            </Anchors>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+                                <Frames>
+                                    <Button name="GossipTitleButton1"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="DGossipGreetingText"
+                                                relativePoint="BOTTOMLEFT">
+                                                <Offset>
+                                                    <AbsDimension x="65" y="-20" />
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton2"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton1"
+                                                relativePoint="BOTTOMLEFT" >
+                                            </Anchor>
+                                                
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton3"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton2"
+                                                relativePoint="BOTTOMLEFT">
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton4"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton3"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton5"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton4"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton6"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton5"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton7"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton6"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton8"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton7"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton9"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton8"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton10"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton9"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton11"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton10"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton12"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton11"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton13"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton12"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton14"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton13"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton15"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton14"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton16"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton15"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+
+                                    <Button name="GossipTitleButton17"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton16"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton18"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton17"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton19"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton18"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton20"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton19"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton21"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton20"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton22"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton21"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton23"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton22"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton24"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton23"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton25"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton24"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton26"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton25"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton27"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton26"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton28"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton27"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton29"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton28"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton30"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton29"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton31"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton30"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="GossipTitleButton32"
+                                        inherits="DGossipTitleButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="GossipTitleButton31"
+                                                relativePoint="BOTTOMLEFT" />
+                                        </Anchors>
+                                    </Button>
+                                    <Frame name="GossipSpacerFrame">
+                                        <Size>
+                                            <AbsDimension x="5" y="15" />
+                                        </Size>
+                                        <Anchors>
+                                            <Anchor point="TOP">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0" />
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Frame>
+                                </Frames>
+                            </Frame>
+                        </ScrollChild>
+                    </ScrollFrame>
+                </Frames>
+            </Frame>
+        </Frames>
+        <Scripts>
+            <OnLoad>
+                GossipFrame_OnLoad();
+            </OnLoad>
+            <OnShow>
+                PlaySound("igQuestListOpen");
+                if ( StaticPopup_Visible("XP_LOSS") ) then
+                StaticPopup_Hide("XP_LOSS");
+                end
+            </OnShow>
+            <OnEvent>
+                GossipFrame_OnEvent();
+            </OnEvent>
+            <OnHide>
+                PlaySound("igQuestListClose");
+                CloseGossip();
+            </OnHide>
+            <OnMouseWheel>
+                return;
+            </OnMouseWheel>
+        </Scripts>
+    </Frame>
 
 </Ui>
