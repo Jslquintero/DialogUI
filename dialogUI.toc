@@ -4,5 +4,7 @@
 ## Version: 0.0.1
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
-Code\dquestFrame.lua
-Code\dgossipFrame.lua
+## Notes: Addon made for an immersive questing experience in vanilla client, consider it a Vanilla+ frame.
+
+src\frames\gossipFrame\gossip.frame.lua
+src\frames\gossipFrame\gossip.frame.xml
