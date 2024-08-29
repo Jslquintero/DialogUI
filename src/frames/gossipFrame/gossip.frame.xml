@@ -1,0 +1,18 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file="src\frames\gossipFrame.lua" />
+    <Frame name="DGossipFrameTemplate" parent="UIParent">
+        <Size x="512" y="512" />
+        <Anchors>
+            <Anchor point="TOPLEFT" />
+        </Anchors>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture file="Interface\AddOns\DialogUI\src\assets\images\Parchment">
+                    <Size x="512" y="512" />
+                </Texture>
+            </Layer>
+        </Layers>
+    </Frame>
+
+
+</Ui>

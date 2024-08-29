@@ -5,3 +5,6 @@
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## Notes: Addon made for an immersive questing experience in vanilla client, consider it a Vanilla+ frame.
+
+src\frames\gossipFrame\gossip.frame.lua
+src\frames\gossipFrame\gossip.frame.xml
