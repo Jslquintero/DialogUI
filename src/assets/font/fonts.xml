@@ -1,0 +1,40 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <!-- font colors
+    DarkBrown: r="0.19" g="0.17" b="0.13"
+    LightBrown:  r="0.50" g="0.36" b="0.24"
+    Ivory:  r="0.87" g="0.86" b="0.75"
+     -->
+
+    <Font name="DQuestTitleFont" font="Interface\AddOns\DialogUI\src\assets\font\frizqt___cyr.ttf"
+        virtual="true">
+        <FontHeight>
+            <AbsValue val="18" />
+        </FontHeight>
+        <Color r="0.19" g="0.17" b="0.13" />
+    </Font> <!--NPC name-->
+    <Font name="DQuestFont" font="Interface\AddOns\DialogUI\src\assets\font\frizqt__.ttf"
+        virtual="true">
+        <FontHeight>
+            <AbsValue val="12" />
+        </FontHeight>
+        <Color r="0.19" g="0.17" b="0.13" />
+    </Font><!--Paragraph-->
+
+    <Font name="DQuestButtonTitleGossip" font="Interface\AddOns\DialogUI\src\assets\font\frizqt__.ttf"
+        virtual="true">
+        <FontHeight>
+            <AbsValue val="12" />
+        </FontHeight>
+    </Font><!--Gossip button text-->
+
+    <Font name="DQuestFontNormalSmall" inherits="GameFontBlack" virtual="true">
+        <Color r="0.30" g="0.18" b="0" />
+    </Font>
+    <Font name="DQuestFontHighlight" font="Fonts\FRIZQT__.TTF" virtual="true">
+        <FontHeight>
+            <AbsValue val="14" />
+        </FontHeight>
+        <Color r="0" g="0" b="0" />
+    </Font>
+</Ui>
