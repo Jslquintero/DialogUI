@@ -54,7 +54,7 @@ function DGossipFrameUpdate()
     end
     DGossipFrameNpcNameText:SetText(UnitName("npc"));
     if (UnitExists("npc")) then
-        SetPortraitTexture(DGossipFramePortrait, "player");
+        SetPortraitTexture(DGossipFramePortrait, "npc");
     else
         DGossipFramePortrait:SetTexture("Interface\\QuestFrame\\UI-QuestLog-BookIcon");
 

@@ -74,7 +74,7 @@
                     <Layer level="OVERLAY">
                         <Texture name="DGossipFramePortrait">
                             <Size>
-                                <AbsDimension x="60" y="60" />
+                                <AbsDimension x="50" y="50" />
                             </Size>
                             <Anchors>
                                 <Anchor point="TOPLEFT">
@@ -96,7 +96,7 @@
                 hidden="false">
                 <Frames>
                     <ScrollFrame name="DGossipGreetingScrollFrame"
-                        inherits="UIPanelScrollFrameTemplate">
+                        inherits="DUIPanelScrollFrameTemplate">
                         <Size>
                             <AbsDimension x="400" y="334" />
                         </Size>
@@ -104,7 +104,7 @@
                             <Anchor point="TOPLEFT" relativeTo="DGossipFrame">
                                 <Offset>
                                     <!-- move contents of the frame -->
-                                    <AbsDimension x="40" y="-81" />
+                                    <AbsDimension x="40" y="-90" />
                                 </Offset>
                             </Anchor>
                         </Anchors>
