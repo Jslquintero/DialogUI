@@ -13,7 +13,6 @@
             </Layer>
         </Layers>
     </Frame>
-
     <Button name="DGossipTitleButtonTemplate" virtual="true" hidden="false">
         <Size x="400" y="20" />
         <Scripts>
@@ -44,9 +43,6 @@
             </Anchors>
         </NormalFont>
     </Button>
-
-
-
     <Frame name="DGossipFrame" toplevel="true" parent="UIParent" movable="true" enableMouse="true"
         hidden="true">
         <Size>
@@ -59,25 +55,6 @@
                 </Offset>
             </Anchor>
         </Anchors>
-        <HitRectInsets>
-            <AbsInset left="0" right="30" top="0" bottom="70" />
-        </HitRectInsets>
-        <Layers>
-            <Layer level="ARTWORK">
-                <Texture name="DGossipFramePortrait">
-                    <Size>
-                        <AbsDimension x="60" y="60" />
-                    </Size>
-                    <Anchors>
-                        <Anchor point="TOPLEFT">
-                            <Offset>
-                                <AbsDimension x="7" y="-6" />
-                            </Offset>
-                        </Anchor>
-                    </Anchors>
-                </Texture>
-            </Layer>
-        </Layers>
         <Frames>
             <Frame name="DGossipNpcNameFrame">
                 <Size>
@@ -86,13 +63,27 @@
                 <Anchors>
                     <Anchor point="TOP" relativeTo="DGossipFrame" relativePoint="TOP">
                         <Offset>
-                            <AbsDimension x="0" y="-23" />
+                            <AbsDimension x="4" y="-50" />
                         </Offset>
                     </Anchor>
                 </Anchors>
                 <Layers>
                     <Layer level="ARTWORK">
                         <FontString name="DGossipFrameNpcNameText" inherits="DQuestTitleFont" />
+                    </Layer>
+                    <Layer level="OVERLAY">
+                        <Texture name="DGossipFramePortrait">
+                            <Size>
+                                <AbsDimension x="60" y="60" />
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="3" y="16" />
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </Texture>
                     </Layer>
                 </Layers>
                 <Scripts>
@@ -528,8 +519,6 @@
                                         </Anchors>
                                     </Frame>
                                 </Frames>
-
-
                             </Frame>
                         </ScrollChild>
                     </ScrollFrame>
