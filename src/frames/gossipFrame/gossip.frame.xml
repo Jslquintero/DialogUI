@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <Script file="src\frames\DGossipFrame.lua" />
+    <Script file="src\frames\gossipFrame\gossip.frame.lua" />
     <Frame name="DGossipFramePanelTemplate" virtual="true">
         <Size x="512" y="512" />
         <Anchors>

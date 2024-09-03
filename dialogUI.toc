@@ -1,14 +1,23 @@
 ## Interface: 11200
 ## Title: DialogUI
 ## Author: Sxus
-## Version: 0.0.3
+## Version: 0.0.4
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## Notes: Addon made for an immersive questing experience in vanilla client, consider it a Vanilla+ frame.
 
+# Fonts used for the frames
 src\assets\font\fonts.xml
+
+# This should remove the texture from the scrollbars
 src\frames\uiPanelTemplate\ui.panel.template.lua
 src\frames\uiPanelTemplate\ui.panel.template.xml
 
+# Gossip frame 
 src\frames\gossipFrame\gossip.frame.lua
 src\frames\gossipFrame\gossip.frame.xml
+
+# Quest frame
+src\frames\questFrame\quest.frame.lua
+src\frames\questFrame\quest.frame.template.xml
+src\frames\questFrame\quest.frame.xml
