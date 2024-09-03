@@ -1,3 +1,7 @@
+# I'M CURRENTLY WORKING ON A NEWER VERSION SO PLEASE DOWNLOAD THE OLD-VERSION BRANCH OR THE RELEASE, I am silly and by mistake I accidentally edited the branch master to the version I am working on.
+
+[older version](https://github.com/Jslquintero/DialogUI/releases/tag/v0)
+
 # DialogUI
 
 This addon was made as a learn project , so the code may be unoptimized. 
