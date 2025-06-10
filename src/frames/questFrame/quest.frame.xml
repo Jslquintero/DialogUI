@@ -1,7 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
     <Script file="src\frames\questFrame\quest.frame.lua" />
-    <Include file="src\frames\questFrame\quest.frame.template.xml" />
     <Frame name="DQuestFrame" toplevel="true" parent="UIParent" movable="true" enableMouse="true"
         hidden="true">
         <Size>
@@ -64,13 +63,13 @@
             <Frame name="DQuestFrameRewardPanel" inherits="DQuestFramePanelTemplate" hidden="true">
                 <Frames>
                     <!-- TODO change the button texture -->
-                    <Button name="QuestFrameCancelButton" inherits="UIPanelButtonTemplate"
+                    <Button name="DQuestFrameCancelButton" inherits="DUIPanelButtonTemplate"
                         text="CANCEL">
                         <Size>
                             <AbsDimension x="78" y="22" />
                         </Size>
                         <Anchors>
-                            <Anchor point="BOTTOMRIGHT" relativeTo="QuestFrame"
+                            <Anchor point="BOTTOMRIGHT" relativeTo="DQuestFrame"
                                 relativePoint="BOTTOMRIGHT">
                                 <Offset>
                                     <AbsDimension x="-39" y="73" />
@@ -84,13 +83,13 @@
                         </Scripts>
                     </Button>
                     <!-- TODO change the button texture -->
-                    <Button name="QuestFrameCompleteQuestButton" inherits="UIPanelButtonTemplate"
+                    <Button name="QuestFrameCompleteQuestButton" inherits="DUIPanelButtonTemplate"
                         text="COMPLETE_QUEST">
                         <Size>
                             <AbsDimension x="120" y="22" />
                         </Size>
                         <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativeTo="QuestFrame"
+                            <Anchor point="BOTTOMLEFT" relativeTo="DQuestFrame"
                                 relativePoint="BOTTOMLEFT">
                                 <Offset>
                                     <AbsDimension x="22" y="72" />
@@ -108,7 +107,7 @@
                             <AbsDimension x="300" y="334" />
                         </Size>
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeTo="QuestFrame">
+                            <Anchor point="TOPLEFT" relativeTo="DQuestFrame">
                                 <Offset>
                                     <AbsDimension x="23" y="-81" />
                                 </Offset>
@@ -288,7 +287,7 @@
                                         <Layers>
                                             <Layer level="BACKGROUND">
                                                 <Texture
-                                                    file="Interface\QuestFrame\UI-QuestItemHighlight"
+                                                    file="Interface\DQuestFrame\UI-QuestItemHighlight"
                                                     alphaMode="ADD">
                                                     <Size>
                                                         <AbsDimension x="256" y="64" />
@@ -318,13 +317,13 @@
             </Frame>
             <Frame name="DQuestFrameProgressPanel" inherits="DQuestFramePanelTemplate" hidden="true">
                 <Frames>
-                    <Button name="QuestFrameGoodbyeButton" inherits="UIPanelButtonTemplate"
+                    <Button name="QuestFrameGoodbyeButton" inherits="DUIPanelButtonTemplate"
                         text="CANCEL">
                         <Size>
                             <AbsDimension x="78" y="22" />
                         </Size>
                         <Anchors>
-                            <Anchor point="BOTTOMRIGHT" relativeTo="QuestFrame"
+                            <Anchor point="BOTTOMRIGHT" relativeTo="DQuestFrame"
                                 relativePoint="BOTTOMRIGHT">
                                 <Offset>
                                     <AbsDimension x="-39" y="73" />
@@ -337,13 +336,13 @@
                             </OnClick>
                         </Scripts>
                     </Button>
-                    <Button name="QuestFrameCompleteButton" inherits="UIPanelButtonTemplate"
+                    <Button name="QuestFrameCompleteButton" inherits="DUIPanelButtonTemplate"
                         text="CONTINUE">
                         <Size>
                             <AbsDimension x="120" y="22" />
                         </Size>
                         <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativeTo="QuestFrame"
+                            <Anchor point="BOTTOMLEFT" relativeTo="DQuestFrame"
                                 relativePoint="BOTTOMLEFT">
                                 <Offset>
                                     <AbsDimension x="22" y="72" />
@@ -362,7 +361,7 @@
                             <AbsDimension x="300" y="334" />
                         </Size>
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeTo="QuestFrame">
+                            <Anchor point="TOPLEFT" relativeTo="DQuestFrame">
                                 <Offset>
                                     <AbsDimension x="23" y="-81" />
                                 </Offset>
@@ -534,13 +533,13 @@
             </Frame>
             <Frame name="DQuestFrameDetailPanel" inherits="DQuestFramePanelTemplate" hidden="true">
                 <Frames>
-                    <Button name="QuestFrameDeclineButton" inherits="UIPanelButtonTemplate"
+                    <Button name="QuestFrameDeclineButton" inherits="DUIPanelButtonTemplate"
                         text="DECLINE">
                         <Size>
                             <AbsDimension x="78" y="22" />
                         </Size>
                         <Anchors>
-                            <Anchor point="BOTTOMRIGHT" relativeTo="QuestFrame"
+                            <Anchor point="BOTTOMRIGHT" relativeTo="DQuestFrame"
                                 relativePoint="BOTTOMRIGHT">
                                 <Offset>
                                     <AbsDimension x="-39" y="72" />
@@ -553,13 +552,13 @@
                             </OnClick>
                         </Scripts>
                     </Button>
-                    <Button name="QuestFrameAcceptButton" inherits="UIPanelButtonTemplate"
+                    <Button name="QuestFrameAcceptButton" inherits="DUIPanelButtonTemplate"
                         text="ACCEPT">
                         <Size>
                             <AbsDimension x="77" y="22" />
                         </Size>
                         <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativeTo="QuestFrame"
+                            <Anchor point="BOTTOMLEFT" relativeTo="DQuestFrame"
                                 relativePoint="BOTTOMLEFT">
                                 <Offset>
                                     <AbsDimension x="23" y="72" />
@@ -820,30 +819,14 @@
                 </Scripts>
             </Frame>
             <Frame name="DQuestFrameGreetingPanel" inherits="DQuestFramePanelTemplate" hidden="true">
-                <Layers>
-                    <Layer level="ARTWORK">
-                        <Texture file="Interface\QuestFrame\UI-Quest-BotLeftPatch">
-                            <Size>
-                                <AbsDimension x="128" y="64" />
-                            </Size>
-                            <Anchors>
-                                <Anchor point="BOTTOMLEFT">
-                                    <Offset>
-                                        <AbsDimension x="22" y="68" />
-                                    </Offset>
-                                </Anchor>
-                            </Anchors>
-                        </Texture>
-                    </Layer>
-                </Layers>
                 <Frames>
-                    <Button name="QuestFrameGreetingGoodbyeButton" inherits="UIPanelButtonTemplate"
+                    <Button name="QuestFrameGreetingGoodbyeButton" inherits="DUIPanelButtonTemplate"
                         text="GOODBYE">
                         <Size>
-                            <AbsDimension x="78" y="22" />
+                            <AbsDimension x="120" y="30" />
                         </Size>
                         <Anchors>
-                            <Anchor point="BOTTOMRIGHT" relativeTo="QuestFrame"
+                            <Anchor point="BOTTOMRIGHT" relativeTo="DQuestFrame"
                                 relativePoint="BOTTOMRIGHT">
                                 <Offset>
                                     <AbsDimension x="-39" y="73" />
@@ -852,7 +835,7 @@
                         </Anchors>
                         <Scripts>
                             <OnClick>
-                                HideUIPanel(QuestFrame);
+                                HideUIPanel(DQuestFrame);
                             </OnClick>
                         </Scripts>
                     </Button>
@@ -862,7 +845,7 @@
                             <AbsDimension x="300" y="334" />
                         </Size>
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeTo="QuestFrame">
+                            <Anchor point="TOPLEFT" relativeTo="DQuestFrame">
                                 <Offset>
                                     <AbsDimension x="23" y="-81" />
                                 </Offset>

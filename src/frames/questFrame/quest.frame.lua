@@ -539,6 +539,7 @@ function DQuestFrameDetailPanel_OnShow()
     DQuestFrameItems_Update("QuestDetail");
     DQuestDetailScrollFrame:UpdateScrollChildRect();
     DQuestDetailScrollFrameScrollBar:SetValue(0);
+    UIPanelButtonTemplate:SetTexture("Interface\\AddOns\\DialogUI");
 
     -- Hide Objectives and rewards until the text is completely displayed
     TextAlphaDependentFrame:SetAlpha(0);
@@ -599,3 +600,13 @@ function DQuestFrame_SetTextColor(fontString, material)
     local materialTextColor = GetMaterialTextColors(material);
     fontString:SetTextColor(materialTextColor[1], materialTextColor[2], materialTextColor[3]);
 end
+
+
+-- function DButtonTemplate_SetTextures()
+--     titleButton:SetNormalTexture(
+--         "Interface\\AddOns\\DialogUI\\src\\assets\\art\\background\\OptionBackground-common")
+--     titleButton:SetHeight(titleButton:GetTextHeight() + 20)
+--     gossipIcon:SetHeight(20)
+--     gossipIcon:SetWidth(20)
+--     SetFontColor(titleButton, "Ivory")
+-- end
