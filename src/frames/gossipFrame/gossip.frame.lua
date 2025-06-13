@@ -14,7 +14,7 @@ function SetFontColor(fontObject, key)
     fontObject:SetTextColor(color[1], color[2], color[3]);
 end
 
-function hideDefaultFrames()
+function HideDefaultFrames()
     GossipFrameGreetingPanel:Hide()
     GossipNpcNameFrame:Hide()
     GossipFrameCloseButton:Hide()
@@ -28,7 +28,7 @@ end
 
 function DGossipFrame_OnEvent()
     if (event == "GOSSIP_SHOW") then
-        hideDefaultFrames()
+        HideDefaultFrames()
         if (not DGossipFrame:IsVisible()) then
             ShowUIPanel(DGossipFrame);
             if (not DGossipFrame:IsVisible()) then

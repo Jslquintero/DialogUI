@@ -6,6 +6,19 @@ QUEST_DESCRIPTION_GRADIENT_LENGTH = 30;
 QUEST_DESCRIPTION_GRADIENT_CPS = 40;
 QUESTINFO_FADE_IN = 1;
 
+local COLORS = {
+    -- ColorKey = {r, g, b}
+
+    DarkBrown = {0.19, 0.17, 0.13},
+    LightBrown = {0.50, 0.36, 0.24},
+    Ivory = {0.87, 0.86, 0.75}
+};
+
+function SetFontColor(fontObject, key)
+    local color = COLORS[key];
+    fontObject:SetTextColor(color[1], color[2], color[3]);
+end
+
 function DQuestFrame_OnLoad()
     this:RegisterEvent("QUEST_GREETING");
     this:RegisterEvent("QUEST_DETAIL");
@@ -15,6 +28,16 @@ function DQuestFrame_OnLoad()
     this:RegisterEvent("QUEST_ITEM_UPDATE");
 end
 
+function HideDefaultFrames()
+    QuestFrameGreetingPanel:Hide()
+    QuestFrameDetailPanel:Hide()
+    QuestFrameProgressPanel:Hide()
+    QuestFrameRewardPanel:Hide()
+    QuestNpcNameFrame:Hide()
+    QuestFramePortrait:SetTexture()
+end
+
+
 function DQuestFrame_OnEvent(event)
     if (event == "QUEST_FINISHED") then
         HideUIPanel(DQuestFrame);
@@ -23,78 +46,78 @@ function DQuestFrame_OnEvent(event)
     if ((event == "QUEST_ITEM_UPDATE") and not DQuestFrame:IsVisible()) then
         return;
     end
-
-    QuestFrame_SetPortrait();
+    
+    HideDefaultFrames();
+    DQuestFrame_SetPortrait();
     ShowUIPanel(DQuestFrame);
     if (not DQuestFrame:IsVisible()) then
         CloseQuest();
         return;
     end
-
     if (event == "QUEST_GREETING") then
         DQuestFrameGreetingPanel:Hide();
         DQuestFrameGreetingPanel:Show();
     elseif (event == "QUEST_DETAIL") then
-        DQuestFrameGreetingPanel:Hide();
-        DQuestFrameGreetingPanel:Show();
+        DQuestFrameDetailPanel:Hide();
+        DQuestFrameDetailPanel:Show();
     elseif (event == "QUEST_PROGRESS") then
-        DQuestFrameGreetingPanel:Hide();
-        DQuestFrameGreetingPanel:Show();
+        DQuestFrameProgressPanel:Hide();
+        DQuestFrameProgressPanel:Show();
     elseif (event == "QUEST_COMPLETE") then
         DQuestFrameRewardPanel:Hide();
         DQuestFrameRewardPanel:Show();
     elseif (event == "QUEST_ITEM_UPDATE") then
-        if (DQuestFrameGreetingPanel:IsVisible()) then
-            DQuestFrameItems_Update("QuestDetail");
+        if (DQuestFrameDetailPanel:IsVisible()) then
+            DQuestFrameItems_Update("DQuestDetail");
             DQuestDetailScrollFrame:UpdateScrollChildRect();
             DQuestDetailScrollFrameScrollBar:SetValue(0);
         elseif (DQuestFrameProgressPanel:IsVisible()) then
-            QuestFrameProgressItems_Update()
-            QuestProgressScrollFrame:UpdateScrollChildRect();
-            QuestProgressScrollFrameScrollBar:SetValue(0);
+            DQuestFrameProgressItems_Update()
+            DQuestProgressScrollFrame:UpdateScrollChildRect();
+            DQuestProgressScrollFrameScrollBar:SetValue(0);
         elseif (DQuestFrameRewardPanel:IsVisible()) then
-            DQuestFrameItems_Update("QuestReward");
-            QuestRewardScrollFrame:UpdateScrollChildRect();
-            QuestRewardScrollFrameScrollBar:SetValue(0);
+            DQuestFrameItems_Update("DQuestReward");
+            DQuestRewardScrollFrame:UpdateScrollChildRect();
+            DQuestRewardScrollFrameScrollBar:SetValue(0);
         end
     end
 end
 
-function QuestFrame_SetPortrait()
+function DQuestFrame_SetPortrait()
     DQuestFrameNpcNameText:SetText(UnitName("npc"));
     if (UnitExists("npc")) then
-        SetPortraitTexture(QuestFramePortrait, "npc");
+        SetPortraitTexture(DQuestFramePortrait, "npc");
     else
-        QuestFramePortrait:SetTexture("Interface\\QuestFrame\\UI-QuestLog-BookIcon");
+        DQuestFramePortrait:SetTexture("Interface\\QuestFrame\\UI-QuestLog-BookIcon");
     end
-
 end
 
 function DQuestFrameRewardPanel_OnShow()
-    QuestFrameDetailPanel:Hide();
-    QuestFrameGreetingPanel:Hide();
+    DQuestFrameDetailPanel:Hide();
+    DQuestFrameGreetingPanel:Hide();
     DQuestFrameProgressPanel:Hide();
+    HideDefaultFrames();
     local material = QuestFrame_GetMaterial();
     DQuestFrame_SetMaterial(DQuestFrameRewardPanel, material);
-    QuestRewardTitleText:SetText(GetTitleText());
-    DQuestFrame_SetTitleTextColor(QuestRewardTitleText, material);
+    DQuestRewardTitleText:SetText(GetTitleText());
+    DQuestFrame_SetTitleTextColor(DQuestRewardTitleText, material);
     QuestRewardText:SetText(GetRewardText());
-    DQuestFrame_SetTextColor(QuestRewardText, material);
-    DQuestFrameItems_Update("QuestReward");
-    QuestRewardScrollFrame:UpdateScrollChildRect();
-    QuestRewardScrollFrameScrollBar:SetValue(0);
+    DQuestFrame_SetTextColor(DQuestRewardText, material);
+    DQuestFrameItems_Update("DQuestReward");
+    DQuestRewardScrollFrame:UpdateScrollChildRect();
+    DQuestRewardScrollFrameScrollBar:SetValue(0);
     if (QUEST_FADING_DISABLE == "0") then
-        QuestRewardScrollChildFrame:SetAlpha(0);
-        UIFrameFadeIn(QuestRewardScrollChildFrame, QUESTINFO_FADE_IN);
+        DQuestRewardScrollChildFrame:SetAlpha(0);
+        UIFrameFadeIn(DQuestRewardScrollChildFrame, QUESTINFO_FADE_IN);
     end
 end
 
-function QuestRewardCancelButton_OnClick()
+function DQuestRewardCancelButton_OnClick()
     DeclineQuest();
     PlaySound("igQuestCancel");
 end
 
-function QuestRewardCompleteButton_OnClick()
+function DQuestRewardCompleteButton_OnClick()
     if (DQuestFrameRewardPanel.itemChoice == 0 and GetNumQuestChoices() > 0) then
         QuestChooseRewardError();
     else
@@ -103,17 +126,17 @@ function QuestRewardCompleteButton_OnClick()
     end
 end
 
-function QuestProgressCompleteButton_OnClick()
+function DQuestProgressCompleteButton_OnClick()
     CompleteQuest();
     -- PlaySound("igQuestListComplete");
 end
 
-function QuestGoodbyeButton_OnClick()
+function DQuestGoodbyeButton_OnClick()
     DeclineQuest();
     PlaySound("igQuestCancel");
 end
 
-function QuestItem_OnClick()
+function DQuestItem_OnClick()
     if (IsControlKeyDown()) then
         if (this.rewardType ~= "spell") then
             DressUpItemLink(GetQuestItemLink(this.type, this:GetID()));
@@ -125,7 +148,7 @@ function QuestItem_OnClick()
     end
 end
 
-function QuestRewardItem_OnClick()
+function DQuestRewardItem_OnClick()
     if (IsControlKeyDown()) then
         if (this.rewardType ~= "spell") then
             DressUpItemLink(GetQuestItemLink(this.type, this:GetID()));
@@ -145,9 +168,11 @@ function DQuestFrameProgressPanel_OnShow()
     DQuestFrameRewardPanel:Hide();
     DQuestFrameDetailPanel:Hide();
     DQuestFrameGreetingPanel:Hide();
+    HideDefaultFrames();
+    message("DQuestFrameProgressPanel_OnShow");
     local material = QuestFrame_GetMaterial();
     DQuestFrame_SetMaterial(DQuestFrameProgressPanel, material);
-    QuestProgressTitleText:SetText(GetTitleText());
+    DQuestProgressTitleText:SetText(GetTitleText());
     DQuestFrame_SetTitleTextColor(DQuestProgressTitleText, material);
     QuestProgressText:SetText(GetProgressText());
     DQuestFrame_SetTextColor(DQuestProgressText, material);
@@ -223,12 +248,13 @@ function DQuestFrameGreetingPanel_OnShow()
         DQuestGreetingScrollChildFrame:SetAlpha(0);
         UIFrameFadeIn(DQuestGreetingScrollChildFrame, QUESTINFO_FADE_IN);
     end
+
     local material = QuestFrame_GetMaterial();
     DQuestFrame_SetMaterial(DQuestFrameGreetingPanel, material);
     DGreetingText:SetText(GetGreetingText());
-    DQuestFrame_SetTextColor(DGreetingText, material);
-    DQuestFrame_SetTitleTextColor(DCurrentQuestsText, material);
-    DQuestFrame_SetTitleTextColor(DAvailableQuestsText, material);
+    SetFontColor(DGreetingText, "Ivory");
+    SetFontColor(DCurrentQuestsText, "Ivory");
+    SetFontColor(DAvailableQuestsText, "Ivory");
     local numActiveQuests = GetNumActiveQuests();
     local numAvailableQuests = GetNumAvailableQuests();
     if (numActiveQuests == 0) then
@@ -295,7 +321,7 @@ function DQuestFrame_OnHide()
     PlaySound("igQuestListClose");
 end
 
-function QuestTitleButton_OnClick()
+function DQuestTitleButton_OnClick()
     if (this.isActive == 1) then
         SelectActiveQuest(this:GetID());
     else
@@ -526,20 +552,20 @@ function DQuestFrameDetailPanel_OnShow()
     DQuestFrameRewardPanel:Hide();
     DQuestFrameProgressPanel:Hide();
     DQuestFrameGreetingPanel:Hide();
+    HideDefaultFrames();
+
     local material = QuestFrame_GetMaterial();
     DQuestFrame_SetMaterial(DQuestFrameDetailPanel, material);
-    DQuestTitleText:SetText(GetTitleText());
-    DQuestFrame_SetTitleTextColor(DQuestTitleText, material);
+    DQuestFrameNpcNameText:SetText(GetTitleText());
     DQuestDescription:SetText(GetQuestText());
-    DQuestFrame_SetTextColor(QuestDescription, material);
-    DQuestFrame_SetTitleTextColor(QuestDetailObjectiveTitleText, material);
-    QuestObjectiveText:SetText(GetObjectiveText());
-    DQuestFrame_SetTextColor(QuestObjectiveText, material);
-    DQuestFrame_SetAsLastShown(QuestObjectiveText, QuestSpacerFrame);
-    DQuestFrameItems_Update("QuestDetail");
+    DQuestObjectiveText:SetText(GetObjectiveText());
+    SetFontColor(DQuestFrameNpcNameText, "DarkBrown");
+    SetFontColor(DQuestDescription, "DarkBrown");
+    SetFontColor(DQuestObjectiveText, "DarkBrown");
+    DQuestFrame_SetAsLastShown(DQuestObjectiveText, QuestSpacerFrame);
+    DQuestFrameItems_Update("DQuestDetail");
     DQuestDetailScrollFrame:UpdateScrollChildRect();
     DQuestDetailScrollFrameScrollBar:SetValue(0);
-    UIPanelButtonTemplate:SetTexture("Interface\\AddOns\\DialogUI");
 
     -- Hide Objectives and rewards until the text is completely displayed
     TextAlphaDependentFrame:SetAlpha(0);
@@ -570,11 +596,11 @@ function DQuestFrameDetailPanel_OnUpdate(elapsed)
     end
 end
 
-function QuestDetailAcceptButton_OnClick()
+function DQuestDetailAcceptButton_OnClick()
     AcceptQuest();
 end
 
-function QuestDetailDeclineButton_OnClick()
+function DQuestDetailDeclineButton_OnClick()
     DeclineQuest();
     PlaySound("igQuestCancel");
 end
@@ -600,13 +626,3 @@ function DQuestFrame_SetTextColor(fontString, material)
     local materialTextColor = GetMaterialTextColors(material);
     fontString:SetTextColor(materialTextColor[1], materialTextColor[2], materialTextColor[3]);
 end
-
-
--- function DButtonTemplate_SetTextures()
---     titleButton:SetNormalTexture(
---         "Interface\\AddOns\\DialogUI\\src\\assets\\art\\background\\OptionBackground-common")
---     titleButton:SetHeight(titleButton:GetTextHeight() + 20)
---     gossipIcon:SetHeight(20)
---     gossipIcon:SetWidth(20)
---     SetFontColor(titleButton, "Ivory")
--- end

@@ -2,7 +2,7 @@
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
     <Frame name="DQuestFramePanelTemplate" virtual="true">
         <Size>
-            <AbsDimension x="384" y="512" />
+            <AbsDimension x="512" y="512" />
         </Size>
         <Anchors>
             <Anchor point="TOPLEFT" />
@@ -15,7 +15,8 @@
             </Layer>
         </Layers>
     </Frame>
-    <Button name="QuestItemTemplate" virtual="true">
+    <!-- TODO properly change the DQuestItemTemplate and  DQuestRewardItemTemplate -->
+    <Button name="DQuestItemTemplate" virtual="true">
         <Size>
             <AbsDimension x="147" y="41" />
         </Size>
@@ -97,27 +98,27 @@
             </OnClick>
         </Scripts>
     </Button>
-    <Button name="QuestRewardItemTemplate" inherits="QuestItemTemplate" virtual="true">
+    <Button name="DQuestRewardItemTemplate" inherits="DQuestItemTemplate" virtual="true">
         <Scripts>
             <OnClick>
                 QuestRewardItem_OnClick();
             </OnClick>
         </Scripts>
     </Button>
-    <!-- <Button name="QuestTitleButtonTemplate" virtual="true">
+    <Button name="DQuestTitleButtonTemplate" virtual="true">
         <Size>
-            <AbsDimension x="300" y="16" />
+            <AbsDimension x="400" y="20" />
         </Size>
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture file="Interface\QuestFrame\UI-Quest-BulletPoint">
+                <Texture file="Interface\AddOns\DialogUI\src\\assets\art\gossipIcons\AvailableQuestIcon">
                     <Size>
                         <AbsDimension x="16" y="16" />
                     </Size>
                     <Anchors>
                         <Anchor point="TOPLEFT">
                             <Offset>
-                                <AbsDimension x="0" y="0" />
+                                <AbsDimension x="3" y="-5" />
                             </Offset>
                         </Anchor>
                     </Anchors>
@@ -126,10 +127,12 @@
         </Layers>
         <Scripts>
             <OnClick>
-                QuestTitleButton_OnClick();
+                DQuestTitleButton_OnClick();
             </OnClick>
         </Scripts>
-        <HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD" />
+        <HighlightTexture
+            file="Interface\AddOns\DialogUI\src\assets\art\button\ButtonHighlight-Gossip"
+            alphaMode="ADD" />
         <ButtonText>
             <Size>
                 <AbsDimension x="275" y="0" />
@@ -137,11 +140,11 @@
             <Anchors>
                 <Anchor point="TOPLEFT">
                     <Offset>
-                        <AbsDimension x="20" y="0" />
+                        <AbsDimension x="30" y="0" />
                     </Offset>
                 </Anchor>
             </Anchors>
         </ButtonText>
-        <NormalFont inherits="QuestFont" justifyH="LEFT" />
-    </Button> -->
+        <NormalFont inherits="DQuestFont" justifyH="LEFT" />
+    </Button>
 </Ui>
