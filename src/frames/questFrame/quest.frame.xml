@@ -254,11 +254,11 @@
                                             <Anchor point="TOPLEFT" />
                                         </Anchors>
                                     </Button>
-                                    <Frame name="QuestRewardMoneyFrame"
-                                        inherits="MoneyFrameTemplate">
+                                    <Frame name="DQuestRewardMoneyFrame"
+                                        inherits="DMoneyFrameTemplate">
                                         <Anchors>
                                             <Anchor point="LEFT"
-                                                relativeTo="QuestRewardItemReceiveText"
+                                                relativeTo="DQuestRewardItemReceiveText"
                                                 relativePoint="RIGHT">
                                                 <Offset>
                                                     <AbsDimension x="15" y="0" />
@@ -413,7 +413,7 @@
                                                 </Anchor>
                                             </Anchors>
                                         </FontString>
-                                        <FontString name="QuestProgressRequiredMoneyText"
+                                        <FontString name="DQuestProgressRequiredMoneyText"
                                             inherits="QuestFontNormalSmall" text="REQUIRED_MONEY"
                                             justifyH="LEFT">
                                             <Anchors>
@@ -429,11 +429,11 @@
                                     </Layer>
                                 </Layers>
                                 <Frames>
-                                    <Frame name="QuestProgressRequiredMoneyFrame"
-                                        inherits="MoneyFrameTemplate">
+                                    <Frame name="DQuestProgressRequiredMoneyFrame"
+                                        inherits="DMoneyFrameTemplate">
                                         <Anchors>
                                             <Anchor point="LEFT"
-                                                relativeTo="QuestProgressRequiredMoneyText"
+                                                relativeTo="DQuestProgressRequiredMoneyText"
                                                 relativePoint="RIGHT">
                                                 <Offset>
                                                     <AbsDimension x="10" y="0" />
@@ -707,68 +707,68 @@
                                             </Layer>
                                         </Layers>
                                         <Frames>
-                                            <Button name="QuestDetailItem1"
+                                            <Button name="DQuestDetailItem1"
                                                 inherits="DQuestItemTemplate">
                                                 <Anchors>
                                                     <Anchor point="TOPLEFT" />
                                                 </Anchors>
                                             </Button>
-                                            <Button name="QuestDetailItem2"
+                                            <Button name="DQuestDetailItem2"
                                                 inherits="DQuestItemTemplate">
                                                 <Anchors>
                                                     <Anchor point="TOPLEFT" />
                                                 </Anchors>
                                             </Button>
-                                            <Button name="QuestDetailItem3"
+                                            <Button name="DQuestDetailItem3"
                                                 inherits="DQuestItemTemplate">
                                                 <Anchors>
                                                     <Anchor point="TOPLEFT" />
                                                 </Anchors>
                                             </Button>
-                                            <Button name="QuestDetailItem4"
+                                            <Button name="DQuestDetailItem4"
                                                 inherits="DQuestItemTemplate">
                                                 <Anchors>
                                                     <Anchor point="TOPLEFT" />
                                                 </Anchors>
                                             </Button>
-                                            <Button name="QuestDetailItem5"
+                                            <Button name="DQuestDetailItem5"
                                                 inherits="DQuestItemTemplate">
                                                 <Anchors>
                                                     <Anchor point="TOPLEFT" />
                                                 </Anchors>
                                             </Button>
-                                            <Button name="QuestDetailItem6"
+                                            <Button name="DQuestDetailItem6"
                                                 inherits="DQuestItemTemplate">
                                                 <Anchors>
                                                     <Anchor point="TOPLEFT" />
                                                 </Anchors>
                                             </Button>
-                                            <Button name="QuestDetailItem7"
+                                            <Button name="DQuestDetailItem7"
                                                 inherits="DQuestItemTemplate">
                                                 <Anchors>
                                                     <Anchor point="TOPLEFT" />
                                                 </Anchors>
                                             </Button>
-                                            <Button name="QuestDetailItem8"
+                                            <Button name="DQuestDetailItem8"
                                                 inherits="DQuestItemTemplate">
                                                 <Anchors>
                                                     <Anchor point="TOPLEFT" />
                                                 </Anchors>
                                             </Button>
-                                            <Button name="QuestDetailItem9"
+                                            <Button name="DQuestDetailItem9"
                                                 inherits="DQuestItemTemplate">
                                                 <Anchors>
                                                     <Anchor point="TOPLEFT" />
                                                 </Anchors>
                                             </Button>
-                                            <Button name="QuestDetailItem10"
+                                            <Button name="DQuestDetailItem10"
                                                 inherits="DQuestItemTemplate">
                                                 <Anchors>
                                                     <Anchor point="TOPLEFT" />
                                                 </Anchors>
                                             </Button>
                                             <Frame name="DQuestDetailMoneyFrame"
-                                                inherits="MoneyFrameTemplate">
+                                                inherits="DMoneyFrameTemplate">
                                                 <Anchors>
                                                     <Anchor point="LEFT"
                                                         relativeTo="DQuestDetailItemReceiveText"

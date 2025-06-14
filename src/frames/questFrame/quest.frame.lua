@@ -196,24 +196,24 @@ function QuestFrameProgressItems_Update()
 
         -- If there's money required then anchor and display it
         if (GetQuestMoneyToGet() > 0) then
-            MoneyFrame_Update("QuestProgressRequiredMoneyFrame", GetQuestMoneyToGet());
+            MoneyFrame_Update("DQuestProgressRequiredMoneyFrame", GetQuestMoneyToGet());
 
             if (GetQuestMoneyToGet() > GetMoney()) then
                 -- Not enough money
                 QuestProgressRequiredMoneyText:SetTextColor(0, 0, 0);
-                SetMoneyFrameColor("QuestProgressRequiredMoneyFrame", 1.0, 0.1, 0.1);
+                SetMoneyFrameColor("DQuestProgressRequiredMoneyFrame", 1.0, 0.1, 0.1);
             else
                 QuestProgressRequiredMoneyText:SetTextColor(0.2, 0.2, 0.2);
-                SetMoneyFrameColor("QuestProgressRequiredMoneyFrame", 1.0, 1.0, 1.0);
+                SetMoneyFrameColor("DQuestProgressRequiredMoneyFrame", 1.0, 1.0, 1.0);
             end
             QuestProgressRequiredMoneyText:Show();
-            QuestProgressRequiredMoneyFrame:Show();
+            DQuestProgressRequiredMoneyFrame:Show();
 
             -- Reanchor required item
             getglobal(questItemName .. 1):SetPoint("TOPLEFT", "QuestProgressRequiredMoneyText", "BOTTOMLEFT", 0, -10);
         else
             QuestProgressRequiredMoneyText:Hide();
-            QuestProgressRequiredMoneyFrame:Hide();
+            DQuestProgressRequiredMoneyFrame:Hide();
 
             getglobal(questItemName .. 1):SetPoint("TOPLEFT", "QuestProgressRequiredItemsText", "BOTTOMLEFT", -3, -5);
         end
@@ -230,7 +230,7 @@ function QuestFrameProgressItems_Update()
         end
     else
         QuestProgressRequiredMoneyText:Hide();
-        QuestProgressRequiredMoneyFrame:Hide();
+        DQuestProgressRequiredMoneyFrame:Hide();
         QuestProgressRequiredItemsText:Hide();
     end
     for i = numRequiredItems + 1, MAX_REQUIRED_ITEMS, 1 do
@@ -366,7 +366,7 @@ function DQuestFrameItems_Update(questState)
     local totalRewards = numQuestRewards + numQuestChoices + numQuestSpellRewards;
     local questItemName = questState .. "Item";
     local material = QuestFrame_GetMaterial();
-    local questItemReceiveText = getglobal(questState .. "ItemReceiveText")
+    local questItemReceiveText = getglobal(questState .. "ItemReceiveText");
     if (totalRewards == 0 and money == 0) then
         getglobal(questState .. "RewardTitleText"):Hide();
     else

@@ -16,7 +16,7 @@
         </Layers>
     </Frame>
     <!-- TODO properly change the DQuestItemTemplate and  DQuestRewardItemTemplate -->
-    <!-- <Button name="DQuestItemTemplate" virtual="true">
+    <Button name="DQuestItemTemplate" virtual="true">
         <Size>
             <AbsDimension x="147" y="41" />
         </Size>
@@ -104,7 +104,7 @@
                 QuestRewardItem_OnClick();
             </OnClick>
         </Scripts>
-    </Button> -->
+    </Button>
     <Button name="DQuestTitleButtonTemplate" virtual="true">
         <Size>
             <AbsDimension x="400" y="20" />
