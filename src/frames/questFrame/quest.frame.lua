@@ -330,7 +330,7 @@ function DQuestTitleButton_OnClick()
     PlaySound("igQuestListSelect");
 end
 
-function QuestMoneyFrame_OnLoad()
+function DQuestMoneyFrame_OnLoad()
     MoneyFrame_OnLoad();
     MoneyFrame_SetType("STATIC");
 end
@@ -372,13 +372,13 @@ function DQuestFrameItems_Update(questState)
     else
         getglobal(questState .. "RewardTitleText"):Show();
         DQuestFrame_SetTitleTextColor(getglobal(questState .. "RewardTitleText"), material);
-        DQuestFrame_SetAsLastShown(getglobal(questState .. "RewardTitleText"), spacerFrame);
+        QuestFrame_SetAsLastShown(getglobal(questState .. "RewardTitleText"), spacerFrame);
     end
     if (money == 0) then
         getglobal(questState .. "MoneyFrame"):Hide();
     else
         getglobal(questState .. "MoneyFrame"):Show();
-        DQuestFrame_SetAsLastShown(getglobal(questState .. "MoneyFrame"), spacerFrame);
+        QuestFrame_SetAsLastShown(getglobal(questState .. "MoneyFrame"), spacerFrame);
         MoneyFrame_Update(questState .. "MoneyFrame", money);
     end
 
@@ -395,7 +395,7 @@ function DQuestFrameItems_Update(questState)
         local itemChooseText = getglobal(questState .. "ItemChooseText");
         itemChooseText:Show();
         DQuestFrame_SetTextColor(itemChooseText, material);
-        DQuestFrame_SetAsLastShown(itemChooseText, spacerFrame);
+        QuestFrame_SetAsLastShown(itemChooseText, spacerFrame);
 
         local index;
         local baseIndex = rewardsCount;
@@ -413,7 +413,7 @@ function DQuestFrameItems_Update(questState)
             questItem:Show();
             -- For the tooltip
             questItem.rewardType = "item"
-            DQuestFrame_SetAsLastShown(questItem, spacerFrame);
+            QuestFrame_SetAsLastShown(questItem, spacerFrame);
             getglobal(questItemName .. index .. "Name"):SetText(name);
             SetItemButtonCount(questItem, numItems);
             SetItemButtonTexture(questItem, texture);
@@ -444,7 +444,7 @@ function DQuestFrameItems_Update(questState)
         local learnSpellText = getglobal(questState .. "SpellLearnText");
         learnSpellText:Show();
         DQuestFrame_SetTextColor(learnSpellText, material);
-        DQuestFrame_SetAsLastShown(learnSpellText, spacerFrame);
+        QuestFrame_SetAsLastShown(learnSpellText, spacerFrame);
 
         -- Anchor learnSpellText if there were choosable rewards
         if (rewardsCount > 0) then
@@ -497,7 +497,7 @@ function DQuestFrameItems_Update(questState)
             questItemReceiveText:SetPoint("TOPLEFT", questState .. "RewardTitleText", "BOTTOMLEFT", 3, -5);
         end
         questItemReceiveText:Show();
-        DQuestFrame_SetAsLastShown(questItemReceiveText, spacerFrame);
+        QuestFrame_SetAsLastShown(questItemReceiveText, spacerFrame);
         -- Setup mandatory rewards
         local index;
         local baseIndex = rewardsCount;
@@ -515,7 +515,7 @@ function DQuestFrameItems_Update(questState)
             questItem:Show();
             -- For the tooltip
             questItem.rewardType = "item";
-            DQuestFrame_SetAsLastShown(questItem, spacerFrame);
+            QuestFrame_SetAsLastShown(questItem, spacerFrame);
             getglobal(questItemName .. index .. "Name"):SetText(name);
             SetItemButtonCount(questItem, numItems);
             SetItemButtonTexture(questItem, texture);
@@ -562,7 +562,7 @@ function DQuestFrameDetailPanel_OnShow()
     SetFontColor(DQuestFrameNpcNameText, "DarkBrown");
     SetFontColor(DQuestDescription, "DarkBrown");
     SetFontColor(DQuestObjectiveText, "DarkBrown");
-    DQuestFrame_SetAsLastShown(DQuestObjectiveText, QuestSpacerFrame);
+    QuestFrame_SetAsLastShown(DQuestObjectiveText, DQuestSpacerFrame);
     DQuestFrameItems_Update("DQuestDetail");
     DQuestDetailScrollFrame:UpdateScrollChildRect();
     DQuestDetailScrollFrameScrollBar:SetValue(0);

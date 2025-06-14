@@ -127,7 +127,7 @@
                                                 </Anchor>
                                             </Anchors>
                                         </FontString>
-                                        <FontString name="DQuestRewardText" inherits="QuestFont"
+                                        <FontString name="DQuestRewardText" inherits="DQuestFont"
                                             justifyH="LEFT">
                                             <Size>
                                                 <AbsDimension x="275" y="0" />
@@ -267,7 +267,7 @@
                                         </Anchors>
                                         <Scripts>
                                             <OnLoad>
-                                                QuestMoneyFrame_OnLoad();
+                                                DQuestMoneyFrame_OnLoad();
                                             </OnLoad>
                                         </Scripts>
                                     </Frame>
@@ -646,14 +646,14 @@
                                                 <FontString name="DQuestObjectiveText"
                                                     inherits="DQuestFont" justifyH="LEFT">
                                                     <Size>
-                                                        <AbsDimension x="370" y="0" />
+                                                        <AbsDimension x="370" y="10" />
                                                     </Size>
                                                     <Anchors>
                                                         <Anchor point="TOPLEFT"
                                                             relativeTo="DQuestDetailObjectiveTitleText"
                                                             relativePoint="BOTTOMLEFT">
                                                             <Offset>
-                                                                <AbsDimension x="10" y="-10" />
+                                                                <AbsDimension x="1" y="-5" />
                                                             </Offset>
                                                         </Anchor>
                                                     </Anchors>
@@ -662,43 +662,43 @@
                                                     inherits="DQuestTitleFont" text="QUEST_REWARDS"
                                                     justifyH="LEFT">
                                                     <Size>
-                                                        <AbsDimension x="285" y="18" />
+                                                        <AbsDimension x="370" y="50" />
                                                     </Size>
                                                     <Anchors>
                                                         <Anchor point="TOPLEFT"
-                                                            relativeTo="QuestObjectiveText"
+                                                            relativeTo="DQuestObjectiveText"
                                                             relativePoint="BOTTOMLEFT">
                                                             <Offset>
-                                                                <AbsDimension x="0" y="-15" />
+                                                                <AbsDimension x="1" y="-5" />
                                                             </Offset>
                                                         </Anchor>
                                                     </Anchors>
                                                 </FontString>
-                                                <FontString name="QuestDetailItemChooseText"
-                                                    inherits="QuestFont" text="REWARD_CHOICES"
+                                                <FontString name="DQuestDetailItemChooseText"
+                                                    inherits="DQuestFont" text="REWARD_CHOICES"
                                                     justifyH="LEFT">
                                                     <Size>
-                                                        <AbsDimension x="295" y="0" />
+                                                        <AbsDimension x="370" y="0" />
                                                     </Size>
                                                     <Anchors>
                                                         <Anchor point="TOPLEFT"
-                                                            relativeTo="QuestDetailRewardTitleText"
+                                                            relativeTo="DQuestDetailRewardTitleText"
                                                             relativePoint="BOTTOMLEFT">
                                                             <Offset>
-                                                                <AbsDimension x="0" y="-5" />
+                                                                <AbsDimension x="1" y="-5" />
                                                             </Offset>
                                                         </Anchor>
                                                     </Anchors>
                                                 </FontString>
-                                                <FontString name="QuestDetailItemReceiveText"
-                                                    inherits="QuestFont" text="Reward receive text"
+                                                <FontString name="DQuestDetailItemReceiveText"
+                                                    inherits="DQuestFont" text="Reward receive text"
                                                     justifyH="LEFT">
                                                     <Anchors>
                                                         <Anchor point="TOPLEFT" />
                                                     </Anchors>
                                                 </FontString>
-                                                <FontString name="QuestDetailSpellLearnText"
-                                                    inherits="QuestFont" hidden="true"
+                                                <FontString name="DQuestDetailSpellLearnText"
+                                                    inherits="DQuestFont" hidden="true"
                                                     justifyH="LEFT">
                                                     <Anchors>
                                                         <Anchor point="TOPLEFT" />
@@ -767,11 +767,11 @@
                                                     <Anchor point="TOPLEFT" />
                                                 </Anchors>
                                             </Button>
-                                            <Frame name="QuestDetailMoneyFrame"
+                                            <Frame name="DQuestDetailMoneyFrame"
                                                 inherits="MoneyFrameTemplate">
                                                 <Anchors>
                                                     <Anchor point="LEFT"
-                                                        relativeTo="QuestDetailItemReceiveText"
+                                                        relativeTo="DQuestDetailItemReceiveText"
                                                         relativePoint="RIGHT">
                                                         <Offset>
                                                             <AbsDimension x="15" y="0" />
@@ -780,13 +780,13 @@
                                                 </Anchors>
                                                 <Scripts>
                                                     <OnLoad>
-                                                        QuestMoneyFrame_OnLoad();
+                                                        DQuestMoneyFrame_OnLoad();
                                                     </OnLoad>
                                                 </Scripts>
                                             </Frame>
                                         </Frames>
                                     </Frame>
-                                    <Frame name="QuestSpacerFrame">
+                                    <Frame name="DQuestSpacerFrame">
                                         <Size>
                                             <AbsDimension x="5" y="25" />
                                         </Size>
