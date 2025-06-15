@@ -2,106 +2,23 @@
 ..\FrameXML\UI.xsd">
     <!-- Textures  -->
     <Texture name="DUIPanelButtonUpTexture" file="Interface\AddOns\DialogUI\src\assets\art\background\OptionBackground-Common" virtual="true">
-        <TexCoords left="0" right="0.625" top="0" bottom="0.6875"/>
     </Texture>
     <Texture name="DUIPanelButtonDownTexture" file="Interface\AddOns\DialogUI\src\assets\art\button\ButtonHighlight-Gossip" virtual="true">
-        <TexCoords left="0" right="0.625" top="0" bottom="0.6875"/>
     </Texture>
     <Texture name="DUIPanelButtonDisabledTexture" file="Interface\AddOns\DialogUI\src\assets\art\background\OptionBackground-Grey"  virtual="true">
-        <TexCoords left="0" right="0.625" top="0" bottom="0.6875"/>
     </Texture>
     <Texture name="DUIPanelButtonDisabledDownTexture" file="Interface\AddOns\DialogUI\src\assets\art\background\OptionBackground-Grey"  virtual="true">
-        <TexCoords left="0" right="0.625" top="0" bottom="0.6875"/>
     </Texture>
     <Texture name="DUIPanelButtonHighlightTexture" file="Interface\AddOns\DialogUI\src\assets\art\button\ButtonHighlight-Front" alphaMode="ADD" virtual="true">
-        <TexCoords left="0" right="0.625" top="0" bottom="0.6875"/>
     </Texture>
     <!-- Textures End -->
     <Button name="DUIPanelButtonTemplate" virtual="true">
         <ButtonText name="$parentText"/>
-        <NormalFont inherits="GameFontNormal"/>
-        <HighlightFont inherits="GameFontHighlight"/>
-        <DisabledFont inherits="GameFontDisable"/>
+        <NormalFont inherits="DGameFontNormal"/>
+        <HighlightFont inherits="DGameFontHighlight"/>
+        <DisabledFont inherits="DGameFontDisable"/>
         <NormalTexture inherits="DUIPanelButtonUpTexture"/>
-        <!-- <PushedTexture inherits="DUIPanelButtonDownTexture"/> -->
         <DisabledTexture inherits="DUIPanelButtonDisabledTexture"/>
         <HighlightTexture inherits="DUIPanelButtonHighlightTexture"/>
     </Button>
-    <!-- <Button name="DUIPanelButtonTemplate2" virtual="true">
-        <Size>
-            <AbsDimension x="40" y="22"/>
-        </Size>
-        <Layers>
-            <Layer level="BACKGROUND">
-                <Texture name="$parentLeft" file="Interface\Buttons\UI-Panel-Button-Up">
-                    <Size>
-                        <AbsDimension x="12" y="22"/>
-                    </Size>
-                    <Anchors>
-                        <Anchor point="LEFT"/>
-                    </Anchors>
-                    <TexCoords left="0" right="0.09375" top="0" bottom="0.6875"/>
-                </Texture>
-                <Texture name="$parentRight" file="Interface\Buttons\UI-Panel-Button-Up">
-                    <Size>
-                        <AbsDimension x="12" y="22"/>
-                    </Size>
-                    <Anchors>
-                        <Anchor point="RIGHT"/>
-                    </Anchors>
-                    <TexCoords left="0.53125" right="0.625" top="0" bottom="0.6875"/>
-                </Texture>
-                <Texture name="$parentMiddle" file="Interface\Buttons\UI-Panel-Button-Up">
-                    <Size>
-                        <AbsDimension x="12" y="22"/>
-                    </Size>
-                    <Anchors>
-                        <Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT"/>
-                        <Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT"/>
-                    </Anchors>
-                    <TexCoords left="0.09375" right="0.53125" top="0" bottom="0.6875"/>
-                </Texture>
-            </Layer>
-        </Layers>
-        <Scripts>
-            <OnMouseDown>
-				getglobal(this:GetName().."Left"):SetTexture("Interface\\Buttons\\UI-Panel-Button-Down");
-				getglobal(this:GetName().."Middle"):SetTexture("Interface\\Buttons\\UI-Panel-Button-Down");
-				getglobal(this:GetName().."Right"):SetTexture("Interface\\Buttons\\UI-Panel-Button-Down");
-			</OnMouseDown>
-            <OnMouseUp>
-				getglobal(this:GetName().."Left"):SetTexture("Interface\\Buttons\\UI-Panel-Button-Up");
-				getglobal(this:GetName().."Middle"):SetTexture("Interface\\Buttons\\UI-Panel-Button-Up");
-				getglobal(this:GetName().."Right"):SetTexture("Interface\\Buttons\\UI-Panel-Button-Up");
-			</OnMouseUp>
-        </Scripts>
-        <ButtonText name="$parentText"/>
-        <NormalFont inherits="GameFontNormal"/>
-        <HighlightFont inherits="GameFontHighlight"/>
-        <DisabledFont inherits="GameFontDisable"/>
-        <DisabledTexture inherits="UIPanelButtonDisabledTexture"/>
-        <HighlightTexture inherits="UIPanelButtonHighlightTexture"/>
-    </Button>
-    <Button name="DUIPanelButtonGrayTemplate" virtual="true">
-        <NormalFont inherits="GameFontHighlight"/>
-        <HighlightFont inherits="GameFontHighlight"/>
-        <DisabledFont inherits="GameFontDisable"/>
-        <NormalTexture inherits="UIPanelButtonDisabledTexture"/>
-        <PushedTexture inherits="UIPanelButtonDisabledDownTexture"/>
-        <DisabledTexture inherits="UIPanelButtonDisabledTexture"/>
-        <HighlightTexture inherits="UIPanelButtonHighlightTexture"/>
-    </Button> -->
-    <!-- <Button name="DUIPanelCloseButton" virtual="true">
-        <Size>
-            <AbsDimension x="32" y="32"/>
-        </Size>
-        <Scripts>
-            <OnClick>
-				HideUIPanel(this:GetParent());
-			</OnClick>
-        </Scripts>
-        <NormalTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Up"/>
-        <PushedTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Down"/>
-        <HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
-    </Button> -->
 </Ui>

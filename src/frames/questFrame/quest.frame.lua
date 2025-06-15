@@ -37,7 +37,6 @@ function HideDefaultFrames()
     QuestFramePortrait:SetTexture()
 end
 
-
 function DQuestFrame_OnEvent(event)
     if (event == "QUEST_FINISHED") then
         HideUIPanel(DQuestFrame);
@@ -46,7 +45,7 @@ function DQuestFrame_OnEvent(event)
     if ((event == "QUEST_ITEM_UPDATE") and not DQuestFrame:IsVisible()) then
         return;
     end
-    
+
     HideDefaultFrames();
     DQuestFrame_SetPortrait();
     ShowUIPanel(DQuestFrame);
@@ -97,12 +96,10 @@ function DQuestFrameRewardPanel_OnShow()
     DQuestFrameGreetingPanel:Hide();
     DQuestFrameProgressPanel:Hide();
     HideDefaultFrames();
-    local material = QuestFrame_GetMaterial();
-    DQuestFrame_SetMaterial(DQuestFrameRewardPanel, material);
     DQuestRewardTitleText:SetText(GetTitleText());
-    DQuestFrame_SetTitleTextColor(DQuestRewardTitleText, material);
-    QuestRewardText:SetText(GetRewardText());
-    DQuestFrame_SetTextColor(DQuestRewardText, material);
+    DQuestRewardText:SetText(GetRewardText());
+    SetFontColor(DQuestRewardTitleText, "DarkBrown");
+    SetFontColor(DQuestRewardText, "DarkBrown");
     DQuestFrameItems_Update("DQuestReward");
     DQuestRewardScrollFrame:UpdateScrollChildRect();
     DQuestRewardScrollFrameScrollBar:SetValue(0);
@@ -158,8 +155,8 @@ function DQuestRewardItem_OnClick()
             ChatFrameEditBox:Insert(GetQuestItemLink(this.type, this:GetID()));
         end
     elseif (this.type == "choice") then
-        QuestRewardItemHighlight:SetPoint("TOPLEFT", this, "TOPLEFT", -8, 7);
-        QuestRewardItemHighlight:Show();
+        DQuestRewardItemHighlight:SetPoint("TOPLEFT", this, "TOPLEFT", -2, 5);
+        DQuestRewardItemHighlight:Show();
         DQuestFrameRewardPanel.itemChoice = this:GetID();
     end
 end
@@ -169,9 +166,7 @@ function DQuestFrameProgressPanel_OnShow()
     DQuestFrameDetailPanel:Hide();
     DQuestFrameGreetingPanel:Hide();
     HideDefaultFrames();
-    message("DQuestFrameProgressPanel_OnShow");
-    local material = QuestFrame_GetMaterial();
-    DQuestFrame_SetMaterial(DQuestFrameProgressPanel, material);
+    local material = DQuestFrame_GetMaterial();
     DQuestProgressTitleText:SetText(GetTitleText());
     DQuestFrame_SetTitleTextColor(DQuestProgressTitleText, material);
     QuestProgressText:SetText(GetProgressText());
@@ -249,8 +244,6 @@ function DQuestFrameGreetingPanel_OnShow()
         UIFrameFadeIn(DQuestGreetingScrollChildFrame, QUESTINFO_FADE_IN);
     end
 
-    local material = QuestFrame_GetMaterial();
-    DQuestFrame_SetMaterial(DQuestFrameGreetingPanel, material);
     DGreetingText:SetText(GetGreetingText());
     SetFontColor(DGreetingText, "Ivory");
     SetFontColor(DCurrentQuestsText, "Ivory");
@@ -259,7 +252,7 @@ function DQuestFrameGreetingPanel_OnShow()
     local numAvailableQuests = GetNumAvailableQuests();
     if (numActiveQuests == 0) then
         DCurrentQuestsText:Hide();
-        
+
     else
         DCurrentQuestsText:SetPoint("TOPLEFT", "DGreetingText", "BOTTOMLEFT", 0, -10);
         DCurrentQuestsText:Show();
@@ -278,12 +271,12 @@ function DQuestFrameGreetingPanel_OnShow()
     end
     if (numAvailableQuests == 0) then
         DAvailableQuestsText:Hide();
-        
+
     else
         if (numActiveQuests > 0) then
             QuestGreetingFrameHorizontalBreak:SetPoint("TOPLEFT", "QuestTitleButton" .. numActiveQuests, "BOTTOMLEFT",
                 22, -10);
-            
+
             DAvailableQuestsText:SetPoint("TOPLEFT", "QuestGreetingFrameHorizontalBreak", "BOTTOMLEFT", -12, -10);
         else
             DAvailableQuestsText:SetPoint("TOPLEFT", "DGreetingText", "BOTTOMLEFT", 0, -10);
@@ -337,41 +330,29 @@ end
 
 function DQuestFrameItems_Update(questState)
     local isQuestLog = 0;
-    if (questState == "QuestLog") then
-        isQuestLog = 1;
-    end
     local numQuestRewards;
     local numQuestChoices;
     local numQuestSpellRewards = 0;
     local money;
     local spacerFrame;
-    if (isQuestLog == 1) then
-        numQuestRewards = GetNumQuestLogRewards();
-        numQuestChoices = GetNumQuestLogChoices();
-        if (GetQuestLogRewardSpell()) then
-            numQuestSpellRewards = 1;
-        end
-        money = GetQuestLogRewardMoney();
-        spacerFrame = QuestLogSpacerFrame;
-    else
+    if (isQuestLog == 0) then
         numQuestRewards = GetNumQuestRewards();
         numQuestChoices = GetNumQuestChoices();
         if (GetRewardSpell()) then
             numQuestSpellRewards = 1;
         end
         money = GetRewardMoney();
-        spacerFrame = QuestSpacerFrame;
+        spacerFrame = DQuestSpacerFrame;
     end
 
     local totalRewards = numQuestRewards + numQuestChoices + numQuestSpellRewards;
     local questItemName = questState .. "Item";
-    local material = QuestFrame_GetMaterial();
     local questItemReceiveText = getglobal(questState .. "ItemReceiveText");
     if (totalRewards == 0 and money == 0) then
         getglobal(questState .. "RewardTitleText"):Hide();
     else
         getglobal(questState .. "RewardTitleText"):Show();
-        DQuestFrame_SetTitleTextColor(getglobal(questState .. "RewardTitleText"), material);
+        SetFontColor(getglobal(questState .. "RewardTitleText"), "DarkBrown");
         QuestFrame_SetAsLastShown(getglobal(questState .. "RewardTitleText"), spacerFrame);
     end
     if (money == 0) then
@@ -379,7 +360,7 @@ function DQuestFrameItems_Update(questState)
     else
         getglobal(questState .. "MoneyFrame"):Show();
         QuestFrame_SetAsLastShown(getglobal(questState .. "MoneyFrame"), spacerFrame);
-        MoneyFrame_Update(questState .. "MoneyFrame", money);
+        DMoneyFrame_Update(questState .. "MoneyFrame", money);
     end
 
     -- Hide unused rewards
@@ -394,7 +375,7 @@ function DQuestFrameItems_Update(questState)
     if (numQuestChoices > 0) then
         local itemChooseText = getglobal(questState .. "ItemChooseText");
         itemChooseText:Show();
-        DQuestFrame_SetTextColor(itemChooseText, material);
+        SetFontColor(itemChooseText, "DarkBrown");
         QuestFrame_SetAsLastShown(itemChooseText, spacerFrame);
 
         local index;
@@ -404,9 +385,7 @@ function DQuestFrameItems_Update(questState)
             questItem = getglobal(questItemName .. index);
             questItem.type = "choice";
             numItems = 1;
-            if (isQuestLog == 1) then
-                name, texture, numItems, quality, isUsable = GetQuestLogChoiceInfo(i);
-            else
+            if (isQuestLog == 0) then
                 name, texture, numItems, quality, isUsable = GetQuestItemInfo(questItem.type, i);
             end
             questItem:SetID(i)
@@ -424,11 +403,12 @@ function DQuestFrameItems_Update(questState)
                 SetItemButtonTextureVertexColor(questItem, 0.9, 0, 0);
                 SetItemButtonNameFrameVertexColor(questItem, 0.9, 0, 0);
             end
+            -- Changes how the reward columns are positioned
             if (i > 1) then
                 if (mod(i, 2) == 1) then
-                    questItem:SetPoint("TOPLEFT", questItemName .. (index - 2), "BOTTOMLEFT", 0, -2);
+                    questItem:SetPoint("TOPLEFT", questItemName .. (index - 2), "BOTTOMLEFT", 0,-20);
                 else
-                    questItem:SetPoint("TOPLEFT", questItemName .. (index - 1), "TOPRIGHT", 1, 0);
+                    questItem:SetPoint("TOPLEFT", questItemName .. (index - 1), "TOPRIGHT", 50, 0);
                 end
             else
                 questItem:SetPoint("TOPLEFT", itemChooseText, "BOTTOMLEFT", -3, -5);
@@ -544,7 +524,7 @@ function DQuestFrameItems_Update(questState)
     if (questState == "QuestReward") then
         QuestFrameCompleteQuestButton:Enable();
         DQuestFrameRewardPanel.itemChoice = 0;
-        QuestRewardItemHighlight:Hide();
+        DQuestRewardItemHighlight:Hide();
     end
 end
 
@@ -553,9 +533,6 @@ function DQuestFrameDetailPanel_OnShow()
     DQuestFrameProgressPanel:Hide();
     DQuestFrameGreetingPanel:Hide();
     HideDefaultFrames();
-
-    local material = QuestFrame_GetMaterial();
-    DQuestFrame_SetMaterial(DQuestFrameDetailPanel, material);
     DQuestFrameNpcNameText:SetText(GetTitleText());
     DQuestDescription:SetText(GetQuestText());
     DQuestObjectiveText:SetText(GetObjectiveText());
@@ -564,12 +541,12 @@ function DQuestFrameDetailPanel_OnShow()
     SetFontColor(DQuestObjectiveText, "DarkBrown");
     QuestFrame_SetAsLastShown(DQuestObjectiveText, DQuestSpacerFrame);
     DQuestFrameItems_Update("DQuestDetail");
-    DQuestDetailScrollFrame:UpdateScrollChildRect();
-    DQuestDetailScrollFrameScrollBar:SetValue(0);
+    QuestDetailScrollFrame:UpdateScrollChildRect();
+    QuestDetailScrollFrameScrollBar:SetValue(0);
 
     -- Hide Objectives and rewards until the text is completely displayed
     TextAlphaDependentFrame:SetAlpha(0);
-    QuestFrameAcceptButton:Disable();
+    DQuestFrameAcceptButton:Disable();
 
     DQuestFrameDetailPanel.fading = 1;
     DQuestFrameDetailPanel.fadingProgress = 0;
@@ -583,7 +560,7 @@ function DQuestFrameDetailPanel_OnUpdate(elapsed)
     if (this.fading) then
         this.fadingProgress = this.fadingProgress + (elapsed * QUEST_DESCRIPTION_GRADIENT_CPS);
         PlaySound("WriteQuest");
-        if (not QuestDescription:SetAlphaGradient(this.fadingProgress, QUEST_DESCRIPTION_GRADIENT_LENGTH)) then
+        if (not DQuestDescription:SetAlphaGradient(this.fadingProgress, QUEST_DESCRIPTION_GRADIENT_LENGTH)) then
             this.fading = nil;
             -- Show Quest Objectives and Rewards
             if (QUEST_FADING_DISABLE == "0") then
@@ -591,7 +568,7 @@ function DQuestFrameDetailPanel_OnUpdate(elapsed)
             else
                 TextAlphaDependentFrame:SetAlpha(1);
             end
-            QuestFrameAcceptButton:Enable();
+            DQuestFrameAcceptButton:Enable();
         end
     end
 end
@@ -605,11 +582,7 @@ function DQuestDetailDeclineButton_OnClick()
     PlaySound("igQuestCancel");
 end
 
-function DQuestFrame_SetMaterial(frame, material)
-
-end
-
-function QuestFrame_GetMaterial()
+function DQuestFrame_GetMaterial()
     local material = GetQuestBackgroundMaterial();
     if (not material) then
         material = "Parchment";

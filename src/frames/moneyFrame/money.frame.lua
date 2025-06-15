@@ -127,15 +127,15 @@ function MoneyFrame_OnEvent()
 	end
 
 	if ( event == "PLAYER_MONEY" and this.moneyType == "PLAYER" ) then
-		MoneyFrame_UpdateMoney();
+		DMoneyFrame_UpdateMoney();
 	elseif ( event == "PLAYER_TRADE_MONEY" and (this.moneyType == "PLAYER" or this.moneyType == "PLAYER_TRADE") ) then
-		MoneyFrame_UpdateMoney();
+		DMoneyFrame_UpdateMoney();
 	elseif ( event == "TRADE_MONEY_CHANGED" and this.moneyType == "TARGET_TRADE" ) then
-		MoneyFrame_UpdateMoney();
+		DMoneyFrame_UpdateMoney();
 	elseif ( event == "SEND_MAIL_MONEY_CHANGED" and (this.moneyType == "PLAYER" or this.moneyType == "SEND_MAIL") ) then
-		MoneyFrame_UpdateMoney();
+		DMoneyFrame_UpdateMoney();
 	elseif ( event == "SEND_MAIL_COD_CHANGED" and (this.moneyType == "PLAYER" or this.moneyType == "SEND_MAIL_COD") ) then
-		MoneyFrame_UpdateMoney();
+		DMoneyFrame_UpdateMoney();
 	end
 end
 
@@ -158,14 +158,14 @@ function MoneyFrame_SetType(type)
 		getglobal(frameName.."CopperButton"):EnableMouse(false);
 	end
 
-	MoneyFrame_UpdateMoney();
+	DMoneyFrame_UpdateMoney();
 end
 
 -- Update the money shown in a money frame
-function MoneyFrame_UpdateMoney()
+function DMoneyFrame_UpdateMoney()
 	if ( this.info ) then
 		local money = this.info.UpdateFunc();
-		MoneyFrame_Update(this:GetName(), money);
+		DMoneyFrame_Update(this:GetName(), money);
 		if ( this.hasPickup == 1 ) then
 			UpdateCoinPickupFrame(money);
 		end
@@ -174,7 +174,7 @@ function MoneyFrame_UpdateMoney()
 	end
 end
 
-function MoneyFrame_Update(frameName, money)
+function DMoneyFrame_Update(frameName, money)
 	local frame = getglobal(frameName);
 	local info = frame.info;
 	if ( not info ) then

@@ -22,19 +22,31 @@
         </Size>
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture name="$parentIconTexture">
+                <Texture name="$parentBackground" file="Interface\AddOns\DialogUI\src\assets\art\rewardChoice\RewardChoice-Pending">
                     <Size>
-                        <AbsDimension x="39" y="39" />
+                        <AbsDimension x="190" y="50" />
                     </Size>
                     <Anchors>
                         <Anchor point="TOPLEFT">
                             <Offset>
-                                <AbsDimension x="0" y="0" />
+                                <AbsDimension x="-2" y="5" />
                             </Offset>
                         </Anchor>
                     </Anchors>
                 </Texture>
-                <Texture name="$parentNameFrame" file="Interface\QuestFrame\UI-QuestItemNameFrame">
+                <Texture name="$parentIconTexture">
+                    <Size>
+                        <AbsDimension x="35" y="35" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="5" y="-2" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+                <Texture name="$parentNameFrame" file="">
                     <Size>
                         <AbsDimension x="128" y="64" />
                     </Size>
@@ -46,14 +58,14 @@
                         </Anchor>
                     </Anchors>
                 </Texture>
-                <FontString name="$parentName" inherits="GameFontHighlight" justifyH="LEFT">
+                <FontString name="$parentName" inherits="DGameFontHighlight" justifyH="LEFT">
                     <Size>
-                        <AbsDimension x="90" y="36" />
+                        <AbsDimension x="120" y="36" />
                     </Size>
                     <Anchors>
-                        <Anchor point="LEFT" relativeTo="$parentNameFrame">
+                        <Anchor point="LEFT" relativeTo="$parentBackground">
                             <Offset>
-                                <AbsDimension x="15" y="0" />
+                                <AbsDimension x="45" y="0" />
                             </Offset>
                         </Anchor>
                     </Anchors>
@@ -101,7 +113,7 @@
     <Button name="DQuestRewardItemTemplate" inherits="DQuestItemTemplate" virtual="true">
         <Scripts>
             <OnClick>
-                QuestRewardItem_OnClick();
+                DQuestRewardItem_OnClick();
             </OnClick>
         </Scripts>
     </Button>
@@ -111,7 +123,7 @@
         </Size>
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture file="Interface\AddOns\DialogUI\src\\assets\art\gossipIcons\AvailableQuestIcon">
+                <Texture file="Interface\AddOns\DialogUI\src\assets\art\gossipIcons\AvailableQuestIcon">
                     <Size>
                         <AbsDimension x="16" y="16" />
                     </Size>
