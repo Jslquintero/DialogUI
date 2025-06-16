@@ -290,7 +290,7 @@
                                         <Layers>
                                             <Layer level="BACKGROUND">
                                                 <Texture
-                                                    file="Interface\AddOns\DialogUI\src\assets\art\rewardChoice\RewardChoice-Highlight"
+                                                    file="Interface\AddOns\DialogUI\src\assets\art\parchment\RewardChoice-Highlight"
                                                     alphaMode="ADD">
                                                     <Size>
                                                         <AbsDimension x="190" y="50" />

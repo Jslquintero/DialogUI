@@ -23,7 +23,7 @@
 						parent.hasPickup = 1;
 					</OnClick>
                 </Scripts>
-                <NormalTexture file="Interface\AddOns\DialogUI\src\assets\art\Icons\Coin-Copper">
+                <NormalTexture file="Interface\AddOns\DialogUI\src\assets\art\icons\Coin-Copper">
                     <Size>
                         <AbsDimension x="19" y="19"/>
                     </Size>
@@ -63,7 +63,7 @@
 						parent.hasPickup = 1;
 					</OnClick>
                 </Scripts>
-                <NormalTexture file="Interface\AddOns\DialogUI\src\assets\art\Icons\Coin-Silver">
+                <NormalTexture file="Interface\AddOns\DialogUI\src\assets\art\icons\Coin-Silver">
                     <Size>
                         <AbsDimension x="19" y="19"/>
                     </Size>
@@ -104,7 +104,7 @@
 						parent.hasPickup = 1;
 					</OnClick>
                 </Scripts>
-                <NormalTexture file="Interface\AddOns\DialogUI\src\assets\art\Icons\Coin-Gold">
+                <NormalTexture file="Interface\AddOns\DialogUI\src\assets\art\icons\Coin-Gold">
                     <Size>
                         <AbsDimension x="19" y="19"/>
                     </Size>

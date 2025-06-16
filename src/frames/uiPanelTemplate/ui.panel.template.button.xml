@@ -1,15 +1,15 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
     <!-- Textures  -->
-    <Texture name="DUIPanelButtonUpTexture" file="Interface\AddOns\DialogUI\src\assets\art\background\OptionBackground-Common" virtual="true">
+    <Texture name="DUIPanelButtonUpTexture" file="Interface\AddOns\DialogUI\src\assets\art\parchment\OptionBackground-Common" virtual="true">
     </Texture>
-    <Texture name="DUIPanelButtonDownTexture" file="Interface\AddOns\DialogUI\src\assets\art\button\ButtonHighlight-Gossip" virtual="true">
+    <Texture name="DUIPanelButtonDownTexture" file="Interface\AddOns\DialogUI\src\assets\art\parchment\ButtonHighlight-Gossip" virtual="true">
     </Texture>
-    <Texture name="DUIPanelButtonDisabledTexture" file="Interface\AddOns\DialogUI\src\assets\art\background\OptionBackground-Grey"  virtual="true">
+    <Texture name="DUIPanelButtonDisabledTexture" file="Interface\AddOns\DialogUI\src\assets\art\parchment\OptionBackground-Grey"  virtual="true">
     </Texture>
-    <Texture name="DUIPanelButtonDisabledDownTexture" file="Interface\AddOns\DialogUI\src\assets\art\background\OptionBackground-Grey"  virtual="true">
+    <Texture name="DUIPanelButtonDisabledDownTexture" file="Interface\AddOns\DialogUI\src\assets\art\parchment\OptionBackground-Grey"  virtual="true">
     </Texture>
-    <Texture name="DUIPanelButtonHighlightTexture" file="Interface\AddOns\DialogUI\src\assets\art\button\ButtonHighlight-Front" alphaMode="ADD" virtual="true">
+    <Texture name="DUIPanelButtonHighlightTexture" file="Interface\AddOns\DialogUI\src\assets\art\parchment\ButtonHighlight-Front" alphaMode="ADD" virtual="true">
     </Texture>
     <!-- Textures End -->
     <Button name="DUIPanelButtonTemplate" virtual="true">

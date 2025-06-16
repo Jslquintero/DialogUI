@@ -9,7 +9,7 @@
         </Anchors>
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture file="Interface\AddOns\DialogUI\src\assets\art\Parchment">
+                <Texture file="Interface\AddOns\DialogUI\src\assets\art\parchment\Parchment">
                     <Size x="512" y="512" />
                 </Texture>
             </Layer>
@@ -22,7 +22,7 @@
         </Size>
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture name="$parentBackground" file="Interface\AddOns\DialogUI\src\assets\art\rewardChoice\RewardChoice-Pending">
+                <Texture name="$parentBackground" file="Interface\AddOns\DialogUI\src\assets\art\parchment\RewardChoice-Pending">
                     <Size>
                         <AbsDimension x="190" y="50" />
                     </Size>
@@ -127,7 +127,7 @@
         </Size>
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture file="Interface\AddOns\DialogUI\src\assets\art\gossipIcons\AvailableQuestIcon">
+                <Texture file="Interface\AddOns\DialogUI\src\assets\art\icons\AvailableQuestIcon">
                     <Size>
                         <AbsDimension x="16" y="16" />
                     </Size>
@@ -147,7 +147,7 @@
             </OnClick>
         </Scripts>
         <HighlightTexture
-            file="Interface\AddOns\DialogUI\src\assets\art\button\ButtonHighlight-Gossip"
+            file="Interface\AddOns\DialogUI\src\assets\art\parchment\ButtonHighlight-Gossip"
             alphaMode="ADD" />
         <ButtonText>
             <Size>

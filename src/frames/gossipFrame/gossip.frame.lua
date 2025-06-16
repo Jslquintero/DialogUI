@@ -109,11 +109,11 @@ function DGossipFrameAvailableQuestsUpdate(...)
             gossipIcon:SetHeight(16)
             gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 3, -5)
         end
-        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\gossipIcons\\AvailableQuestIcon")
+        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\AvailableQuestIcon")
 
         -- Apply normal texture only for available quests
         titleButton:SetNormalTexture(
-            "Interface\\AddOns\\DialogUI\\src\\assets\\art\\background\\OptionBackground-common")
+            "Interface\\AddOns\\DialogUI\\src\\assets\\art\\parchment\\OptionBackground-common")
         SetFontColor(titleButton, "Ivory")
 
         titleButton:SetHeight(titleButton:GetTextHeight() + 20)
@@ -152,14 +152,14 @@ function DGossipFrameActiveQuestsUpdate(...)
         gossipIcon:SetHeight(16)
         gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 3, -5)
 
-        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\gossipIcons\\ActiveQuestIcon");
+        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\ActiveQuestIcon");
 
         DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1;
         titleIndex = titleIndex + 1;
         titleButton:Show();
 
         titleButton:SetNormalTexture(
-            "Interface\\AddOns\\DialogUI\\src\\assets\\art\\background\\OptionBackground-common")
+            "Interface\\AddOns\\DialogUI\\src\\assets\\art\\parchment\\OptionBackground-common")
         titleButton:SetHeight(titleButton:GetTextHeight() + 20)
         gossipIcon:SetHeight(20)
         gossipIcon:SetWidth(20)
@@ -200,7 +200,7 @@ function DGossipFrameOptionsUpdate(...)
         end
 
         getglobal(titleButton:GetName() .. "GossipIcon"):SetTexture(
-            "Interface\\AddOns\\DialogUI\\src\\assets\\art\\gossipIcons\\" .. arg[i + 1] .. "GossipIcon");
+            "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. arg[i + 1] .. "GossipIcon");
         DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1;
         titleIndex = titleIndex + 1;
         titleButton:Show();

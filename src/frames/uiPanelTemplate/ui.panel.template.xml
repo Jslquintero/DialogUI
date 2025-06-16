@@ -64,7 +64,7 @@
             </OnValueChanged>
         </Scripts>
         <ThumbTexture name="$parentThumbTexture" inherits="DUIPanelScrollBarButton"
-            file="Interface\AddOns\DialogUI\src\assets\art\UI-ScrollBar-Knob">
+            file="Interface\AddOns\DialogUI\src\assets\art\parchment\UI-ScrollBar-Knob">
             <Size>
                 <AbsDimension x="24" y="24" />
             </Size>
