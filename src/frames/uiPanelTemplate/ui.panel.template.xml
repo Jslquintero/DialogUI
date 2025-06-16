@@ -1,5 +1,4 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
     <Texture name="DUIPanelScrollBarButton" virtual="true">
         <TexCoords left="0.25" right="0.75" top="0.25" bottom="0.75" />
     </Texture>
@@ -65,9 +64,9 @@
             </OnValueChanged>
         </Scripts>
         <ThumbTexture name="$parentThumbTexture" inherits="DUIPanelScrollBarButton"
-            file="Interface\Buttons\UI-ScrollBar-Knob">
+            file="Interface\AddOns\DialogUI\src\assets\art\UI-ScrollBar-Knob">
             <Size>
-                <AbsDimension x="16" y="24" />
+                <AbsDimension x="24" y="24" />
             </Size>
             <TexCoords left="0.25" right="0.75" top="0.125" bottom="0.875" />
         </ThumbTexture>
@@ -193,5 +192,4 @@
             </OnMouseWheel>
         </Scripts>
     </ScrollFrame>
-
 </Ui>

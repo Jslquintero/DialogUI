@@ -34,18 +34,6 @@
                         </Anchor>
                     </Anchors>
                 </Texture>
-                <Texture name="$parentIconTexture">
-                    <Size>
-                        <AbsDimension x="35" y="35" />
-                    </Size>
-                    <Anchors>
-                        <Anchor point="TOPLEFT">
-                            <Offset>
-                                <AbsDimension x="5" y="-2" />
-                            </Offset>
-                        </Anchor>
-                    </Anchors>
-                </Texture>
                 <Texture name="$parentNameFrame" file="">
                     <Size>
                         <AbsDimension x="128" y="64" />
@@ -58,6 +46,22 @@
                         </Anchor>
                     </Anchors>
                 </Texture>
+            </Layer>
+            <Layer level="BORDER">
+                <Texture name="$parentIconTexture">
+                    <Size>
+                        <AbsDimension x="35" y="35" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="5" y="-2" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK">
                 <FontString name="$parentName" inherits="DGameFontHighlight" justifyH="LEFT">
                     <Size>
                         <AbsDimension x="120" y="36" />

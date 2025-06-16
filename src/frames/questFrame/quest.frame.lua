@@ -96,8 +96,9 @@ function DQuestFrameRewardPanel_OnShow()
     DQuestFrameGreetingPanel:Hide();
     DQuestFrameProgressPanel:Hide();
     HideDefaultFrames();
-    DQuestRewardTitleText:SetText(GetTitleText());
+    DQuestFrameNpcNameText:SetText(GetTitleText());
     DQuestRewardText:SetText(GetRewardText());
+    SetFontColor(DQuestFrameNpcNameText, "DarkBrown");
     SetFontColor(DQuestRewardTitleText, "DarkBrown");
     SetFontColor(DQuestRewardText, "DarkBrown");
     DQuestFrameItems_Update("DQuestReward");
@@ -239,6 +240,7 @@ function DQuestFrameGreetingPanel_OnShow()
     DQuestFrameRewardPanel:Hide();
     DQuestFrameProgressPanel:Hide();
     DQuestFrameDetailPanel:Hide();
+
     if (QUEST_FADING_DISABLE == "0") then
         DQuestGreetingScrollChildFrame:SetAlpha(0);
         UIFrameFadeIn(DQuestGreetingScrollChildFrame, QUESTINFO_FADE_IN);
@@ -500,11 +502,11 @@ function DQuestFrameItems_Update(questState)
             SetItemButtonCount(questItem, numItems);
             SetItemButtonTexture(questItem, texture);
             if (isUsable) then
-                SetItemButtonTextureVertexColor(questItem, 1.0, 1.0, 1.0);
-                SetItemButtonNameFrameVertexColor(questItem, 1.0, 1.0, 1.0);
+                -- SetItemButtonTextureVertexColor(questItem, 1.0, 1.0, 1.0);
+                -- SetItemButtonNameFrameVertexColor(questItem, 1.0, 1.0, 1.0);
             else
-                SetItemButtonTextureVertexColor(questItem, 0.5, 0, 0);
-                SetItemButtonNameFrameVertexColor(questItem, 1.0, 0, 0);
+                -- SetItemButtonTextureVertexColor(questItem, 0.5, 0, 0);
+                -- SetItemButtonNameFrameVertexColor(questItem, 1.0, 0, 0);
             end
 
             if (i > 1) then
@@ -522,7 +524,7 @@ function DQuestFrameItems_Update(questState)
         questItemReceiveText:Hide();
     end
     if (questState == "QuestReward") then
-        QuestFrameCompleteQuestButton:Enable();
+        DQuestFrameCompleteQuestButton:Enable();
         DQuestFrameRewardPanel.itemChoice = 0;
         DQuestRewardItemHighlight:Hide();
     end
@@ -541,8 +543,8 @@ function DQuestFrameDetailPanel_OnShow()
     SetFontColor(DQuestObjectiveText, "DarkBrown");
     QuestFrame_SetAsLastShown(DQuestObjectiveText, DQuestSpacerFrame);
     DQuestFrameItems_Update("DQuestDetail");
-    QuestDetailScrollFrame:UpdateScrollChildRect();
-    QuestDetailScrollFrameScrollBar:SetValue(0);
+    DQuestDetailScrollFrame:UpdateScrollChildRect();
+    DQuestDetailScrollFrameScrollBar:SetValue(0);
 
     -- Hide Objectives and rewards until the text is completely displayed
     TextAlphaDependentFrame:SetAlpha(0);

@@ -30,7 +30,18 @@
                 </Anchors>
                 <Layers>
                     <Layer level="ARTWORK">
-                        <FontString name="DQuestFrameNpcNameText" inherits="DQuestTitleFont" text="Title Text"/>
+                        <FontString name="DQuestFrameNpcNameText" inherits="DQuestTitleFont" text="Title Text" justifyH="LEFT">
+                            <Size>
+                                <AbsDimension x="235" y="20"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="60" y="0" />
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
                     </Layer>
                     <Layer level="OVERLAY">
                         <Texture name="DQuestFramePortrait">
@@ -55,7 +66,6 @@
             </Frame>
             <Frame name="DQuestFrameRewardPanel" inherits="DQuestFramePanelTemplate" hidden="true">
                 <Frames>
-                    <!-- TODO change the button texture -->
                     <Button name="DQuestFrameCancelButton" inherits="DUIPanelButtonTemplate"
                         text="CANCEL">
                         <Size>
@@ -75,8 +85,7 @@
                             </OnClick>
                         </Scripts>
                     </Button>
-                    <!-- TODO change the button texture -->
-                    <Button name="QuestFrameCompleteQuestButton" inherits="DUIPanelButtonTemplate"
+                    <Button name="DQuestFrameCompleteQuestButton" inherits="DUIPanelButtonTemplate"
                         text="COMPLETE_QUEST">
                         <Size>
                             <AbsDimension x="200" y="40" />
@@ -130,14 +139,14 @@
                                         <FontString name="DQuestRewardText" inherits="DQuestFont"
                                             justifyH="LEFT">
                                             <Size>
-                                                <AbsDimension x="390" y="0" />
+                                                <AbsDimension x="370" y="0" />
                                             </Size>
                                             <Anchors>
                                                 <Anchor point="TOPLEFT"
                                                     relativeTo="DQuestRewardTitleText"
                                                     relativePoint="BOTTOMLEFT">
                                                     <Offset>
-                                                        <AbsDimension x="1" y="-5" />
+                                                        <AbsDimension x="1" y="-15" />
                                                     </Offset>
                                                 </Anchor>
                                             </Anchors>
@@ -146,13 +155,13 @@
                                             inherits="DQuestTitleFont" text="QUEST_REWARDS"
                                             justifyH="LEFT">
                                             <Size>
-                                                <AbsDimension x="390" y="0" />
+                                                <AbsDimension x="370" y="0" />
                                             </Size>
                                             <Anchors>
                                                 <Anchor point="TOPLEFT" relativeTo="DQuestRewardText"
                                                     relativePoint="BOTTOMLEFT">
                                                     <Offset>
-                                                        <AbsDimension x="1" y="-10" />
+                                                        <AbsDimension x="1" y="-15" />
                                                     </Offset>
                                                 </Anchor>
                                             </Anchors>
@@ -168,7 +177,7 @@
                                                     relativeTo="DQuestRewardRewardTitleText"
                                                     relativePoint="BOTTOMLEFT">
                                                     <Offset>
-                                                        <AbsDimension x="0" y="-5" />
+                                                        <AbsDimension x="0" y="-15" />
                                                     </Offset>
                                                 </Anchor>
                                             </Anchors>
@@ -180,7 +189,7 @@
                                                     relativeTo="DQuestRewardRewardTitleText"
                                                     relativePoint="BOTTOMLEFT">
                                                     <Offset>
-                                                        <AbsDimension x="0" y="-5" />
+                                                        <AbsDimension x="0" y="-15" />
                                                     </Offset>
                                                 </Anchor>
                                             </Anchors>
@@ -565,7 +574,7 @@
                             </OnClick>
                         </Scripts>
                     </Button>
-                    <ScrollFrame name="QuestDetailScrollFrame" inherits="DUIPanelScrollFrameTemplate">
+                    <ScrollFrame name="DQuestDetailScrollFrame" inherits="DUIPanelScrollFrameTemplate">
                         <Size>
                             <AbsDimension x="400" y="334" />
                         </Size>
@@ -599,13 +608,13 @@
                                         <FontString name="DQuestDescription" inherits="DQuestFont"
                                             justifyH="LEFT">
                                             <Size>
-                                                <AbsDimension x="390" y="0" />
+                                                <AbsDimension x="370" y="0" />
                                             </Size>
                                             <Anchors>
                                                 <Anchor point="TOPLEFT" relativeTo="DQuestTitleText"
                                                     relativePoint="BOTTOMLEFT">
                                                     <Offset>
-                                                        <AbsDimension x="1" y="-5" />
+                                                        <AbsDimension x="1" y="-15" />
                                                     </Offset>
                                                 </Anchor>
                                             </Anchors>
@@ -621,7 +630,7 @@
                                             <Anchor point="TOPLEFT" relativeTo="DQuestDescription"
                                                 relativePoint="BOTTOMLEFT">
                                                 <Offset>
-                                                    <AbsDimension x="0" y="-5" />
+                                                    <AbsDimension x="1" y="-15" />
                                                 </Offset>
                                             </Anchor>
                                         </Anchors>
@@ -631,7 +640,7 @@
                                                     inherits="DQuestTitleFont"
                                                     text="QUEST_OBJECTIVES" justifyH="LEFT">
                                                     <Size>
-                                                        <AbsDimension x="370" y="50" />
+                                                        <AbsDimension x="370" y="0" />
                                                     </Size>
                                                     <Anchors>
                                                         <Anchor point="TOPLEFT"
@@ -646,14 +655,14 @@
                                                 <FontString name="DQuestObjectiveText"
                                                     inherits="DQuestFont" justifyH="LEFT">
                                                     <Size>
-                                                        <AbsDimension x="370" y="10" />
+                                                        <AbsDimension x="370" y="0" />
                                                     </Size>
                                                     <Anchors>
                                                         <Anchor point="TOPLEFT"
                                                             relativeTo="DQuestDetailObjectiveTitleText"
                                                             relativePoint="BOTTOMLEFT">
                                                             <Offset>
-                                                                <AbsDimension x="1" y="-5" />
+                                                                <AbsDimension x="1" y="-15" />
                                                             </Offset>
                                                         </Anchor>
                                                     </Anchors>
@@ -662,14 +671,14 @@
                                                     inherits="DQuestTitleFont" text="QUEST_REWARDS"
                                                     justifyH="LEFT">
                                                     <Size>
-                                                        <AbsDimension x="370" y="50" />
+                                                        <AbsDimension x="370" y="0" />
                                                     </Size>
                                                     <Anchors>
                                                         <Anchor point="TOPLEFT"
                                                             relativeTo="DQuestObjectiveText"
                                                             relativePoint="BOTTOMLEFT">
                                                             <Offset>
-                                                                <AbsDimension x="1" y="-5" />
+                                                                <AbsDimension x="1" y="-15" />
                                                             </Offset>
                                                         </Anchor>
                                                     </Anchors>
@@ -685,7 +694,7 @@
                                                             relativeTo="DQuestDetailRewardTitleText"
                                                             relativePoint="BOTTOMLEFT">
                                                             <Offset>
-                                                                <AbsDimension x="1" y="-5" />
+                                                                <AbsDimension x="1" y="-15" />
                                                             </Offset>
                                                         </Anchor>
                                                     </Anchors>
