@@ -18,17 +18,18 @@ function HideDefaultFrames()
     GossipFrameGreetingPanel:Hide()
     GossipNpcNameFrame:Hide()
     GossipFrameCloseButton:Hide()
+    GossipFramePortrait:Hide()
     GossipFramePortrait:SetTexture()
 end
 
 function DGossipFrame_OnLoad()
+    HideDefaultFrames()
     this:RegisterEvent("GOSSIP_SHOW");
     this:RegisterEvent("GOSSIP_CLOSED");
 end
 
 function DGossipFrame_OnEvent()
     if (event == "GOSSIP_SHOW") then
-        HideDefaultFrames()
         if (not DGossipFrame:IsVisible()) then
             ShowUIPanel(DGossipFrame);
             if (not DGossipFrame:IsVisible()) then
@@ -48,6 +49,15 @@ function DGossipFrameUpdate()
     DGossipFrameAvailableQuestsUpdate(GetGossipAvailableQuests());
     DGossipFrameActiveQuestsUpdate(GetGossipActiveQuests());
     DGossipFrameOptionsUpdate(GetGossipOptions());
+
+
+     -- Debug GetGossipOptions()
+     local options = {GetGossipOptions()}
+     DEFAULT_CHAT_FRAME:AddMessage("GetGossipOptions() returned " .. table.getn(options) .. " items:")
+     for i = 1, table.getn(options) do
+        DEFAULT_CHAT_FRAME:AddMessage("Option " .. i .. ": " .. tostring(options[i]))
+     end
+     
 
     for i = DGossipFrame.buttonIndex, NUMGOSSIPBUTTONS do
         getglobal("DGossipTitleButton" .. i):Hide();
@@ -69,8 +79,8 @@ function DGossipFrameUpdate()
     end
 
     -- Update scrollframe
-    GossipGreetingScrollFrame:SetVerticalScroll(0);
-    GossipGreetingScrollFrame:UpdateScrollChildRect();
+    DGossipGreetingScrollFrame:SetVerticalScroll(0);
+    DGossipGreetingScrollFrame:UpdateScrollChildRect();
 end
 
 function DGossipTitleButton_OnClick()
@@ -185,24 +195,111 @@ function DGossipFrameOptionsUpdate(...)
         titleButton:SetID(titleIndex);
         titleButton.type = "Gossip";
 
-        -- makes the texture layer for the gossip options
-        local gossipIcon = titleButton:CreateTexture("$parentGossipIcon", "OVERLAY")
-        gossipIcon:SetWidth(16)
-        gossipIcon:SetHeight(16)
-        gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 5, -6)
+        local gossipIconName = titleButton:GetName() .. "GossipIcon"
+        local gossipIcon = getglobal(gossipIconName)
+        
+        if not gossipIcon then
+            gossipIcon = titleButton:CreateTexture(gossipIconName, "OVERLAY")
+            gossipIcon:SetWidth(20)
+            gossipIcon:SetHeight(20)
+            gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 5, -6)
+        end
 
         if titleButton.type == "Gossip" then
-            titleButton:SetNormalTexture(nil) -- no texture (gossip icons only (bank, trainer, etc.))
+            titleButton:SetNormalTexture(nil)
             titleButton:SetHeight(titleButton:GetTextHeight() + 20)
-            getglobal(titleButton:GetName() .. "GossipIcon"):SetHeight(20)
-            getglobal(titleButton:GetName() .. "GossipIcon"):SetWidth(20)
             SetFontColor(titleButton, "DarkBrown")
         end
 
-        getglobal(titleButton:GetName() .. "GossipIcon"):SetTexture(
-            "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. arg[i + 1] .. "GossipIcon");
+        -- Determine icon type based on the second argument
+        local iconType = arg[i + 1]  -- This is the type (gossip, trainer, etc.)
+        local texturePath
+        
+        if iconType == "gossip" then
+            -- For generic "gossip" type, determine icon from text
+            local specificType = DetermineGossipIconType(arg[i])
+            texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. specificType .. "GossipIcon"
+        elseif iconType == "taxi" then
+            texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\flightGossipIcon"
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("Unknown icon type, repor it to the author: " .. iconType)
+            -- For specific types (trainer, vendor, etc.), use the type directly
+            texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. iconType .. "GossipIcon"
+        end
+        
+        -- DEFAULT_CHAT_FRAME:AddMessage("Setting texture: " .. texturePath)
+        
+        -- Set the texture first
+        gossipIcon:SetTexture(texturePath);
+        
+        -- Then check if it loaded successfully and use fallback if needed
+        if not gossipIcon:GetTexture() then
+            DEFAULT_CHAT_FRAME:AddMessage("Texture failed to load, using fallback")
+            gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\PetitionGossipIcon");
+        end
+        
         DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1;
         titleIndex = titleIndex + 1;
         titleButton:Show();
+    end
+end
+
+function DetermineGossipIconType(gossipText)
+    local text = string.lower(gossipText)
+    
+    local professions = {
+        "alchemy", "blacksmithing", "enchanting", "engineering", 
+        "herbalism", "leatherworking", "mining", "skinning", 
+        "tailoring", "jewelcrafting", "inscription", "cooking", "fishing", "first aid"
+    }
+    
+    for _, profession in pairs(professions) do
+        if string.find(text, profession) then
+            return profession
+        end
+    end
+    
+    local classes = {
+        "warrior", "paladin", "hunter", "rogue", "priest", 
+        "shaman", "mage", "warlock", "druid", "death knight"
+    }
+    
+    for _, class in pairs(classes) do
+        if string.find(text, class) then
+            return class
+        end
+    end
+    
+    -- Main menu service types
+    if string.find(text, "profession") and string.find(text, "trainer") then
+        return "trainer"
+    elseif string.find(text, "class") and string.find(text, "trainer") then
+        return "class trainer"
+    elseif string.find(text, "stable") then
+        return "stablemaster"
+    elseif string.find(text, "inn") then
+        return "innkeeper"
+    elseif string.find(text, "mailbox") then
+        return "mailbox"
+    elseif string.find(text, "guild master") then
+        return "guild master"
+    elseif string.find(text, "trainer") and string.find(text, "pet") then
+        return "pet trainer"
+    elseif string.find(text, "auction") then
+        return "auction house"
+    elseif string.find(text, "weapon") and string.find(text, "trainer") then
+        return "weapons trainer"
+    elseif string.find(text, "deeprun") then
+        return "deeprun tram"
+    elseif string.find(text, "bat handler") or 
+           string.find(text, "wind rider master") or 
+           string.find(text, "gryphon master") or 
+           string.find(text, "hippogryph master") or 
+           string.find(text, "flight master") then
+        return "flight"
+    elseif string.find(text, "bank") then
+        return "banker"
+    else
+        return "gossip"  -- fallback
     end
 end

@@ -70,7 +70,18 @@
                 </Anchors>
                 <Layers>
                     <Layer level="ARTWORK">
-                        <FontString name="DGossipFrameNpcNameText" inherits="DQuestTitleFont" />
+                        <FontString name="DGossipFrameNpcNameText" inherits="DQuestTitleFont" justifyH="LEFT">
+                            <Size>
+                                <AbsDimension x="235" y="20"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="60" y="0" />
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
                     </Layer>
                     <Layer level="OVERLAY">
                         <Texture name="DGossipFramePortrait">
@@ -96,6 +107,23 @@
             <Frame name="DGossipFrameGreetingPanel" inherits="DGossipFramePanelTemplate"
                 hidden="false">
                 <Frames>
+                    <Button name="DGossipFrameGreetingGoodbyeButton" inherits="DUIPanelButtonTemplate" text="GOODBYE">
+                        <Size>
+                            <AbsDimension x="200" y="40" />
+                        </Size>
+                        <Anchors>
+                            <Anchor point="BOTTOMRIGHT" relativeTo="DGossipFrame" relativePoint="BOTTOMRIGHT">
+                                <Offset>
+                                    <AbsDimension x="80" y="40" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+								HideUIPanel(GossipFrame);
+							</OnClick>
+                        </Scripts>
+                    </Button>
                     <ScrollFrame name="DGossipGreetingScrollFrame"
                         inherits="DUIPanelScrollFrameTemplate">
                         <Size>
