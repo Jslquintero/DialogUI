@@ -70,7 +70,6 @@
                     <Anchors>
                         <Anchor point="RIGHT"/>
                     </Anchors>
-                    <TexCoords left="0.25" right="0.5" top="0" bottom="1"/>
                 </NormalTexture>
                 <ButtonText name="$parentText">
                     <Anchors>
@@ -111,7 +110,6 @@
                     <Anchors>
                         <Anchor point="RIGHT"/>
                     </Anchors>
-                    <TexCoords left="0" right="0.25" top="0" bottom="1"/>
                 </NormalTexture>
                 <ButtonText name="$parentText">
                     <Anchors>
