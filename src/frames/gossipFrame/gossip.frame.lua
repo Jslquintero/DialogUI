@@ -211,31 +211,44 @@ function DGossipFrameOptionsUpdate(...)
             SetFontColor(titleButton, "DarkBrown")
         end
 
-        -- Determine icon type based on the second argument
-        local iconType = arg[i + 1]  -- This is the type (gossip, trainer, etc.)
+        -- Get the icon type from the second argument
+        local iconType = arg[i + 1]
         local texturePath
+        
+        -- Define the mapping for all supported icon types
+        local iconMap = {
+            ["banker"] = "bankerGossipIcon",
+            ["battlemaster"] = "battlemasterGossipIcon", 
+            ["binder"] = "binderGossipIcon",
+            ["gossip"] = nil,
+            ["healer"] = nil,
+            ["tabard"] = "guild masterGossipIcon",
+            ["taxi"] = "flightGossipIcon",
+            ["trainer"] = "trainerGossipIcon",
+            ["unlearn"] = "unlearnGossipIcon",
+            ["vendor"] = "vendorGossipIcon",
+        }
         
         if iconType == "gossip" then
             -- For generic "gossip" type, determine icon from text
             local specificType = DetermineGossipIconType(arg[i])
             texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. specificType .. "GossipIcon"
-        elseif iconType == "taxi" then
-            texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\flightGossipIcon"
+        elseif iconMap[iconType] then
+            -- Use the mapped icon name
+            texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. iconMap[iconType]
         else
-            DEFAULT_CHAT_FRAME:AddMessage("Unknown icon type, repor it to the author: " .. iconType)
-            -- For specific types (trainer, vendor, etc.), use the type directly
-            texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. iconType .. "GossipIcon"
+            -- Unknown icon type
+            DEFAULT_CHAT_FRAME:AddMessage("Unknown icon type, report it to the author: " .. tostring(iconType))
+            texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\petitionGossipIcon" -- fallback
         end
         
-        -- DEFAULT_CHAT_FRAME:AddMessage("Setting texture: " .. texturePath)
-        
-        -- Set the texture first
+        -- Set the texture
         gossipIcon:SetTexture(texturePath);
         
-        -- Then check if it loaded successfully and use fallback if needed
+        -- Check if it loaded successfully and use fallback if needed
         if not gossipIcon:GetTexture() then
-            DEFAULT_CHAT_FRAME:AddMessage("Texture failed to load, using fallback")
-            gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\PetitionGossipIcon");
+            DEFAULT_CHAT_FRAME:AddMessage("Texture failed to load: " .. texturePath .. ", using fallback")
+            gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\petitionGossipIcon");
         end
         
         DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1;
