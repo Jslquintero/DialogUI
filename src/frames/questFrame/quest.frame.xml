@@ -320,117 +320,99 @@
             </Frame>
             <Frame name="DQuestFrameProgressPanel" inherits="DQuestFramePanelTemplate" hidden="true">
                 <Frames>
-                    <Button name="DQuestFrameGoodbyeButton" inherits="DUIPanelButtonTemplate"
-                        text="CANCEL">
+                    <Button name="DQuestFrameGoodbyeButton" inherits="DUIPanelButtonTemplate" text="CANCEL">
                         <Size>
-                            <AbsDimension x="78" y="22" />
+                            <AbsDimension x="200" y="40" />
                         </Size>
                         <Anchors>
-                            <Anchor point="BOTTOMRIGHT" relativeTo="DQuestFrame"
-                                relativePoint="BOTTOMRIGHT">
+                            <Anchor point="BOTTOMRIGHT" relativeTo="DQuestFrame" relativePoint="BOTTOMRIGHT">
                                 <Offset>
-                                    <AbsDimension x="-39" y="73" />
+                                    <AbsDimension x="80" y="40" />
                                 </Offset>
                             </Anchor>
                         </Anchors>
                         <Scripts>
                             <OnClick>
-                                QuestGoodbyeButton_OnClick();
-                            </OnClick>
+								DQuestGoodbyeButton_OnClick();
+							</OnClick>
                         </Scripts>
                     </Button>
-                    <Button name="QuestFrameCompleteButton" inherits="DUIPanelButtonTemplate"
-                        text="CONTINUE">
+                    <Button name="DQuestFrameCompleteButton" inherits="DUIPanelButtonTemplate" text="CONTINUE">
                         <Size>
-                            <AbsDimension x="120" y="22" />
+                            <AbsDimension x="200" y="40" />
                         </Size>
                         <Anchors>
-                            <Anchor point="BOTTOMLEFT" relativeTo="DQuestFrame"
-                                relativePoint="BOTTOMLEFT">
+                            <Anchor point="BOTTOMLEFT" relativeTo="DQuestFrame" relativePoint="BOTTOMLEFT">
                                 <Offset>
-                                    <AbsDimension x="22" y="72" />
+                                    <AbsDimension x="35" y="40" />
                                 </Offset>
                             </Anchor>
                         </Anchors>
                         <Scripts>
                             <OnClick>
-                                QuestProgressCompleteButton_OnClick();
-                            </OnClick>
+								DQuestProgressCompleteButton_OnClick();
+							</OnClick>
                         </Scripts>
                     </Button>
-                    <ScrollFrame name="QuestProgressScrollFrame"
-                        inherits="DUIPanelScrollFrameTemplate">
+                    <ScrollFrame name="DQuestProgressScrollFrame" inherits="DUIPanelScrollFrameTemplate">
                         <Size>
-                            <AbsDimension x="300" y="334" />
+                            <AbsDimension x="400" y="334" />
                         </Size>
                         <Anchors>
                             <Anchor point="TOPLEFT" relativeTo="DQuestFrame">
                                 <Offset>
-                                    <AbsDimension x="23" y="-81" />
+                                    <AbsDimension x="40" y="-90" />
                                 </Offset>
                             </Anchor>
                         </Anchors>
                         <ScrollChild>
                             <Frame name="DQuestProgressScrollChildFrame">
                                 <Size>
-                                    <AbsDimension x="300" y="334" />
+                                    <AbsDimension x="512" y="334" />
                                 </Size>
                                 <Layers>
                                     <Layer level="BACKGROUND">
-                                        <FontString name="QuestProgressTitleText"
-                                            inherits="QuestTitleFont" text="Quest Title"
-                                            justifyH="LEFT">
+                                        <FontString name="DQuestProgressTitleText" inherits="DQuestTitleFont" justifyH="LEFT">
                                             <Size>
-                                                <AbsDimension x="285" y="0" />
+                                                <AbsDimension x="370" y="0" />
                                             </Size>
                                             <Anchors>
                                                 <Anchor point="TOPLEFT">
                                                     <Offset>
-                                                        <AbsDimension x="5" y="-10" />
+                                                        <AbsDimension x="10" y="-10" />
                                                     </Offset>
                                                 </Anchor>
                                             </Anchors>
                                         </FontString>
-                                        <FontString name="QuestProgressText" inherits="QuestFont"
-                                            justifyH="LEFT">
+                                        <FontString name="DQuestProgressText" inherits="DQuestFont" justifyH="LEFT">
                                             <Size>
-                                                <AbsDimension x="275" y="0" />
+                                                <AbsDimension x="370" y="0" />
                                             </Size>
                                             <Anchors>
-                                                <Anchor point="TOPLEFT"
-                                                    relativeTo="QuestProgressTitleText"
-                                                    relativePoint="BOTTOMLEFT">
+                                                <Anchor point="TOPLEFT" relativeTo="DQuestProgressTitleText" relativePoint="BOTTOMLEFT">
                                                     <Offset>
-                                                        <AbsDimension x="0" y="-5" />
+                                                        <AbsDimension x="1" y="-15" />
                                                     </Offset>
                                                 </Anchor>
                                             </Anchors>
                                         </FontString>
-                                        <FontString name="QuestProgressRequiredItemsText"
-                                            inherits="QuestTitleFont" text="TURN_IN_ITEMS"
-                                            justifyH="LEFT">
+                                        <FontString name="DQuestProgressRequiredItemsText" inherits="DQuestTitleFont" text="TURN_IN_ITEMS" justifyH="LEFT">
                                             <Size>
-                                                <AbsDimension x="295" y="0" />
+                                                <AbsDimension x="295" y="0"/>
                                             </Size>
                                             <Anchors>
-                                                <Anchor point="TOPLEFT"
-                                                    relativeTo="QuestProgressText"
-                                                    relativePoint="BOTTOMLEFT">
+                                                <Anchor point="TOPLEFT" relativeTo="DQuestProgressText" relativePoint="BOTTOMLEFT">
                                                     <Offset>
-                                                        <AbsDimension x="0" y="-10" />
+                                                        <AbsDimension x="0" y="-10"/>
                                                     </Offset>
                                                 </Anchor>
                                             </Anchors>
                                         </FontString>
-                                        <FontString name="DQuestProgressRequiredMoneyText"
-                                            inherits="QuestFontNormalSmall" text="REQUIRED_MONEY"
-                                            justifyH="LEFT">
+                                        <FontString name="DQuestProgressRequiredMoneyText" inherits="DQuestFontNormalSmall" text="REQUIRED_MONEY" justifyH="LEFT">
                                             <Anchors>
-                                                <Anchor point="TOPLEFT"
-                                                    relativeTo="QuestProgressRequiredItemsText"
-                                                    relativePoint="BOTTOMLEFT">
+                                                <Anchor point="TOPLEFT" relativeTo="DQuestProgressRequiredItemsText" relativePoint="BOTTOMLEFT">
                                                     <Offset>
-                                                        <AbsDimension x="0" y="-10" />
+                                                        <AbsDimension x="0" y="-10"/>
                                                     </Offset>
                                                 </Anchor>
                                             </Anchors>
@@ -438,87 +420,71 @@
                                     </Layer>
                                 </Layers>
                                 <Frames>
-                                    <Frame name="DQuestProgressRequiredMoneyFrame"
-                                        inherits="DMoneyFrameTemplate">
+                                    <Frame name="DQuestProgressRequiredMoneyFrame" inherits="DMoneyFrameTemplate">
                                         <Anchors>
-                                            <Anchor point="LEFT"
-                                                relativeTo="DQuestProgressRequiredMoneyText"
-                                                relativePoint="RIGHT">
+                                            <Anchor point="LEFT" relativeTo="DQuestProgressRequiredMoneyText" relativePoint="RIGHT">
                                                 <Offset>
-                                                    <AbsDimension x="10" y="0" />
+                                                    <AbsDimension x="10" y="0"/>
                                                 </Offset>
                                             </Anchor>
                                         </Anchors>
                                         <Scripts>
                                             <OnLoad>
-                                                SmallMoneyFrame_OnLoad();
-                                                MoneyFrame_SetType("STATIC");
-                                            </OnLoad>
+												SmallMoneyFrame_OnLoad();
+												MoneyFrame_SetType("STATIC");
+											</OnLoad>
                                         </Scripts>
                                     </Frame>
-                                    <Button name="DQuestProgressItem1" inherits="DQuestItemTemplate"
-                                        id="1">
+                                    <Button name="DQuestProgressItem1" inherits="DQuestItemTemplate" id="1">
                                         <Anchors>
-                                            <Anchor point="TOPLEFT"
-                                                relativeTo="QuestProgressRequiredItemsText"
-                                                relativePoint="BOTTOMLEFT">
+                                            <Anchor point="TOPLEFT" relativeTo="DQuestProgressRequiredItemsText" relativePoint="BOTTOMLEFT">
                                                 <Offset>
-                                                    <AbsDimension x="-3" y="-5" />
+                                                    <AbsDimension x="-3" y="-5"/>
                                                 </Offset>
                                             </Anchor>
                                         </Anchors>
                                     </Button>
-                                    <Button name="DQuestProgressItem2" inherits="DQuestItemTemplate"
-                                        id="2">
+                                    <Button name="DQuestProgressItem2" inherits="DQuestItemTemplate" id="2">
                                         <Anchors>
-                                            <Anchor point="LEFT" relativeTo="DQuestProgressItem1"
-                                                relativePoint="RIGHT">
+                                            <Anchor point="LEFT" relativeTo="DQuestProgressItem1" relativePoint="RIGHT">
                                                 <Offset>
-                                                    <AbsDimension x="2" y="0" />
+                                                    <AbsDimension x="2" y="0"/>
                                                 </Offset>
                                             </Anchor>
                                         </Anchors>
                                     </Button>
-                                    <Button name="DQuestProgressItem3" inherits="DQuestItemTemplate"
-                                        id="3">
+                                    <Button name="DQuestProgressItem3" inherits="DQuestItemTemplate" id="3">
                                         <Anchors>
-                                            <Anchor point="TOP" relativeTo="DQuestProgressItem1"
-                                                relativePoint="BOTTOM">
+                                            <Anchor point="TOP" relativeTo="DQuestProgressItem1" relativePoint="BOTTOM">
                                                 <Offset>
-                                                    <AbsDimension x="0" y="-3" />
+                                                    <AbsDimension x="0" y="-3"/>
                                                 </Offset>
                                             </Anchor>
                                         </Anchors>
                                     </Button>
-                                    <Button name="DQuestProgressItem4" inherits="DQuestItemTemplate"
-                                        id="4">
+                                    <Button name="DQuestProgressItem4" inherits="DQuestItemTemplate" id="4">
                                         <Anchors>
-                                            <Anchor point="LEFT" relativeTo="DQuestProgressItem3"
-                                                relativePoint="RIGHT">
+                                            <Anchor point="LEFT" relativeTo="DQuestProgressItem3" relativePoint="RIGHT">
                                                 <Offset>
-                                                    <AbsDimension x="2" y="0" />
+                                                    <AbsDimension x="2" y="0"/>
                                                 </Offset>
                                             </Anchor>
                                         </Anchors>
                                     </Button>
-                                    <Button name="DQuestProgressItem5" inherits="DQuestItemTemplate"
-                                        id="5">
+                                    <Button name="DQuestProgressItem5" inherits="DQuestItemTemplate" id="5">
                                         <Anchors>
-                                            <Anchor point="TOP" relativeTo="DQuestProgressItem3"
-                                                relativePoint="BOTTOM">
+                                            <Anchor point="TOP" relativeTo="DQuestProgressItem3" relativePoint="BOTTOM">
                                                 <Offset>
-                                                    <AbsDimension x="0" y="-3" />
+                                                    <AbsDimension x="0" y="-3"/>
                                                 </Offset>
                                             </Anchor>
                                         </Anchors>
                                     </Button>
-                                    <Button name="DQuestProgressItem6" inherits="DQuestItemTemplate"
-                                        id="6">
+                                    <Button name="DQuestProgressItem6" inherits="DQuestItemTemplate" id="6">
                                         <Anchors>
-                                            <Anchor point="LEFT" relativeTo="DQuestProgressItem5"
-                                                relativePoint="RIGHT">
+                                            <Anchor point="LEFT" relativeTo="DQuestProgressItem5" relativePoint="RIGHT">
                                                 <Offset>
-                                                    <AbsDimension x="2" y="0" />
+                                                    <AbsDimension x="2" y="0"/>
                                                 </Offset>
                                             </Anchor>
                                         </Anchors>
@@ -530,8 +496,8 @@
                 </Frames>
                 <Scripts>
                     <OnShow>
-                        DQuestFrameProgressPanel_OnShow();
-                    </OnShow>
+						DQuestFrameProgressPanel_OnShow();
+					</OnShow>
                 </Scripts>
             </Frame>
             <Frame name="DQuestFrameDetailPanel" inherits="DQuestFramePanelTemplate" hidden="true">

@@ -126,7 +126,7 @@ end
 
 function DQuestProgressCompleteButton_OnClick()
     CompleteQuest();
-    -- PlaySound("igQuestListComplete");
+    PlaySound("igQuestListComplete");
 end
 
 function DQuestGoodbyeButton_OnClick()
@@ -167,51 +167,50 @@ function DQuestFrameProgressPanel_OnShow()
     DQuestFrameDetailPanel:Hide();
     DQuestFrameGreetingPanel:Hide();
     HideDefaultFrames();
-    local material = DQuestFrame_GetMaterial();
-    DQuestProgressTitleText:SetText(GetTitleText());
-    DQuestFrame_SetTitleTextColor(DQuestProgressTitleText, material);
-    QuestProgressText:SetText(GetProgressText());
-    DQuestFrame_SetTextColor(DQuestProgressText, material);
+    DQuestFrameNpcNameText:SetText(GetTitleText());
+    DQuestProgressText:SetText(GetProgressText());
+    SetFontColor(DQuestFrameNpcNameText, "DarkBrown");
+    SetFontColor(DQuestProgressText, "DarkBrown");
     if (IsQuestCompletable()) then
-        QuestFrameCompleteButton:Enable();
+        DQuestFrameCompleteButton:Enable();
     else
-        QuestFrameCompleteButton:Disable();
+        DQuestFrameCompleteButton:Disable();
     end
-    QuestFrameProgressItems_Update();
+    DQuestFrameProgressItems_Update();
     if (QUEST_FADING_DISABLE == "0") then
-        QuestProgressScrollChildFrame:SetAlpha(0);
+        DQuestProgressScrollChildFrame:SetAlpha(0);
         UIFrameFadeIn(DQuestProgressScrollChildFrame, QUESTINFO_FADE_IN);
     end
 end
 
-function QuestFrameProgressItems_Update()
+function DQuestFrameProgressItems_Update()
     local numRequiredItems = GetNumQuestItems();
-    local questItemName = "QuestProgressItem";
+    local questItemName = "DQuestProgressItem";
     if (numRequiredItems > 0 or GetQuestMoneyToGet() > 0) then
-        QuestProgressRequiredItemsText:Show();
+        DQuestProgressRequiredItemsText:Show();
 
         -- If there's money required then anchor and display it
         if (GetQuestMoneyToGet() > 0) then
-            MoneyFrame_Update("DQuestProgressRequiredMoneyFrame", GetQuestMoneyToGet());
+            DMoneyFrame_Update("DQuestProgressRequiredMoneyFrame", GetQuestMoneyToGet());
 
             if (GetQuestMoneyToGet() > GetMoney()) then
                 -- Not enough money
-                QuestProgressRequiredMoneyText:SetTextColor(0, 0, 0);
+                DQuestProgressRequiredMoneyText:SetTextColor(0, 0, 0);
                 SetMoneyFrameColor("DQuestProgressRequiredMoneyFrame", 1.0, 0.1, 0.1);
             else
-                QuestProgressRequiredMoneyText:SetTextColor(0.2, 0.2, 0.2);
+                DQuestProgressRequiredMoneyText:SetTextColor(0.2, 0.2, 0.2);
                 SetMoneyFrameColor("DQuestProgressRequiredMoneyFrame", 1.0, 1.0, 1.0);
             end
-            QuestProgressRequiredMoneyText:Show();
+            DQuestProgressRequiredMoneyText:Show();
             DQuestProgressRequiredMoneyFrame:Show();
 
             -- Reanchor required item
-            getglobal(questItemName .. 1):SetPoint("TOPLEFT", "QuestProgressRequiredMoneyText", "BOTTOMLEFT", 0, -10);
+            getglobal(questItemName .. 1):SetPoint("TOPLEFT", "DQuestProgressRequiredMoneyText", "BOTTOMLEFT", 0, -10);
         else
-            QuestProgressRequiredMoneyText:Hide();
+            DQuestProgressRequiredMoneyText:Hide();
             DQuestProgressRequiredMoneyFrame:Hide();
 
-            getglobal(questItemName .. 1):SetPoint("TOPLEFT", "QuestProgressRequiredItemsText", "BOTTOMLEFT", -3, -5);
+            getglobal(questItemName .. 1):SetPoint("TOPLEFT", "DQuestProgressRequiredItemsText", "BOTTOMLEFT", -3, -5);
         end
 
         for i = 1, numRequiredItems, 1 do
@@ -225,15 +224,15 @@ function QuestFrameProgressItems_Update()
 
         end
     else
-        QuestProgressRequiredMoneyText:Hide();
+        DQuestProgressRequiredMoneyText:Hide();
         DQuestProgressRequiredMoneyFrame:Hide();
-        QuestProgressRequiredItemsText:Hide();
+        DQuestProgressRequiredItemsText:Hide();
     end
     for i = numRequiredItems + 1, MAX_REQUIRED_ITEMS, 1 do
         getglobal(questItemName .. i):Hide();
     end
-    QuestProgressScrollFrame:UpdateScrollChildRect();
-    QuestProgressScrollFrameScrollBar:SetValue(0);
+    DQuestProgressScrollFrame:UpdateScrollChildRect();
+    DQuestProgressScrollFrameScrollBar:SetValue(0);
 end
 
 function DQuestFrameGreetingPanel_OnShow()
