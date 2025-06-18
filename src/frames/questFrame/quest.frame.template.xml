@@ -156,11 +156,20 @@
             <Anchors>
                 <Anchor point="TOPLEFT">
                     <Offset>
-                        <AbsDimension x="30" y="0" />
+                        <!-- controls the text inside of greeting panel  -->
+                        <AbsDimension x="30" y="-5" />
                     </Offset>
                 </Anchor>
             </Anchors>
         </ButtonText>
-        <NormalFont inherits="DQuestFont" justifyH="LEFT" />
+        <NormalFont inherits="DQuestFont" justifyH="LEFT">
+            <Anchors>
+                <Anchor point="LEFT">
+                    <Offset>
+                        <AbsDimension x="20" y="0" />
+                    </Offset>
+                </Anchor>
+            </Anchors>
+        </NormalFont>
     </Button>
 </Ui>

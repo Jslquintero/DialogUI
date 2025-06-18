@@ -52,11 +52,11 @@ function DGossipFrameUpdate()
 
 
      -- Debug GetGossipOptions()
-     local options = {GetGossipOptions()}
-     DEFAULT_CHAT_FRAME:AddMessage("GetGossipOptions() returned " .. table.getn(options) .. " items:")
-     for i = 1, table.getn(options) do
-        DEFAULT_CHAT_FRAME:AddMessage("Option " .. i .. ": " .. tostring(options[i]))
-     end
+    --  local options = {GetGossipOptions()}
+    --  DEFAULT_CHAT_FRAME:AddMessage("GetGossipOptions() returned " .. table.getn(options) .. " items:")
+    --  for i = 1, table.getn(options) do
+    --     DEFAULT_CHAT_FRAME:AddMessage("Option " .. i .. ": " .. tostring(options[i]))
+    --  end
      
 
     for i = DGossipFrame.buttonIndex, NUMGOSSIPBUTTONS do

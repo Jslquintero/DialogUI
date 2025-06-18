@@ -246,9 +246,9 @@ function DQuestFrameGreetingPanel_OnShow()
     end
 
     DGreetingText:SetText(GetGreetingText());
-    SetFontColor(DGreetingText, "Ivory");
-    SetFontColor(DCurrentQuestsText, "Ivory");
-    SetFontColor(DAvailableQuestsText, "Ivory");
+    SetFontColor(DGreetingText, "DarkBrown");
+    SetFontColor(DCurrentQuestsText, "DarkBrown");
+    SetFontColor(DAvailableQuestsText, "DarkBrown");
     local numActiveQuests = GetNumActiveQuests();
     local numAvailableQuests = GetNumAvailableQuests();
     if (numActiveQuests == 0) then
@@ -259,14 +259,14 @@ function DQuestFrameGreetingPanel_OnShow()
         DCurrentQuestsText:Show();
         DQuestTitleButton1:SetPoint("TOPLEFT", "DCurrentQuestsText", "BOTTOMLEFT", -10, -5);
         for i = 1, numActiveQuests, 1 do
-            local questTitleButton = getglobal("QuestTitleButton" .. i);
+            local questTitleButton = getglobal("DQuestTitleButton" .. i);
             questTitleButton:SetText(GetActiveTitle(i));
-            questTitleButton:SetHeight(questTitleButton:GetTextHeight() + 2);
+            questTitleButton:SetHeight(questTitleButton:GetTextHeight() + 20);
             questTitleButton:SetID(i);
             questTitleButton.isActive = 1;
             questTitleButton:Show();
             if (i > 1) then
-                questTitleButton:SetPoint("TOPLEFT", "QuestTitleButton" .. (i - 1), "BOTTOMLEFT", 0, 0)
+                questTitleButton:SetPoint("TOPLEFT", "DQuestTitleButton" .. (i - 1), "BOTTOMLEFT", 0, 0)
             end
         end
     end
@@ -275,30 +275,30 @@ function DQuestFrameGreetingPanel_OnShow()
 
     else
         if (numActiveQuests > 0) then
-            QuestGreetingFrameHorizontalBreak:SetPoint("TOPLEFT", "QuestTitleButton" .. numActiveQuests, "BOTTOMLEFT",
-                22, -10);
+            -- DQuestGreetingFrameHorizontalBreak:SetPoint("TOPLEFT", "DQuestTitleButton" .. numActiveQuests, "BOTTOMLEFT",
+            --     22, -90);
 
-            DAvailableQuestsText:SetPoint("TOPLEFT", "QuestGreetingFrameHorizontalBreak", "BOTTOMLEFT", -12, -10);
+            DAvailableQuestsText:SetPoint("TOPLEFT", "DQuestGreetingFrameHorizontalBreak", "BOTTOMLEFT", -12, -10);
         else
             DAvailableQuestsText:SetPoint("TOPLEFT", "DGreetingText", "BOTTOMLEFT", 0, -10);
         end
         DAvailableQuestsText:Show();
-        getglobal("QuestTitleButton" .. (numActiveQuests + 1)):SetPoint("TOPLEFT", "DAvailableQuestsText", "BOTTOMLEFT",
+        getglobal("DQuestTitleButton" .. (numActiveQuests + 1)):SetPoint("TOPLEFT", "DAvailableQuestsText", "BOTTOMLEFT",
             -10, -5);
         for i = (numActiveQuests + 1), (numActiveQuests + numAvailableQuests), 1 do
-            local questTitleButton = getglobal("QuestTitleButton" .. i);
+            local questTitleButton = getglobal("DQuestTitleButton" .. i);
             questTitleButton:SetText(GetAvailableTitle(i - numActiveQuests));
-            questTitleButton:SetHeight(questTitleButton:GetTextHeight() + 2);
+            questTitleButton:SetHeight(questTitleButton:GetTextHeight() + 20);
             questTitleButton:SetID(i - numActiveQuests);
             questTitleButton.isActive = 0;
             questTitleButton:Show();
             if (i > numActiveQuests + 1) then
-                questTitleButton:SetPoint("TOPLEFT", "QuestTitleButton" .. (i - 1), "BOTTOMLEFT", 0, 0)
+                questTitleButton:SetPoint("TOPLEFT", "DQuestTitleButton" .. (i - 1), "BOTTOMLEFT", 0, 0)
             end
         end
     end
     for i = (numActiveQuests + numAvailableQuests + 1), MAX_NUM_QUESTS, 1 do
-        getglobal("QuestTitleButton" .. i):Hide();
+        getglobal("DQuestTitleButton" .. i):Hide();
     end
 end
 
