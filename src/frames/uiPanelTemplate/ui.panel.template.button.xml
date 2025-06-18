@@ -9,7 +9,7 @@
     </Texture>
     <Texture name="DUIPanelButtonDisabledDownTexture" file="Interface\AddOns\DialogUI\src\assets\art\parchment\OptionBackground-Grey"  virtual="true">
     </Texture>
-    <Texture name="DUIPanelButtonHighlightTexture" file="Interface\AddOns\DialogUI\src\assets\art\parchment\ButtonHighlight-Front" alphaMode="ADD" virtual="true">
+    <Texture name="DUIPanelButtonHighlightTexture" file="Interface\AddOns\DialogUI\src\assets\art\parchment\ButtonHighlight-Gossip" alphaMode="ADD" virtual="true">
     </Texture>
     <!-- Textures End -->
     <Button name="DUIPanelButtonTemplate" virtual="true">
