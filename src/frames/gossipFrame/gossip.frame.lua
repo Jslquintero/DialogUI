@@ -44,6 +44,7 @@ function DGossipFrame_OnEvent()
 end
 
 function DGossipFrameUpdate()
+    ClearAllGossipIcons();
     DGossipFrame.buttonIndex = 1;
     DGossipGreetingText:SetText(GetGossipText());
     DGossipFrameAvailableQuestsUpdate(GetGossipAvailableQuests());
@@ -110,8 +111,13 @@ function DGossipFrameAvailableQuestsUpdate(...)
         titleButton:SetID(titleIndex)
         titleButton.type = "Available" -- Set quest type
 
-        -- Access the existing gossip icon texture and update it
+        -- CLEAR ANY EXISTING GOSSIP ICON FIRST
         local gossipIcon = getglobal(titleButton:GetName() .. "GossipIcon")
+        if gossipIcon then
+            gossipIcon:Hide() -- Hide existing icon
+        end
+
+        -- Access the existing gossip icon texture and update it
         if not gossipIcon then
             -- If the texture doesn't exist, create it (should only happen the first time)
             gossipIcon = titleButton:CreateTexture(titleButton:GetName() .. "GossipIcon", "OVERLAY")
@@ -119,7 +125,9 @@ function DGossipFrameAvailableQuestsUpdate(...)
             gossipIcon:SetHeight(16)
             gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 3, -5)
         end
+        
         gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\AvailableQuestIcon")
+        gossipIcon:Show() -- Make sure it's visible
 
         -- Apply normal texture only for available quests
         titleButton:SetNormalTexture(
@@ -142,7 +150,6 @@ function DGossipFrameAvailableQuestsUpdate(...)
         DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1
     end
 end
-
 function DGossipFrameActiveQuestsUpdate(...)
     local titleButton;
     local titleIndex = 1;
@@ -157,12 +164,25 @@ function DGossipFrameActiveQuestsUpdate(...)
 
         titleButton:SetID(titleIndex);
         titleButton.type = "Active";
-        local gossipIcon = titleButton:CreateTexture("$parentGossipIcon", "OVERLAY")
-        gossipIcon:SetWidth(16)
-        gossipIcon:SetHeight(16)
-        gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 3, -5)
+        
+        -- Use the same naming convention as other functions
+        local gossipIconName = titleButton:GetName() .. "GossipIcon"
+        local gossipIcon = getglobal(gossipIconName)
+        
+        -- CLEAR ANY EXISTING GOSSIP ICON FIRST
+        if gossipIcon then
+            gossipIcon:Hide() -- Hide existing icon
+        end
+        
+        if not gossipIcon then
+            gossipIcon = titleButton:CreateTexture(gossipIconName, "OVERLAY")
+            gossipIcon:SetWidth(16)
+            gossipIcon:SetHeight(16)
+            gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 3, -5)
+        end
 
         gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\ActiveQuestIcon");
+        gossipIcon:Show() -- Make sure it's visible
 
         DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1;
         titleIndex = titleIndex + 1;
@@ -197,6 +217,11 @@ function DGossipFrameOptionsUpdate(...)
 
         local gossipIconName = titleButton:GetName() .. "GossipIcon"
         local gossipIcon = getglobal(gossipIconName)
+        
+        -- CLEAR ANY EXISTING GOSSIP ICON FIRST
+        if gossipIcon then
+            gossipIcon:Hide() -- Hide existing icon
+        end
         
         if not gossipIcon then
             gossipIcon = titleButton:CreateTexture(gossipIconName, "OVERLAY")
@@ -244,6 +269,7 @@ function DGossipFrameOptionsUpdate(...)
         
         -- Set the texture
         gossipIcon:SetTexture(texturePath);
+        gossipIcon:Show() -- Make sure it's visible
         
         -- Check if it loaded successfully and use fallback if needed
         if not gossipIcon:GetTexture() then
@@ -314,5 +340,17 @@ function DetermineGossipIconType(gossipText)
         return "banker"
     else
         return "gossip"  -- fallback
+    end
+end
+
+function ClearAllGossipIcons()
+    for i = 1, NUMGOSSIPBUTTONS do
+        local titleButton = getglobal("DGossipTitleButton" .. i)
+        if titleButton then
+            local gossipIcon = getglobal(titleButton:GetName() .. "GossipIcon")
+            if gossipIcon then
+                gossipIcon:Hide()
+            end
+        end
     end
 end
