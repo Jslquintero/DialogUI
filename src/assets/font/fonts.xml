@@ -12,7 +12,7 @@
         <Color r="0.19" g="0.17" b="0.13" />
     </Font>
     <!--NPC name-->
-    <Font name="DQuestFont" font="Interface\AddOns\DialogUI\src\assets\font\frizqt__.ttf"
+    <Font name="DQuestFont" font="Interface\AddOns\DialogUI\src\assets\font\frizqt___cyr.ttf"
         virtual="true">
         <FontHeight>
             <AbsValue val="12" />
@@ -20,18 +20,18 @@
         <Color r="0.19" g="0.17" b="0.13" />
     </Font>
     <!--Paragraph-->
-    <Font name="DQuestButtonTitleGossip" font="Interface\AddOns\DialogUI\src\assets\font\frizqt__.ttf"
+    <Font name="DQuestButtonTitleGossip" font="Interface\AddOns\DialogUI\src\assets\font\frizqt___cyr.ttf"
         virtual="true">
         <FontHeight>
             <AbsValue val="12" />
         </FontHeight>
     </Font>
-    <Font name="DGameFontNormal" inherits="MasterFont" font="Interface\AddOns\DialogUI\src\assets\font\frizqt__.ttf" virtual="true">
+    <Font name="DGameFontNormal" inherits="MasterFont" font="Interface\AddOns\DialogUI\src\assets\font\frizqt___cyr.ttf" virtual="true">
         <FontHeight>
             <AbsValue val="12"/>
         </FontHeight>
     </Font>
-    <Font name="DGameFontBlack" font="Interface\AddOns\DialogUI\src\assets\font\frizqt__.ttf" virtual="true">
+    <Font name="DGameFontBlack" font="Interface\AddOns\DialogUI\src\assets\font\frizqt___cyr.ttf" virtual="true">
         <FontHeight>
             <AbsValue val="12"/>
         </FontHeight>
