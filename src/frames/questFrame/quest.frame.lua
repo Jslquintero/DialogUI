@@ -275,11 +275,11 @@ function DQuestFrameGreetingPanel_OnShow()
 
     else
         if (numActiveQuests > 0) then
-            -- DQuestGreetingFrameHorizontalBreak:SetPoint("TOPLEFT", "DQuestTitleButton" .. numActiveQuests, "BOTTOMLEFT",
-            --     22, -10);
-            -- DQuestGreetingFrameHorizontalBreak:Show();
+            DQuestGreetingFrameHorizontalBreak:SetPoint("TOPLEFT", "DQuestTitleButton" .. numActiveQuests, "BOTTOMLEFT",
+                22, -10);
+            DQuestGreetingFrameHorizontalBreak:Show();
 
-            -- DAvailableQuestsText:SetPoint("TOPLEFT", "DQuestGreetingFrameHorizontalBreak", "BOTTOMLEFT", -12, -10);
+            DAvailableQuestsText:SetPoint("TOPLEFT", "DQuestGreetingFrameHorizontalBreak", "BOTTOMLEFT", -12, -10);
         else
             DAvailableQuestsText:SetPoint("TOPLEFT", "DGreetingText", "BOTTOMLEFT", 0, -10);
         end
@@ -600,4 +600,38 @@ end
 function DQuestFrame_SetTextColor(fontString, material)
     local materialTextColor = GetMaterialTextColors(material);
     fontString:SetTextColor(materialTextColor[1], materialTextColor[2], materialTextColor[3]);
+end
+
+
+local function UpdateQuestIcons()
+    local numActiveQuests = GetNumActiveQuests();
+    local numAvailableQuests = GetNumAvailableQuests();
+    
+    -- Update active quest icons
+    for i = 1, numActiveQuests do
+        local button = getglobal("DQuestTitleButton" .. i);
+        if button and button:IsVisible() then
+            local iconTexture = button:GetRegions(); -- Gets the first region (your texture)
+            if iconTexture and iconTexture.SetTexture then
+                iconTexture:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\ActiveQuestIcon");
+            end
+        end
+    end
+    
+    -- Update available quest icons
+    for i = (numActiveQuests + 1), (numActiveQuests + numAvailableQuests) do
+        local button = getglobal("DQuestTitleButton" .. i);
+        if button and button:IsVisible() then
+            local iconTexture = button:GetRegions(); -- Gets the first region (your texture)
+            if iconTexture and iconTexture.SetTexture then
+                iconTexture:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\AvailableQuestIcon");
+            end
+        end
+    end
+end
+
+local originalOnShow = DQuestFrameGreetingPanel_OnShow;
+DQuestFrameGreetingPanel_OnShow = function()
+    originalOnShow();
+    UpdateQuestIcons();
 end
