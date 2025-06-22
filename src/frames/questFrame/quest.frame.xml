@@ -860,7 +860,7 @@
                                                 </Anchor>
                                             </Anchors>
                                         </FontString>
-                                        <!-- <Texture name="DQuestGreetingFrameHorizontalBreak" file="Interface\QuestFrame\UI-HorizontalBreak">
+                                        <Texture name="DQuestGreetingFrameHorizontalBreak" file="">
                                             <Size>
                                                 <AbsDimension x="300" y="32"/>
                                             </Size>
@@ -871,7 +871,7 @@
                                                     </Offset>
                                                 </Anchor>
                                             </Anchors>
-                                        </Texture> -->
+                                        </Texture>
                                         <FontString name="DAvailableQuestsText"
                                             inherits="DQuestTitleFont" text="AVAILABLE_QUESTS"
                                             justifyH="LEFT">

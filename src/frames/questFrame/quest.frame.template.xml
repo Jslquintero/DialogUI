@@ -127,7 +127,7 @@
         </Size>
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture file="Interface\AddOns\DialogUI\src\assets\art\icons\AvailableQuestIcon">
+                <Texture name="$parentQuestIcon" file="Interface\AddOns\DialogUI\src\assets\art\icons\AvailableQuestIcon">
                     <Size>
                         <AbsDimension x="16" y="16" />
                     </Size>
@@ -143,12 +143,12 @@
         </Layers>
         <Scripts>
             <OnClick>
-                DQuestTitleButton_OnClick();
-            </OnClick>
+            DQuestTitleButton_OnClick();
+        </OnClick>
         </Scripts>
         <HighlightTexture
-            file="Interface\AddOns\DialogUI\src\assets\art\parchment\ButtonHighlight-Gossip"
-            alphaMode="ADD" />
+        file="Interface\AddOns\DialogUI\src\assets\art\parchment\ButtonHighlight-Gossip"
+        alphaMode="ADD" />
         <ButtonText>
             <Size>
                 <AbsDimension x="275" y="0" />
