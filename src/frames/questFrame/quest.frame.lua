@@ -331,6 +331,15 @@ function DQuestMoneyFrame_OnLoad()
 end
 
 function DQuestFrameItems_Update(questState)
+
+
+    if (DQuestFrameRewardPanel) then
+        DQuestFrameRewardPanel.itemChoice = 0;
+    end
+    if (DQuestRewardItemHighlight) then
+        DQuestRewardItemHighlight:Hide();
+    end
+
     local isQuestLog = 0;
     local numQuestRewards;
     local numQuestChoices;
