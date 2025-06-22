@@ -191,7 +191,7 @@ function DQuestFrameProgressItems_Update()
 
         -- If there's money required then anchor and display it
         if (GetQuestMoneyToGet() > 0) then
-            DMoneyFrame_Update("DQuestProgressRequiredMoneyFrame", GetQuestMoneyToGet());
+            MoneyFrame_Update("DQuestProgressRequiredMoneyFrame", GetQuestMoneyToGet());
 
             if (GetQuestMoneyToGet() > GetMoney()) then
                 -- Not enough money
@@ -276,9 +276,10 @@ function DQuestFrameGreetingPanel_OnShow()
     else
         if (numActiveQuests > 0) then
             -- DQuestGreetingFrameHorizontalBreak:SetPoint("TOPLEFT", "DQuestTitleButton" .. numActiveQuests, "BOTTOMLEFT",
-            --     22, -90);
+            --     22, -10);
+            -- DQuestGreetingFrameHorizontalBreak:Show();
 
-            DAvailableQuestsText:SetPoint("TOPLEFT", "DQuestGreetingFrameHorizontalBreak", "BOTTOMLEFT", -12, -10);
+            -- DAvailableQuestsText:SetPoint("TOPLEFT", "DQuestGreetingFrameHorizontalBreak", "BOTTOMLEFT", -12, -10);
         else
             DAvailableQuestsText:SetPoint("TOPLEFT", "DGreetingText", "BOTTOMLEFT", 0, -10);
         end
@@ -361,7 +362,7 @@ function DQuestFrameItems_Update(questState)
     else
         getglobal(questState .. "MoneyFrame"):Show();
         QuestFrame_SetAsLastShown(getglobal(questState .. "MoneyFrame"), spacerFrame);
-        DMoneyFrame_Update(questState .. "MoneyFrame", money);
+        MoneyFrame_Update(questState .. "MoneyFrame", money);
     end
 
     -- Hide unused rewards
