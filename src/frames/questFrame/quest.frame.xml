@@ -860,7 +860,7 @@
                                                 </Anchor>
                                             </Anchors>
                                         </FontString>
-                                        <!-- <Texture name="D1QuestGreetingFrameHorizontalBreak" file="Interface\QuestFrame\UI-HorizontalBreak">
+                                        <!-- <Texture name="DQuestGreetingFrameHorizontalBreak" file="Interface\QuestFrame\UI-HorizontalBreak">
                                             <Size>
                                                 <AbsDimension x="300" y="32"/>
                                             </Size>

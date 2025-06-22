@@ -157,7 +157,7 @@
                 <Anchor point="TOPLEFT">
                     <Offset>
                         <!-- controls the text inside of greeting panel  -->
-                        <AbsDimension x="30" y="-5" />
+                        <AbsDimension x="30" y="-7" />
                     </Offset>
                 </Anchor>
             </Anchors>
