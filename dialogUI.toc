@@ -9,15 +9,18 @@
 # Fonts used for the frames
 src\assets\font\fonts.xml
 
+
+# Money frame
+# src\frames\moneyFrame\money.frame.lua
+src\frames\moneyFrame\money.frame.xml
+
+
 # UI panel textures
 src\frames\uiPanelTemplate\ui.panel.template.lua
 src\frames\uiPanelTemplate\ui.panel.template.xml
 src\frames\uiPanelTemplate\ui.panel.template.button.xml
 
 
-# Money frame
-src\frames\moneyFrame\money.frame.lua
-src\frames\moneyFrame\money.frame.xml
 
 # Gossip frame
 src\frames\gossipFrame\gossip.frame.lua

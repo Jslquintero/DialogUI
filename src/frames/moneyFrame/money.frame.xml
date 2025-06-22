@@ -134,7 +134,7 @@
 				MoneyFrame_OnEvent();
 			</OnEvent>
             <OnShow>
-				DMoneyFrame_UpdateMoney();
+				MoneyFrame_UpdateMoney();
 			</OnShow>
             <OnHide>
 				if ( this.hasPickup == 1 ) then
