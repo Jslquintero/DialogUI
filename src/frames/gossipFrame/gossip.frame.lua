@@ -70,6 +70,12 @@ function DGossipFrame_OnKeyDown()
         return
     end
     
+    -- Handle spacebar to select first option
+    if key == "SPACE" then
+        DGossipSelectOption(1)
+        return
+    end
+    
     -- Handle number keys 1-9 for gossip options
     if key >= "1" and key <= "9" then
         local buttonIndex = tonumber(key)
@@ -97,12 +103,12 @@ end
 function DGossipSelectOption(buttonIndex)
     -- Only work if gossip frame is visible
     if not DGossipFrame:IsVisible() then
-        DEFAULT_CHAT_FRAME:AddMessage("Gossip frame not visible")
+        -- DEFAULT_CHAT_FRAME:AddMessage("Gossip frame not visible")
         return
     end
     
     -- Debug: Print what we're looking for
-    DEFAULT_CHAT_FRAME:AddMessage("Looking for button " .. buttonIndex .. " (total buttons: " .. totalGossipButtons .. ")")
+    -- DEFAULT_CHAT_FRAME:AddMessage("Looking for button " .. buttonIndex .. " (total buttons: " .. totalGossipButtons .. ")")
     
     -- Find the actual button that corresponds to this display number
     for i = 1, NUMGOSSIPBUTTONS do
@@ -114,25 +120,25 @@ function DGossipSelectOption(buttonIndex)
             local _, _, numStr = string.find(buttonText, "^(%d+)%.")
             if numStr then
                 local displayNum = tonumber(numStr)
-                DEFAULT_CHAT_FRAME:AddMessage("Found button " .. i .. " with display number " .. displayNum .. ": " .. buttonText .. " (type: " .. tostring(titleButton.type) .. ", ID: " .. tostring(titleButton:GetID()) .. ")")
+                -- DEFAULT_CHAT_FRAME:AddMessage("Found button " .. i .. " with display number " .. displayNum .. ": " .. buttonText .. " (type: " .. tostring(titleButton.type) .. ", ID: " .. tostring(titleButton:GetID()) .. ")")
                 
                 if displayNum == buttonIndex then
-                    DEFAULT_CHAT_FRAME:AddMessage("Triggering button " .. displayNum)
+                    -- DEFAULT_CHAT_FRAME:AddMessage("Triggering button " .. displayNum)
                     
                     -- Debug the function calls
                     if titleButton.type == "Available" then
-                        DEFAULT_CHAT_FRAME:AddMessage("Calling SelectGossipAvailableQuest(" .. titleButton:GetID() .. ")")
+                        -- DEFAULT_CHAT_FRAME:AddMessage("Calling SelectGossipAvailableQuest(" .. titleButton:GetID() .. ")")
                         SelectGossipAvailableQuest(titleButton:GetID())
                     elseif titleButton.type == "Active" then
-                        DEFAULT_CHAT_FRAME:AddMessage("Calling SelectGossipActiveQuest(" .. titleButton:GetID() .. ")")
+                        -- DEFAULT_CHAT_FRAME:AddMessage("Calling SelectGossipActiveQuest(" .. titleButton:GetID() .. ")")
                         SelectGossipActiveQuest(titleButton:GetID())
                     else
-                        DEFAULT_CHAT_FRAME:AddMessage("Calling SelectGossipOption(" .. titleButton:GetID() .. ")")
+                        -- DEFAULT_CHAT_FRAME:AddMessage("Calling SelectGossipOption(" .. titleButton:GetID() .. ")")
                         SelectGossipOption(titleButton:GetID())
                     end
                     
                     -- Also try the direct mouse click approach as backup
-                    DEFAULT_CHAT_FRAME:AddMessage("Also trying direct button click")
+                    -- DEFAULT_CHAT_FRAME:AddMessage("Also trying direct button click")
                     DGossipTitleButton_OnClick_Direct(titleButton)
                     return
                 end
@@ -140,14 +146,14 @@ function DGossipSelectOption(buttonIndex)
         end
     end
     
-    DEFAULT_CHAT_FRAME:AddMessage("No button found for number " .. buttonIndex)
+    -- DEFAULT_CHAT_FRAME:AddMessage("No button found for number " .. buttonIndex)
 end
 
 -- Direct button click function for debugging
 function DGossipTitleButton_OnClick_Direct(button)
     if not button then return end
     
-    DEFAULT_CHAT_FRAME:AddMessage("Direct click: type=" .. tostring(button.type) .. ", ID=" .. tostring(button:GetID()))
+    -- DEFAULT_CHAT_FRAME:AddMessage("Direct click: type=" .. tostring(button.type) .. ", ID=" .. tostring(button:GetID()))
     
     if (button.type == "Available") then
         SelectGossipAvailableQuest(button:GetID());
@@ -176,7 +182,6 @@ function DGossipTitleButton_OnClick()
     end
 end
 
--- Rest of your existing functions remain exactly the same...
 function DGossipFrameUpdate()
     ClearAllGossipIcons();
     DGossipFrame.buttonIndex = 1;
@@ -221,7 +226,7 @@ function DGossipFrameUpdate()
         end
     end
     totalGossipButtons = actualCount
-    DEFAULT_CHAT_FRAME:AddMessage("Total gossip buttons: " .. totalGossipButtons)
+    -- DEFAULT_CHAT_FRAME:AddMessage("Total gossip buttons: " .. totalGossipButtons)
 end
 
 function DGossipFrameAvailableQuestsUpdate(...)
