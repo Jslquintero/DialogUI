@@ -127,7 +127,7 @@
         </Size>
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture name="$parentQuestIcon" file="Interface\AddOns\DialogUI\src\assets\art\icons\AvailableQuestIcon">
+                <Texture name="$parentQuestIcon" file="Interface\AddOns\DialogUI\src\assets\art\icons\availableQuestIcon">
                     <Size>
                         <AbsDimension x="16" y="16" />
                     </Size>

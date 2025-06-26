@@ -249,18 +249,26 @@ function DQuestFrameGreetingPanel_OnShow()
     SetFontColor(DGreetingText, "DarkBrown");
     SetFontColor(DCurrentQuestsText, "DarkBrown");
     SetFontColor(DAvailableQuestsText, "DarkBrown");
+    
     local numActiveQuests = GetNumActiveQuests();
     local numAvailableQuests = GetNumAvailableQuests();
+    local buttonIndex = 1; -- Counter for numbering buttons 1-9
+    
     if (numActiveQuests == 0) then
         DCurrentQuestsText:Hide();
-
     else
         DCurrentQuestsText:SetPoint("TOPLEFT", "DGreetingText", "BOTTOMLEFT", 0, -10);
         DCurrentQuestsText:Show();
         DQuestTitleButton1:SetPoint("TOPLEFT", "DCurrentQuestsText", "BOTTOMLEFT", -10, -5);
         for i = 1, numActiveQuests, 1 do
             local questTitleButton = getglobal("DQuestTitleButton" .. i);
-            questTitleButton:SetText(GetActiveTitle(i));
+            -- Add number prefix (1-9) to the quest title
+            local questTitle = GetActiveTitle(i);
+            if (buttonIndex <= 9) then
+                questTitleButton:SetText(buttonIndex .. ". " .. questTitle);
+            else
+                questTitleButton:SetText(questTitle);
+            end
             questTitleButton:SetHeight(questTitleButton:GetTextHeight() + 20);
             questTitleButton:SetID(i);
             questTitleButton.isActive = 1;
@@ -268,17 +276,17 @@ function DQuestFrameGreetingPanel_OnShow()
             if (i > 1) then
                 questTitleButton:SetPoint("TOPLEFT", "DQuestTitleButton" .. (i - 1), "BOTTOMLEFT", 0, 0)
             end
+            buttonIndex = buttonIndex + 1;
         end
     end
+    
     if (numAvailableQuests == 0) then
         DAvailableQuestsText:Hide();
-
     else
         if (numActiveQuests > 0) then
             DQuestGreetingFrameHorizontalBreak:SetPoint("TOPLEFT", "DQuestTitleButton" .. numActiveQuests, "BOTTOMLEFT",
                 22, -10);
             DQuestGreetingFrameHorizontalBreak:Show();
-
             DAvailableQuestsText:SetPoint("TOPLEFT", "DQuestGreetingFrameHorizontalBreak", "BOTTOMLEFT", -12, -10);
         else
             DAvailableQuestsText:SetPoint("TOPLEFT", "DGreetingText", "BOTTOMLEFT", 0, -10);
@@ -288,7 +296,13 @@ function DQuestFrameGreetingPanel_OnShow()
             -10, -5);
         for i = (numActiveQuests + 1), (numActiveQuests + numAvailableQuests), 1 do
             local questTitleButton = getglobal("DQuestTitleButton" .. i);
-            questTitleButton:SetText(GetAvailableTitle(i - numActiveQuests));
+            -- Add number prefix (1-9) to the quest title
+            local questTitle = GetAvailableTitle(i - numActiveQuests);
+            if (buttonIndex <= 9) then
+                questTitleButton:SetText(buttonIndex .. ". " .. questTitle);
+            else
+                questTitleButton:SetText(questTitle);
+            end
             questTitleButton:SetHeight(questTitleButton:GetTextHeight() + 20);
             questTitleButton:SetID(i - numActiveQuests);
             questTitleButton.isActive = 0;
@@ -296,12 +310,76 @@ function DQuestFrameGreetingPanel_OnShow()
             if (i > numActiveQuests + 1) then
                 questTitleButton:SetPoint("TOPLEFT", "DQuestTitleButton" .. (i - 1), "BOTTOMLEFT", 0, 0)
             end
+            buttonIndex = buttonIndex + 1;
         end
     end
+    
     for i = (numActiveQuests + numAvailableQuests + 1), MAX_NUM_QUESTS, 1 do
         getglobal("DQuestTitleButton" .. i):Hide();
     end
+    
+    -- Enable keyboard capture for this frame
+    DQuestFrame:EnableKeyboard(true);
+    DQuestFrame:SetScript("OnKeyDown", DQuestFrame_OnKeyDown);
 end
+
+function DQuestFrame_OnKeyDown()
+    local key = arg1;
+    
+    -- Handle ESC key to close
+    if key == "ESCAPE" then
+        HideUIPanel(DQuestFrame);
+        return
+    end
+
+    -- Handle spacebar press to select first option
+ -- Handle spacebar press
+ if (key == "SPACE") then
+    -- Check which panel is currently visible and trigger appropriate action
+    if (DQuestFrameDetailPanel:IsVisible()) then
+        -- Quest Detail panel - Accept quest
+        DQuestDetailAcceptButton_OnClick();
+        return;
+    elseif (DQuestFrameRewardPanel:IsVisible()) then
+        -- Quest Reward panel - Complete quest
+        DQuestRewardCompleteButton_OnClick();
+        return;
+    elseif (DQuestFrameProgressPanel:IsVisible()) then
+        -- Quest Progress panel - Complete quest
+        DQuestProgressCompleteButton_OnClick();
+        return;
+    else
+        -- Greeting panel - Select first quest
+        local numActiveQuests = GetNumActiveQuests();
+        local numAvailableQuests = GetNumAvailableQuests();
+        
+        -- Check if there are any quests available
+        if (numActiveQuests > 0 or numAvailableQuests > 0) then
+            -- Click the first quest button
+            local firstButton = getglobal("DQuestTitleButton1");
+            if (firstButton and firstButton:IsVisible()) then
+                firstButton:Click();
+            end
+        end
+    end
+end
+    
+    -- Handle number keys 1-9 for direct quest selection
+    if (key >= "1" and key <= "9") then
+        local buttonNum = tonumber(key);
+        local numActiveQuests = GetNumActiveQuests();
+        local numAvailableQuests = GetNumAvailableQuests();
+        local totalQuests = numActiveQuests + numAvailableQuests;
+        
+        if (buttonNum <= totalQuests) then
+            local questButton = getglobal("DQuestTitleButton" .. buttonNum);
+            if (questButton and questButton:IsVisible()) then
+                questButton:Click();
+            end
+        end
+    end
+end
+
 
 function DQuestFrame_OnShow()
     PlaySound("igQuestListOpen");
@@ -434,7 +512,7 @@ function DQuestFrameItems_Update(questState)
     if (numQuestSpellRewards > 0) then
         local learnSpellText = getglobal(questState .. "SpellLearnText");
         learnSpellText:Show();
-        DQuestFrame_SetTextColor(learnSpellText, material);
+        SetFontColor(learnSpellText, "DarkBrown");
         QuestFrame_SetAsLastShown(learnSpellText, spacerFrame);
 
         -- Anchor learnSpellText if there were choosable rewards
@@ -471,7 +549,7 @@ function DQuestFrameItems_Update(questState)
 
     -- Setup mandatory rewards
     if (numQuestRewards > 0 or money > 0) then
-        DQuestFrame_SetTextColor(questItemReceiveText, material);
+            SetFontColor(questItemReceiveText, "DarkBrown");
         -- Anchor the reward text differently if there are choosable rewards
         if (numQuestSpellRewards > 0) then
             questItemReceiveText:SetText(TEXT(REWARD_ITEMS));
@@ -520,9 +598,9 @@ function DQuestFrameItems_Update(questState)
 
             if (i > 1) then
                 if (mod(i, 2) == 1) then
-                    questItem:SetPoint("TOPLEFT", questItemName .. (index - 2), "BOTTOMLEFT", 0, -2);
+                    questItem:SetPoint("TOPLEFT", questItemName .. (index - 2), "BOTTOMLEFT", 0, -02);
                 else
-                    questItem:SetPoint("TOPLEFT", questItemName .. (index - 1), "TOPRIGHT", 1, 0);
+                    questItem:SetPoint("TOPLEFT", questItemName .. (index - 1), "TOPRIGHT", 50, 0);
                 end
             else
                 questItem:SetPoint("TOPLEFT", questState .. "ItemReceiveText", "BOTTOMLEFT", -3, -5);
@@ -556,7 +634,7 @@ function DQuestFrameDetailPanel_OnShow()
     DQuestDetailScrollFrameScrollBar:SetValue(0);
 
     -- Hide Objectives and rewards until the text is completely displayed
-    TextAlphaDependentFrame:SetAlpha(0);
+    DTextAlphaDependentFrame:SetAlpha(0);
     DQuestFrameAcceptButton:Disable();
 
     DQuestFrameDetailPanel.fading = 1;
@@ -575,9 +653,9 @@ function DQuestFrameDetailPanel_OnUpdate(elapsed)
             this.fading = nil;
             -- Show Quest Objectives and Rewards
             if (QUEST_FADING_DISABLE == "0") then
-                UIFrameFadeIn(TextAlphaDependentFrame, QUESTINFO_FADE_IN);
+                UIFrameFadeIn(DTextAlphaDependentFrame, QUESTINFO_FADE_IN);
             else
-                TextAlphaDependentFrame:SetAlpha(1);
+                DTextAlphaDependentFrame:SetAlpha(1);
             end
             DQuestFrameAcceptButton:Enable();
         end
@@ -593,24 +671,6 @@ function DQuestDetailDeclineButton_OnClick()
     PlaySound("igQuestCancel");
 end
 
-function DQuestFrame_GetMaterial()
-    local material = GetQuestBackgroundMaterial();
-    if (not material) then
-        material = "Parchment";
-    end
-    return material;
-end
-
-function DQuestFrame_SetTitleTextColor(fontString, material)
-    local temp, materialTitleTextColor = GetMaterialTextColors(material);
-    fontString:SetTextColor(materialTitleTextColor[1], materialTitleTextColor[2], materialTitleTextColor[3]);
-end
-
-function DQuestFrame_SetTextColor(fontString, material)
-    local materialTextColor = GetMaterialTextColors(material);
-    fontString:SetTextColor(materialTextColor[1], materialTextColor[2], materialTextColor[3]);
-end
-
 
 local function UpdateQuestIcons()
     local numActiveQuests = GetNumActiveQuests();
@@ -622,7 +682,7 @@ local function UpdateQuestIcons()
         if button and button:IsVisible() then
             local iconTexture = button:GetRegions(); -- Gets the first region (your texture)
             if iconTexture and iconTexture.SetTexture then
-                iconTexture:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\ActiveQuestIcon");
+                iconTexture:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\activeQuestIcon");
             end
         end
     end
@@ -633,7 +693,7 @@ local function UpdateQuestIcons()
         if button and button:IsVisible() then
             local iconTexture = button:GetRegions(); -- Gets the first region (your texture)
             if iconTexture and iconTexture.SetTexture then
-                iconTexture:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\AvailableQuestIcon");
+                iconTexture:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\availableQuestIcon");
             end
         end
     end

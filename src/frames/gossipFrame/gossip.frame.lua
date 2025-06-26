@@ -262,7 +262,7 @@ function DGossipFrameAvailableQuestsUpdate(...)
             gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 3, -5)
         end
         
-        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\AvailableQuestIcon")
+        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\availableQuestIcon")
         gossipIcon:Show()
 
         titleButton:SetNormalTexture(
@@ -318,7 +318,7 @@ function DGossipFrameActiveQuestsUpdate(...)
             gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 3, -5)
         end
 
-        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\ActiveQuestIcon");
+        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\activeQuestIcon");
         gossipIcon:Show()
 
         DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1;
@@ -445,9 +445,9 @@ function DetermineGossipIconType(gossipText)
     end
     
     if string.find(text, "profession") and string.find(text, "trainer") then
-        return "trainer"
+        return "professionTrainer"
     elseif string.find(text, "class") and string.find(text, "trainer") then
-        return "class trainer"
+        return "classTrainer"
     elseif string.find(text, "stable") then
         return "stablemaster"
     elseif string.find(text, "inn") then
@@ -455,15 +455,15 @@ function DetermineGossipIconType(gossipText)
     elseif string.find(text, "mailbox") then
         return "mailbox"
     elseif string.find(text, "guild master") then
-        return "guild master"
+        return "guildMaster"
     elseif string.find(text, "trainer") and string.find(text, "pet") then
-        return "pet trainer"
+        return "pettrainer"
     elseif string.find(text, "auction") then
-        return "auction house"
+        return "auctionHouse"
     elseif string.find(text, "weapon") and string.find(text, "trainer") then
-        return "weapons trainer"
+        return "weaponsTrainer"
     elseif string.find(text, "deeprun") then
-        return "deeprun tram"
+        return "deeprunTram"
     elseif string.find(text, "bat handler") or 
            string.find(text, "wind rider master") or 
            string.find(text, "gryphon master") or 
