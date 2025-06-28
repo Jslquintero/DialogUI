@@ -79,6 +79,22 @@
                                 </Offset>
                             </Anchor>
                         </Anchors>
+                        <Layers>
+                            <Layer level="ARTWORK">
+                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\src\assets\art\keys\esc">
+                                    <Size>
+                                        <AbsDimension x="32" y="32" />
+                                    </Size>
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+                                            <Offset>
+                                                <AbsDimension x="8" y="0" />
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
                         <Scripts>
                             <OnClick>
                                 DQuestRewardCancelButton_OnClick();
