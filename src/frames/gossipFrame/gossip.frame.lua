@@ -3,11 +3,13 @@ NUMGOSSIPBUTTONS = 32;
 
 local COLORS = {
     -- ColorKey = {r, g, b}
-
+    
     DarkBrown = {0.19, 0.17, 0.13},
     LightBrown = {0.50, 0.36, 0.24},
     Ivory = {0.87, 0.86, 0.75}
 };
+
+local totalGossipButtons = 0
 
 function SetFontColor(fontObject, key)
     local color = COLORS[key];
@@ -22,10 +24,21 @@ function HideDefaultFrames()
     GossipFramePortrait:SetTexture()
 end
 
+
 function DGossipFrame_OnLoad()
     HideDefaultFrames()
     this:RegisterEvent("GOSSIP_SHOW");
     this:RegisterEvent("GOSSIP_CLOSED");
+    
+    -- Create simplified key handler frame
+    if not DGossipKeyFrame then
+        CreateFrame("Frame", "DGossipKeyFrame", UIParent)
+        DGossipKeyFrame:SetScript("OnKeyDown", DGossipFrame_OnKeyDown)
+        DGossipKeyFrame:EnableKeyboard(false) -- Start disabled
+        DGossipKeyFrame:SetToplevel(true)
+        DGossipKeyFrame:SetAllPoints(UIParent)
+        DGossipKeyFrame:SetFrameStrata("TOOLTIP")
+    end
 end
 
 function DGossipFrame_OnEvent()
@@ -38,27 +51,146 @@ function DGossipFrame_OnEvent()
             end
         end
         DGossipFrameUpdate();
+        -- Enable key capture when gossip frame is shown
+        DGossipKeyFrame:EnableKeyboard(true)
     elseif (event == "GOSSIP_CLOSED") then
         HideUIPanel(DGossipFrame);
+        -- Disable key capture when gossip frame is closed
+        DGossipKeyFrame:EnableKeyboard(false)
+    end
+end
+
+-- Simplified key handler - only handles what we need
+function DGossipFrame_OnKeyDown()
+    local key = arg1
+    
+    -- Handle ESC key to close gossip
+    if key == "ESCAPE" then
+        CloseGossip()
+        return
+    end
+    
+    -- Handle spacebar to select first option
+    if key == "SPACE" then
+        DGossipSelectOption(1)
+        return
+    end
+    
+    -- Handle number keys 1-9 for gossip options
+    if key >= "1" and key <= "9" then
+        local buttonIndex = tonumber(key)
+        DGossipSelectOption(buttonIndex)
+        return
+    end
+    
+    -- For all other keys, let the game handle them normally
+    -- We do this by temporarily disabling our keyboard capture
+    DGossipKeyFrame:EnableKeyboard(false)
+    
+    -- Re-enable after a brief moment using a simple timer
+    local reEnableTime = GetTime() + 0.05
+    DGossipKeyFrame:SetScript("OnUpdate", function()
+        if GetTime() >= reEnableTime then
+            if DGossipFrame:IsVisible() then
+                DGossipKeyFrame:EnableKeyboard(true)
+            end
+            DGossipKeyFrame:SetScript("OnUpdate", nil)
+        end
+    end)
+end
+
+-- Simplified option selection function
+function DGossipSelectOption(buttonIndex)
+    -- Only work if gossip frame is visible
+    if not DGossipFrame:IsVisible() then
+        -- DEFAULT_CHAT_FRAME:AddMessage("Gossip frame not visible")
+        return
+    end
+    
+    -- Debug: Print what we're looking for
+    -- DEFAULT_CHAT_FRAME:AddMessage("Looking for button " .. buttonIndex .. " (total buttons: " .. totalGossipButtons .. ")")
+    
+    -- Find the actual button that corresponds to this display number
+    for i = 1, NUMGOSSIPBUTTONS do
+        local titleButton = getglobal("DGossipTitleButton" .. i)
+        if titleButton and titleButton:IsVisible() and titleButton:GetText() and titleButton:GetText() ~= "" then
+            local buttonText = titleButton:GetText()
+            
+            -- Extract the number from the button text using string.find (e.g., "3. Train me" -> 3)
+            local _, _, numStr = string.find(buttonText, "^(%d+)%.")
+            if numStr then
+                local displayNum = tonumber(numStr)
+                -- DEFAULT_CHAT_FRAME:AddMessage("Found button " .. i .. " with display number " .. displayNum .. ": " .. buttonText .. " (type: " .. tostring(titleButton.type) .. ", ID: " .. tostring(titleButton:GetID()) .. ")")
+                
+                if displayNum == buttonIndex then
+                    -- DEFAULT_CHAT_FRAME:AddMessage("Triggering button " .. displayNum)
+                    
+                    -- Debug the function calls
+                    if titleButton.type == "Available" then
+                        -- DEFAULT_CHAT_FRAME:AddMessage("Calling SelectGossipAvailableQuest(" .. titleButton:GetID() .. ")")
+                        SelectGossipAvailableQuest(titleButton:GetID())
+                    elseif titleButton.type == "Active" then
+                        -- DEFAULT_CHAT_FRAME:AddMessage("Calling SelectGossipActiveQuest(" .. titleButton:GetID() .. ")")
+                        SelectGossipActiveQuest(titleButton:GetID())
+                    else
+                        -- DEFAULT_CHAT_FRAME:AddMessage("Calling SelectGossipOption(" .. titleButton:GetID() .. ")")
+                        SelectGossipOption(titleButton:GetID())
+                    end
+                    
+                    -- Also try the direct mouse click approach as backup
+                    -- DEFAULT_CHAT_FRAME:AddMessage("Also trying direct button click")
+                    DGossipTitleButton_OnClick_Direct(titleButton)
+                    return
+                end
+            end
+        end
+    end
+    
+    -- DEFAULT_CHAT_FRAME:AddMessage("No button found for number " .. buttonIndex)
+end
+
+-- Direct button click function for debugging
+function DGossipTitleButton_OnClick_Direct(button)
+    if not button then return end
+    
+    -- DEFAULT_CHAT_FRAME:AddMessage("Direct click: type=" .. tostring(button.type) .. ", ID=" .. tostring(button:GetID()))
+    
+    if (button.type == "Available") then
+        SelectGossipAvailableQuest(button:GetID());
+    elseif (button.type == "Active") then
+        SelectGossipActiveQuest(button:GetID());
+    else
+        SelectGossipOption(button:GetID());
+    end
+end
+
+-- Function to close the gossip UI (can be called from anywhere)
+function DGossipFrame_CloseUI()
+    if DGossipFrame:IsVisible() then
+        CloseGossip()
+    end
+end
+
+-- Keep original click handler for mouse clicks (unchanged)
+function DGossipTitleButton_OnClick()
+    if (this.type == "Available") then
+        SelectGossipAvailableQuest(this:GetID());
+    elseif (this.type == "Active") then
+        SelectGossipActiveQuest(this:GetID());
+    else
+        SelectGossipOption(this:GetID());
     end
 end
 
 function DGossipFrameUpdate()
     ClearAllGossipIcons();
     DGossipFrame.buttonIndex = 1;
+    totalGossipButtons = 0; -- Reset counter
+    
     DGossipGreetingText:SetText(GetGossipText());
     DGossipFrameAvailableQuestsUpdate(GetGossipAvailableQuests());
     DGossipFrameActiveQuestsUpdate(GetGossipActiveQuests());
     DGossipFrameOptionsUpdate(GetGossipOptions());
-
-
-     -- Debug GetGossipOptions()
-    --  local options = {GetGossipOptions()}
-    --  DEFAULT_CHAT_FRAME:AddMessage("GetGossipOptions() returned " .. table.getn(options) .. " items:")
-    --  for i = 1, table.getn(options) do
-    --     DEFAULT_CHAT_FRAME:AddMessage("Option " .. i .. ": " .. tostring(options[i]))
-    --  end
-     
 
     for i = DGossipFrame.buttonIndex, NUMGOSSIPBUTTONS do
         getglobal("DGossipTitleButton" .. i):Hide();
@@ -68,7 +200,6 @@ function DGossipFrameUpdate()
         SetPortraitTexture(DGossipFramePortrait, "npc");
     else
         DGossipFramePortrait:SetTexture("Interface\\QuestFrame\\UI-QuestLog-BookIcon");
-
     end
 
     -- Set Spacer
@@ -82,17 +213,20 @@ function DGossipFrameUpdate()
     -- Update scrollframe
     DGossipGreetingScrollFrame:SetVerticalScroll(0);
     DGossipGreetingScrollFrame:UpdateScrollChildRect();
-end
-
-function DGossipTitleButton_OnClick()
-
-    if (this.type == "Available") then
-        SelectGossipAvailableQuest(this:GetID());
-    elseif (this.type == "Active") then
-        SelectGossipActiveQuest(this:GetID());
-    else
-        SelectGossipOption(this:GetID());
+    
+    -- Debug: Count actual visible numbered buttons
+    local actualCount = 0
+    for i = 1, NUMGOSSIPBUTTONS do
+        local titleButton = getglobal("DGossipTitleButton" .. i)
+        if titleButton and titleButton:IsVisible() and titleButton:GetText() and titleButton:GetText() ~= "" then
+            local _, _, numStr = string.find(titleButton:GetText(), "^(%d+)%.")
+            if numStr then
+                actualCount = actualCount + 1
+            end
+        end
     end
+    totalGossipButtons = actualCount
+    -- DEFAULT_CHAT_FRAME:AddMessage("Total gossip buttons: " .. totalGossipButtons)
 end
 
 function DGossipFrameAvailableQuestsUpdate(...)
@@ -106,30 +240,31 @@ function DGossipFrameAvailableQuestsUpdate(...)
         end
 
         titleButton = getglobal("DGossipTitleButton" .. DGossipFrame.buttonIndex)
-        titleButton:SetText(arg[i])
+        
+        -- Add numbering to the text
+        local numberedText = DGossipFrame.buttonIndex .. ". " .. arg[i]
+        titleButton:SetText(numberedText)
+        totalGossipButtons = totalGossipButtons + 1
 
         titleButton:SetID(titleIndex)
-        titleButton.type = "Available" -- Set quest type
+        titleButton.type = "Available"
 
         -- CLEAR ANY EXISTING GOSSIP ICON FIRST
         local gossipIcon = getglobal(titleButton:GetName() .. "GossipIcon")
         if gossipIcon then
-            gossipIcon:Hide() -- Hide existing icon
+            gossipIcon:Hide()
         end
 
-        -- Access the existing gossip icon texture and update it
         if not gossipIcon then
-            -- If the texture doesn't exist, create it (should only happen the first time)
             gossipIcon = titleButton:CreateTexture(titleButton:GetName() .. "GossipIcon", "OVERLAY")
             gossipIcon:SetWidth(16)
             gossipIcon:SetHeight(16)
             gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 3, -5)
         end
         
-        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\AvailableQuestIcon")
-        gossipIcon:Show() -- Make sure it's visible
+        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\availableQuestIcon")
+        gossipIcon:Show()
 
-        -- Apply normal texture only for available quests
         titleButton:SetNormalTexture(
             "Interface\\AddOns\\DialogUI\\src\\assets\\art\\parchment\\OptionBackground-common")
         SetFontColor(titleButton, "Ivory")
@@ -143,13 +278,13 @@ function DGossipFrameAvailableQuestsUpdate(...)
         titleButton:Show()
     end
 
-    -- Hide the extra button if there are no more quests
     if (DGossipFrame.buttonIndex > 1) then
         titleButton = getglobal("DGossipTitleButton" .. DGossipFrame.buttonIndex)
         titleButton:Hide()
         DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1
     end
 end
+
 function DGossipFrameActiveQuestsUpdate(...)
     local titleButton;
     local titleIndex = 1;
@@ -160,18 +295,20 @@ function DGossipFrameActiveQuestsUpdate(...)
             message("This NPC has too many quests and/or gossip options.");
         end
         titleButton = getglobal("DGossipTitleButton" .. DGossipFrame.buttonIndex);
-        titleButton:SetText(arg[i]);
+        
+        -- Add numbering to the text
+        local numberedText = DGossipFrame.buttonIndex .. ". " .. arg[i]
+        titleButton:SetText(numberedText);
+        totalGossipButtons = totalGossipButtons + 1
 
         titleButton:SetID(titleIndex);
         titleButton.type = "Active";
         
-        -- Use the same naming convention as other functions
         local gossipIconName = titleButton:GetName() .. "GossipIcon"
         local gossipIcon = getglobal(gossipIconName)
         
-        -- CLEAR ANY EXISTING GOSSIP ICON FIRST
         if gossipIcon then
-            gossipIcon:Hide() -- Hide existing icon
+            gossipIcon:Hide()
         end
         
         if not gossipIcon then
@@ -181,8 +318,8 @@ function DGossipFrameActiveQuestsUpdate(...)
             gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 3, -5)
         end
 
-        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\ActiveQuestIcon");
-        gossipIcon:Show() -- Make sure it's visible
+        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\activeQuestIcon");
+        gossipIcon:Show()
 
         DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1;
         titleIndex = titleIndex + 1;
@@ -211,16 +348,20 @@ function DGossipFrameOptionsUpdate(...)
             message("This NPC has too many quests and/or gossip options.");
         end
         titleButton = getglobal("DGossipTitleButton" .. DGossipFrame.buttonIndex);
-        titleButton:SetText(arg[i]);
+
+        -- Add numbering to the text
+        local numberedText = DGossipFrame.buttonIndex .. ". " .. arg[i]
+        titleButton:SetText(numberedText);
+        totalGossipButtons = totalGossipButtons + 1
+        
         titleButton:SetID(titleIndex);
         titleButton.type = "Gossip";
 
         local gossipIconName = titleButton:GetName() .. "GossipIcon"
         local gossipIcon = getglobal(gossipIconName)
         
-        -- CLEAR ANY EXISTING GOSSIP ICON FIRST
         if gossipIcon then
-            gossipIcon:Hide() -- Hide existing icon
+            gossipIcon:Hide()
         end
         
         if not gossipIcon then
@@ -236,11 +377,9 @@ function DGossipFrameOptionsUpdate(...)
             SetFontColor(titleButton, "DarkBrown")
         end
 
-        -- Get the icon type from the second argument
         local iconType = arg[i + 1]
         local texturePath
         
-        -- Define the mapping for all supported icon types
         local iconMap = {
             ["banker"] = "bankerGossipIcon",
             ["battlemaster"] = "battlemasterGossipIcon", 
@@ -255,23 +394,18 @@ function DGossipFrameOptionsUpdate(...)
         }
         
         if iconType == "gossip" then
-            -- For generic "gossip" type, determine icon from text
             local specificType = DetermineGossipIconType(arg[i])
             texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. specificType .. "GossipIcon"
         elseif iconMap[iconType] then
-            -- Use the mapped icon name
             texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. iconMap[iconType]
         else
-            -- Unknown icon type
             DEFAULT_CHAT_FRAME:AddMessage("Unknown icon type, report it to the author: " .. tostring(iconType))
-            texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\petitionGossipIcon" -- fallback
+            texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\petitionGossipIcon"
         end
         
-        -- Set the texture
         gossipIcon:SetTexture(texturePath);
-        gossipIcon:Show() -- Make sure it's visible
+        gossipIcon:Show()
         
-        -- Check if it loaded successfully and use fallback if needed
         if not gossipIcon:GetTexture() then
             DEFAULT_CHAT_FRAME:AddMessage("Texture failed to load: " .. texturePath .. ", using fallback")
             gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\petitionGossipIcon");
@@ -283,6 +417,7 @@ function DGossipFrameOptionsUpdate(...)
     end
 end
 
+-- Rest of your functions remain the same
 function DetermineGossipIconType(gossipText)
     local text = string.lower(gossipText)
     
@@ -309,11 +444,10 @@ function DetermineGossipIconType(gossipText)
         end
     end
     
-    -- Main menu service types
     if string.find(text, "profession") and string.find(text, "trainer") then
-        return "trainer"
+        return "professionTrainer"
     elseif string.find(text, "class") and string.find(text, "trainer") then
-        return "class trainer"
+        return "classTrainer"
     elseif string.find(text, "stable") then
         return "stablemaster"
     elseif string.find(text, "inn") then
@@ -321,15 +455,15 @@ function DetermineGossipIconType(gossipText)
     elseif string.find(text, "mailbox") then
         return "mailbox"
     elseif string.find(text, "guild master") then
-        return "guild master"
+        return "guildMaster"
     elseif string.find(text, "trainer") and string.find(text, "pet") then
-        return "pet trainer"
+        return "pettrainer"
     elseif string.find(text, "auction") then
-        return "auction house"
+        return "auctionHouse"
     elseif string.find(text, "weapon") and string.find(text, "trainer") then
-        return "weapons trainer"
+        return "weaponsTrainer"
     elseif string.find(text, "deeprun") then
-        return "deeprun tram"
+        return "deeprunTram"
     elseif string.find(text, "bat handler") or 
            string.find(text, "wind rider master") or 
            string.find(text, "gryphon master") or 
@@ -339,7 +473,7 @@ function DetermineGossipIconType(gossipText)
     elseif string.find(text, "bank") then
         return "banker"
     else
-        return "gossip"  -- fallback
+        return "gossip"
     end
 end
 

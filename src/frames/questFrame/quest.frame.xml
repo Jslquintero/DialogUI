@@ -32,7 +32,7 @@
                     <Layer level="ARTWORK">
                         <FontString name="DQuestFrameNpcNameText" inherits="DQuestTitleFont" text="Title Text" justifyH="LEFT">
                             <Size>
-                                <AbsDimension x="235" y="20"/>
+                                <AbsDimension x="235" y="0"/>
                             </Size>
                             <Anchors>
                                 <Anchor point="TOPLEFT">
@@ -79,6 +79,22 @@
                                 </Offset>
                             </Anchor>
                         </Anchors>
+                        <Layers>
+                            <Layer level="ARTWORK">
+                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\src\assets\art\keys\esc">
+                                    <Size>
+                                        <AbsDimension x="32" y="32" />
+                                    </Size>
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+                                            <Offset>
+                                                <AbsDimension x="8" y="0" />
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
                         <Scripts>
                             <OnClick>
                                 DQuestRewardCancelButton_OnClick();
@@ -98,6 +114,22 @@
                                 </Offset>
                             </Anchor>
                         </Anchors>
+                        <Layers>
+                            <Layer level="ARTWORK">
+                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\src\assets\art\keys\space">
+                                    <Size>
+                                        <AbsDimension x="32" y="32" />
+                                    </Size>
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+                                            <Offset>
+                                                <AbsDimension x="8" y="0" />
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
                         <Scripts>
                             <OnClick>
                                 DQuestRewardCompleteButton_OnClick();
@@ -348,6 +380,22 @@
                                 </Offset>
                             </Anchor>
                         </Anchors>
+                        <Layers>
+                            <Layer level="ARTWORK">
+                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\src\assets\art\keys\space">
+                                    <Size>
+                                        <AbsDimension x="32" y="32" />
+                                    </Size>
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+                                            <Offset>
+                                                <AbsDimension x="8" y="0" />
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
                         <Scripts>
                             <OnClick>
 								DQuestProgressCompleteButton_OnClick();
@@ -515,6 +563,22 @@
                                 </Offset>
                             </Anchor>
                         </Anchors>
+                        <Layers>
+                            <Layer level="ARTWORK">
+                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\src\assets\art\keys\esc">
+                                    <Size>
+                                        <AbsDimension x="32" y="32" />
+                                    </Size>
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+                                            <Offset>
+                                                <AbsDimension x="8" y="0" />
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
                         <Scripts>
                             <OnClick>
                                 DQuestDetailDeclineButton_OnClick();
@@ -534,6 +598,22 @@
                                 </Offset>
                             </Anchor>
                         </Anchors>
+                        <Layers>
+                            <Layer level="ARTWORK">
+                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\src\assets\art\keys\space">
+                                    <Size>
+                                        <AbsDimension x="32" y="32" />
+                                    </Size>
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+                                            <Offset>
+                                                <AbsDimension x="8" y="0" />
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
                         <Scripts>
                             <OnClick>
                                 DQuestDetailAcceptButton_OnClick();
@@ -588,7 +668,7 @@
                                     </Layer>
                                 </Layers>
                                 <Frames>
-                                    <Frame name="TextAlphaDependentFrame">
+                                    <Frame name="DTextAlphaDependentFrame">
                                         <Size>
                                             <AbsDimension x="1" y="1" />
                                         </Size>
@@ -802,6 +882,22 @@
                                 </Offset>
                             </Anchor>
                         </Anchors>
+                        <Layers>
+                            <Layer level="ARTWORK">
+                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\src\assets\art\keys\esc">
+                                    <Size>
+                                        <AbsDimension x="32" y="32" />
+                                    </Size>
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+                                            <Offset>
+                                                <AbsDimension x="8" y="0" />
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
                         <Scripts>
                             <OnClick>
                                 HideUIPanel(DQuestFrame);
