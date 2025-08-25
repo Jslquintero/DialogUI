@@ -16,6 +16,14 @@ function DQuestFrame_OnLoad()
     this:RegisterEvent("QUEST_COMPLETE");
     this:RegisterEvent("QUEST_FINISHED");
     this:RegisterEvent("QUEST_ITEM_UPDATE");
+    if not DQuestKeyFrame then
+        CreateFrame("Frame", "DQuestKeyFrame", UIParent)
+        DQuestKeyFrame:SetScript("OnKeyDown", DQuestFrame_OnKeyDown)
+        DQuestKeyFrame:EnableKeyboard(false)
+        DQuestKeyFrame:SetToplevel(true)
+        DQuestKeyFrame:SetAllPoints(UIParent)
+        DQuestKeyFrame:SetFrameStrata("TOOLTIP")
+    end
 end
 
 function HideDefaultFrames()
@@ -25,6 +33,7 @@ end
 function DQuestFrame_OnEvent(event)
     if (event == "QUEST_FINISHED") then
         HideUIPanel(DQuestFrame);
+        if DQuestKeyFrame then DQuestKeyFrame:EnableKeyboard(false) end
         return;
     end
     if ((event == "QUEST_ITEM_UPDATE") and not DQuestFrame:IsVisible()) then
@@ -38,6 +47,7 @@ function DQuestFrame_OnEvent(event)
         CloseQuest();
         return;
     end
+    if DQuestKeyFrame then DQuestKeyFrame:EnableKeyboard(true) end
     if (event == "QUEST_GREETING") then
         DQuestFrameGreetingPanel:Hide();
         DQuestFrameGreetingPanel:Show();
@@ -305,44 +315,57 @@ end
 
 function DQuestFrame_OnKeyDown()
     local key = arg1;
-    
-    -- Handle ESC key to close
-    if key == "ESCAPE" then
-        HideUIPanel(DQuestFrame);
-        return
-    end
+    local acceptKey = GetBindingKey("DIALOGUI_ACCEPT")
+    local cancelKey = GetBindingKey("DIALOGUI_CANCEL")
 
-    -- Handle spacebar press to select first option
- -- Handle spacebar press
- if (key == "SPACE") then
-    -- Check which panel is currently visible and trigger appropriate action
-    if (DQuestFrameDetailPanel:IsVisible()) then
-        -- Quest Detail panel - Accept quest
-        DQuestDetailAcceptButton_OnClick();
-        return;
-    elseif (DQuestFrameRewardPanel:IsVisible()) then
-        -- Quest Reward panel - Complete quest
-        DQuestRewardCompleteButton_OnClick();
-        return;
-    elseif (DQuestFrameProgressPanel:IsVisible()) then
-        -- Quest Progress panel - Complete quest
-        DQuestProgressCompleteButton_OnClick();
-        return;
-    else
-        -- Greeting panel - Select first quest
-        local numActiveQuests = GetNumActiveQuests();
-        local numAvailableQuests = GetNumAvailableQuests();
-        
-        -- Check if there are any quests available
-        if (numActiveQuests > 0 or numAvailableQuests > 0) then
-            -- Click the first quest button
-            local firstButton = getglobal("DQuestTitleButton1");
-            if (firstButton and firstButton:IsVisible()) then
-                firstButton:Click();
-            end
+    local effectiveAccept = acceptKey or "SPACE"
+    local effectiveCancel = cancelKey or "ESCAPE"
+
+    local function passToBindings()
+        if DQuestFrame then DQuestFrame:EnableKeyboard(false) end
+        if DQuestKeyFrame then DQuestKeyFrame:EnableKeyboard(false) end
+        local reEnableTime = GetTime() + 0.05
+        if DQuestKeyFrame then
+            DQuestKeyFrame:SetScript("OnUpdate", function()
+                if GetTime() >= reEnableTime then
+                    if DQuestFrame and DQuestFrame:IsVisible() then
+                        DQuestFrame:EnableKeyboard(true)
+                        DQuestKeyFrame:EnableKeyboard(true)
+                    end
+                    DQuestKeyFrame:SetScript("OnUpdate", nil)
+                end
+            end)
         end
     end
-end
+    
+    if key == effectiveCancel then
+        DIALOGUI_OnCancel()
+        HideUIPanel(DQuestFrame);
+    end
+
+
+    if (key == effectiveAccept) then
+        if (DQuestFrameDetailPanel:IsVisible()) then
+            DQuestDetailAcceptButton_OnClick();
+            return;
+        elseif (DQuestFrameRewardPanel:IsVisible()) then
+            DQuestRewardCompleteButton_OnClick();
+            return;
+        elseif (DQuestFrameProgressPanel:IsVisible()) then
+            DQuestProgressCompleteButton_OnClick();
+            return;
+        else
+            local numActiveQuests = GetNumActiveQuests();
+            local numAvailableQuests = GetNumAvailableQuests();
+            if (numActiveQuests > 0 or numAvailableQuests > 0) then
+                local firstButton = getglobal("DQuestTitleButton1");
+                if (firstButton and firstButton:IsVisible()) then
+                    firstButton:Click();
+                end
+            end
+            return;
+        end
+    end
     
     -- Handle number keys 1-9 for direct quest selection
     if (key >= "1" and key <= "9") then
@@ -358,6 +381,8 @@ end
             end
         end
     end
+
+    passToBindings()
 end
 
 
@@ -370,6 +395,7 @@ function DQuestFrame_OnHide()
     DQuestFrameDetailPanel:Hide();
     DQuestFrameRewardPanel:Hide();
     DQuestFrameProgressPanel:Hide();
+    if DQuestKeyFrame then DQuestKeyFrame:EnableKeyboard(false) end
     CloseQuest();
     PlaySound("igQuestListClose");
 end

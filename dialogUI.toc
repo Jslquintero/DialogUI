@@ -6,6 +6,10 @@
 ## LoadOnDemand: 0
 ## Notes: Addon made for an immersive questing experience in vanilla client, consider it a Vanilla+ frame.
 
+# Keybindings
+Bindings.lua
+Bindings.xml
+
 # Fonts used for the frames
 Assets\font\fonts.xml
 

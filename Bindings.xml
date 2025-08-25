@@ -1,0 +1,4 @@
+<Bindings>
+  <Binding name="DIALOGUI_ACCEPT" header="DIALOGUI">DIALOGUI_OnAccept()</Binding>
+  <Binding name="DIALOGUI_CANCEL" header="DIALOGUI">DIALOGUI_OnCancel()</Binding>
+</Bindings>

@@ -49,19 +49,36 @@ end
 -- Simplified key handler - only handles what we need
 function DGossipFrame_OnKeyDown()
     local key = arg1
-    
-    -- Handle ESC key to close gossip
-    if key == "ESCAPE" then
-        CloseGossip()
-        return
+    local acceptKey = GetBindingKey("DIALOGUI_ACCEPT")
+    local cancelKey = GetBindingKey("DIALOGUI_CANCEL")
+
+    local effectiveAccept = acceptKey or "SPACE"
+    local effectiveCancel = cancelKey or "ESCAPE"
+
+    local function passToBindings()
+       DGossipKeyFrame:EnableKeyboard(false)
+        local reEnableTime = GetTime() + 0.05
+        DGossipKeyFrame:SetScript("OnUpdate", function()
+            if GetTime() >= reEnableTime then
+                if DGossipFrame:IsVisible() then
+                    DGossipKeyFrame:EnableKeyboard(true)
+                end
+                DGossipKeyFrame:SetScript("OnUpdate", nil)
+            end
+        end)
+    end
+
+    if key == effectiveAccept then
+      DGossipSelectOption(1)
+      return
     end
     
-    -- Handle spacebar to select first option
-    if key == "SPACE" then
-        DGossipSelectOption(1)
-        return
+    if key == effectiveCancel then
+      CloseGossip()
     end
     
+    passToBindings()
+
     -- Handle number keys 1-9 for gossip options
     if key >= "1" and key <= "9" then
         local buttonIndex = tonumber(key)
@@ -69,11 +86,7 @@ function DGossipFrame_OnKeyDown()
         return
     end
     
-    -- For all other keys, let the game handle them normally
-    -- We do this by temporarily disabling our keyboard capture
     DGossipKeyFrame:EnableKeyboard(false)
-    
-    -- Re-enable after a brief moment using a simple timer
     local reEnableTime = GetTime() + 0.05
     DGossipKeyFrame:SetScript("OnUpdate", function()
         if GetTime() >= reEnableTime then
