@@ -1,4 +1,19 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Frame name="DUIParchmentPanelTemplate" virtual="true">
+        <Size>
+            <AbsDimension x="512" y="512" />
+        </Size>
+        <Anchors>
+            <Anchor point="TOPLEFT" />
+        </Anchors>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture file="Interface\AddOns\DialogUI\Assets\art\parchment\Parchment">
+                    <Size x="512" y="512" />
+                </Texture>
+            </Layer>
+        </Layers>
+    </Frame>
     <Texture name="DUIPanelScrollBarButton" virtual="true">
         <TexCoords left="0.25" right="0.75" top="0.25" bottom="0.75" />
     </Texture>
@@ -64,7 +79,7 @@
             </OnValueChanged>
         </Scripts>
         <ThumbTexture name="$parentThumbTexture" inherits="DUIPanelScrollBarButton"
-            file="Interface\AddOns\DialogUI\src\assets\art\parchment\UI-ScrollBar-Knob">
+            file="Interface\AddOns\DialogUI\Assets\art\parchment\UI-ScrollBar-Knob">
             <Size>
                 <AbsDimension x="24" y="24" />
             </Size>

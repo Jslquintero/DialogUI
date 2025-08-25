@@ -1,22 +1,11 @@
 ---@diagnostic disable: undefined-global
 NUMGOSSIPBUTTONS = 32;
 
-local COLORS = {
-    -- ColorKey = {r, g, b}
-    
-    DarkBrown = {0.19, 0.17, 0.13},
-    LightBrown = {0.50, 0.36, 0.24},
-    Ivory = {0.87, 0.86, 0.75}
-};
-
 local totalGossipButtons = 0
 
-function SetFontColor(fontObject, key)
-    local color = COLORS[key];
-    fontObject:SetTextColor(color[1], color[2], color[3]);
-end
+local SetFontColor = DIALOG_UI_SHARED and DIALOG_UI_SHARED.SetFontColor or function() end
 
-function HideDefaultFrames()
+local function HideDefaultFrames()
     GossipFrameGreetingPanel:Hide()
     GossipNpcNameFrame:Hide()
     GossipFrameCloseButton:Hide()
@@ -262,11 +251,11 @@ function DGossipFrameAvailableQuestsUpdate(...)
             gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 3, -5)
         end
         
-        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\availableQuestIcon")
+        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\Assets\\art\\icons\\availableQuestIcon")
         gossipIcon:Show()
 
         titleButton:SetNormalTexture(
-            "Interface\\AddOns\\DialogUI\\src\\assets\\art\\parchment\\OptionBackground-common")
+            "Interface\\AddOns\\DialogUI\\Assets\\art\\parchment\\OptionBackground-common")
         SetFontColor(titleButton, "Ivory")
 
         titleButton:SetHeight(titleButton:GetTextHeight() + 20)
@@ -318,7 +307,7 @@ function DGossipFrameActiveQuestsUpdate(...)
             gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 3, -5)
         end
 
-        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\activeQuestIcon");
+        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\Assets\\art\\icons\\activeQuestIcon");
         gossipIcon:Show()
 
         DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1;
@@ -326,7 +315,7 @@ function DGossipFrameActiveQuestsUpdate(...)
         titleButton:Show();
 
         titleButton:SetNormalTexture(
-            "Interface\\AddOns\\DialogUI\\src\\assets\\art\\parchment\\OptionBackground-common")
+            "Interface\\AddOns\\DialogUI\\Assets\\art\\parchment\\OptionBackground-common")
         titleButton:SetHeight(titleButton:GetTextHeight() + 20)
         gossipIcon:SetHeight(20)
         gossipIcon:SetWidth(20)
@@ -395,12 +384,12 @@ function DGossipFrameOptionsUpdate(...)
         
         if iconType == "gossip" then
             local specificType = DetermineGossipIconType(arg[i])
-            texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. specificType .. "GossipIcon"
+            texturePath = "Interface\\AddOns\\DialogUI\\Assets\\art\\icons\\" .. specificType .. "GossipIcon"
         elseif iconMap[iconType] then
-            texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. iconMap[iconType]
+            texturePath = "Interface\\AddOns\\DialogUI\\Assets\\art\\icons\\" .. iconMap[iconType]
         else
             DEFAULT_CHAT_FRAME:AddMessage("Unknown icon type, report it to the author: " .. tostring(iconType))
-            texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\petitionGossipIcon"
+            texturePath = "Interface\\AddOns\\DialogUI\\Assets\\art\\icons\\petitionGossipIcon"
         end
         
         gossipIcon:SetTexture(texturePath);
@@ -408,7 +397,7 @@ function DGossipFrameOptionsUpdate(...)
         
         if not gossipIcon:GetTexture() then
             DEFAULT_CHAT_FRAME:AddMessage("Texture failed to load: " .. texturePath .. ", using fallback")
-            gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\petitionGossipIcon");
+            gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\Assets\\art\\icons\\petitionGossipIcon");
         end
         
         DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1;

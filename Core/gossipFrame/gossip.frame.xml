@@ -1,18 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <Script file="src\frames\gossipFrame\gossip.frame.lua" />
-    <Frame name="DGossipFramePanelTemplate" virtual="true">
-        <Size x="512" y="512" />
-        <Anchors>
-            <Anchor point="TOPLEFT" />
-        </Anchors>
-        <Layers>
-            <Layer level="BACKGROUND">
-                <Texture file="Interface\AddOns\DialogUI\src\assets\art\parchment\Parchment">
-                    <Size x="512" y="512" />
-                </Texture>
-            </Layer>
-        </Layers>
-    </Frame>
+    <Script file="Core\Utils\shared.lua" />
+    <Script file="Core\gossipFrame\gossip.frame.lua" />
+    <Frame name="DGossipFramePanelTemplate" inherits="DUIParchmentPanelTemplate" virtual="true" />
     <Button name="DGossipTitleButtonTemplate" virtual="true" hidden="false">
         <Size x="400" y="20" />
         <Scripts>
@@ -21,7 +10,7 @@
             </OnClick>
         </Scripts>
         <HighlightTexture
-            file="Interface\AddOns\DialogUI\src\assets\art\parchment\ButtonHighlight-Gossip"
+            file="Interface\AddOns\DialogUI\Assets\art\parchment\ButtonHighlight-Gossip"
             alphaMode="ADD" />
         <ButtonText>
             <Size x="275" y="0" />
@@ -120,7 +109,7 @@
                         </Anchors>
                         <Layers>
                             <Layer level="ARTWORK">
-                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\src\assets\art\keys\esc">
+                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\Assets\art\keys\esc">
                                     <Size>
                                         <AbsDimension x="32" y="32" />
                                     </Size>

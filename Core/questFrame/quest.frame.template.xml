@@ -1,20 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
-    <Frame name="DQuestFramePanelTemplate" virtual="true">
-        <Size>
-            <AbsDimension x="512" y="512" />
-        </Size>
-        <Anchors>
-            <Anchor point="TOPLEFT" />
-        </Anchors>
-        <Layers>
-            <Layer level="BACKGROUND">
-                <Texture file="Interface\AddOns\DialogUI\src\assets\art\parchment\Parchment">
-                    <Size x="512" y="512" />
-                </Texture>
-            </Layer>
-        </Layers>
-    </Frame>
+    <Frame name="DQuestFramePanelTemplate" inherits="DUIParchmentPanelTemplate" virtual="true" />
     <!-- TODO properly change the DQuestItemTemplate and  DQuestRewardItemTemplate -->
     <Button name="DQuestItemTemplate" virtual="true">
         <Size>
@@ -22,7 +8,7 @@
         </Size>
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture name="$parentBackground" file="Interface\AddOns\DialogUI\src\assets\art\parchment\RewardChoice-Pending">
+                <Texture name="$parentBackground" file="Interface\AddOns\DialogUI\Assets\art\parchment\RewardChoice-Pending">
                     <Size>
                         <AbsDimension x="190" y="50" />
                     </Size>
@@ -127,7 +113,7 @@
         </Size>
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture name="$parentQuestIcon" file="Interface\AddOns\DialogUI\src\assets\art\icons\availableQuestIcon">
+                <Texture name="$parentQuestIcon" file="Interface\AddOns\DialogUI\Assets\art\icons\availableQuestIcon">
                     <Size>
                         <AbsDimension x="16" y="16" />
                     </Size>
@@ -147,7 +133,7 @@
         </OnClick>
         </Scripts>
         <HighlightTexture
-        file="Interface\AddOns\DialogUI\src\assets\art\parchment\ButtonHighlight-Gossip"
+        file="Interface\AddOns\DialogUI\Assets\art\parchment\ButtonHighlight-Gossip"
         alphaMode="ADD" />
         <ButtonText>
             <Size>

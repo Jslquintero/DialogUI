@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
-    <Script file="src\frames\questFrame\quest.frame.lua" />
+    <Script file="Core\Utils\shared.lua" />
+    <Script file="Core\questFrame\quest.frame.lua" />
     <Frame name="DQuestFrame" toplevel="true" parent="UIParent" movable="true" enableMouse="true"
         hidden="true">
         <Size>
@@ -81,7 +82,7 @@
                         </Anchors>
                         <Layers>
                             <Layer level="ARTWORK">
-                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\src\assets\art\keys\esc">
+                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\Assets\art\keys\esc">
                                     <Size>
                                         <AbsDimension x="32" y="32" />
                                     </Size>
@@ -116,7 +117,7 @@
                         </Anchors>
                         <Layers>
                             <Layer level="ARTWORK">
-                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\src\assets\art\keys\space">
+                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\Assets\art\keys\space">
                                     <Size>
                                         <AbsDimension x="32" y="32" />
                                     </Size>
@@ -235,83 +236,7 @@
                                     </Layer>
                                 </Layers>
                                 <Frames>
-                                    <Button name="DQuestRewardItem1"
-                                        inherits="DQuestRewardItemTemplate">
-                                        <Anchors>
-                                            <Anchor point="TOPLEFT" />
-                                        </Anchors>
-                                    </Button>
-                                    <Button name="DQuestRewardItem2"
-                                        inherits="DQuestRewardItemTemplate">
-                                        <Anchors>
-                                            <Anchor point="TOPLEFT" />
-                                        </Anchors>
-                                    </Button>
-                                    <Button name="DQuestRewardItem3"
-                                        inherits="DQuestRewardItemTemplate">
-                                        <Anchors>
-                                            <Anchor point="TOPLEFT" />
-                                        </Anchors>
-                                    </Button>
-                                    <Button name="DQuestRewardItem4"
-                                        inherits="DQuestRewardItemTemplate">
-                                        <Anchors>
-                                            <Anchor point="TOPLEFT" />
-                                        </Anchors>
-                                    </Button>
-                                    <Button name="DQuestRewardItem5"
-                                        inherits="DQuestRewardItemTemplate">
-                                        <Anchors>
-                                            <Anchor point="TOPLEFT" />
-                                        </Anchors>
-                                    </Button>
-                                    <Button name="DQuestRewardItem6"
-                                        inherits="DQuestRewardItemTemplate">
-                                        <Anchors>
-                                            <Anchor point="TOPLEFT" />
-                                        </Anchors>
-                                    </Button>
-                                    <Button name="DQuestRewardItem7"
-                                        inherits="DQuestRewardItemTemplate">
-                                        <Anchors>
-                                            <Anchor point="TOPLEFT" />
-                                        </Anchors>
-                                    </Button>
-                                    <Button name="DQuestRewardItem8"
-                                        inherits="DQuestRewardItemTemplate">
-                                        <Anchors>
-                                            <Anchor point="TOPLEFT" />
-                                        </Anchors>
-                                    </Button>
-                                    <Button name="DQuestRewardItem9"
-                                        inherits="DQuestRewardItemTemplate">
-                                        <Anchors>
-                                            <Anchor point="TOPLEFT" />
-                                        </Anchors>
-                                    </Button>
-                                    <Button name="DQuestRewardItem10"
-                                        inherits="DQuestRewardItemTemplate">
-                                        <Anchors>
-                                            <Anchor point="TOPLEFT" />
-                                        </Anchors>
-                                    </Button>
-                                    <Frame name="DQuestRewardMoneyFrame"
-                                        inherits="DMoneyFrameTemplate">
-                                        <Anchors>
-                                            <Anchor point="LEFT"
-                                                relativeTo="DQuestRewardItemReceiveText"
-                                                relativePoint="RIGHT">
-                                                <Offset>
-                                                    <AbsDimension x="15" y="0" />
-                                                </Offset>
-                                            </Anchor>
-                                        </Anchors>
-                                        <Scripts>
-                                            <OnLoad>
-                                                DQuestMoneyFrame_OnLoad();
-                                            </OnLoad>
-                                        </Scripts>
-                                    </Frame>
+                                    <!-- Reward highlight uses parchment highlight texture -->
                                     <Frame name="DQuestRewardItemHighlight" hidden="true">
                                         <Size>
                                             <AbsDimension x="256" y="64" />
@@ -322,7 +247,7 @@
                                         <Layers>
                                             <Layer level="BACKGROUND">
                                                 <Texture
-                                                    file="Interface\AddOns\DialogUI\src\assets\art\parchment\RewardChoice-Highlight"
+                                                    file="Interface\AddOns\DialogUI\Assets\art\parchment\RewardChoice-Highlight"
                                                     alphaMode="ADD">
                                                     <Size>
                                                         <AbsDimension x="190" y="50" />
@@ -382,7 +307,7 @@
                         </Anchors>
                         <Layers>
                             <Layer level="ARTWORK">
-                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\src\assets\art\keys\space">
+                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\Assets\art\keys\space">
                                     <Size>
                                         <AbsDimension x="32" y="32" />
                                     </Size>
@@ -565,7 +490,7 @@
                         </Anchors>
                         <Layers>
                             <Layer level="ARTWORK">
-                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\src\assets\art\keys\esc">
+                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\Assets\art\keys\esc">
                                     <Size>
                                         <AbsDimension x="32" y="32" />
                                     </Size>
@@ -600,7 +525,7 @@
                         </Anchors>
                         <Layers>
                             <Layer level="ARTWORK">
-                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\src\assets\art\keys\space">
+                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\Assets\art\keys\space">
                                     <Size>
                                         <AbsDimension x="32" y="32" />
                                     </Size>
@@ -884,7 +809,7 @@
                         </Anchors>
                         <Layers>
                             <Layer level="ARTWORK">
-                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\src\assets\art\keys\esc">
+                                <Texture name="$parentIcon" file="Interface\AddOns\DialogUI\Assets\art\keys\esc">
                                     <Size>
                                         <AbsDimension x="32" y="32" />
                                     </Size>

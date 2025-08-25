@@ -6,18 +6,7 @@ QUEST_DESCRIPTION_GRADIENT_LENGTH = 30;
 QUEST_DESCRIPTION_GRADIENT_CPS = 40;
 QUESTINFO_FADE_IN = 1;
 
-local COLORS = {
-    -- ColorKey = {r, g, b}
-
-    DarkBrown = {0.19, 0.17, 0.13},
-    LightBrown = {0.50, 0.36, 0.24},
-    Ivory = {0.87, 0.86, 0.75}
-};
-
-function SetFontColor(fontObject, key)
-    local color = COLORS[key];
-    fontObject:SetTextColor(color[1], color[2], color[3]);
-end
+local SetFontColor = DIALOG_UI_SHARED and DIALOG_UI_SHARED.SetFontColor or function() end
 
 function DQuestFrame_OnLoad()
     this:RegisterEvent("QUEST_GREETING");
@@ -28,7 +17,7 @@ function DQuestFrame_OnLoad()
     this:RegisterEvent("QUEST_ITEM_UPDATE");
 end
 
-function HideDefaultFrames()
+local function HideDefaultFrames()
     QuestFrameGreetingPanel:Hide()
     QuestFrameDetailPanel:Hide()
     QuestFrameProgressPanel:Hide()
@@ -84,10 +73,8 @@ end
 
 function DQuestFrame_SetPortrait()
     DQuestFrameNpcNameText:SetText(UnitName("npc"));
-    if (UnitExists("npc")) then
-        SetPortraitTexture(DQuestFramePortrait, "npc");
-    else
-        DQuestFramePortrait:SetTexture("Interface\\QuestFrame\\UI-QuestLog-BookIcon");
+    if DIALOG_UI_SHARED and DIALOG_UI_SHARED.SafeSetPortraitTexture then
+        DIALOG_UI_SHARED.SafeSetPortraitTexture(DQuestFramePortrait, "npc")
     end
 end
 
@@ -682,7 +669,7 @@ local function UpdateQuestIcons()
         if button and button:IsVisible() then
             local iconTexture = button:GetRegions(); -- Gets the first region (your texture)
             if iconTexture and iconTexture.SetTexture then
-                iconTexture:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\activeQuestIcon");
+                iconTexture:SetTexture("Interface\\AddOns\\DialogUI\\Assets\\art\\icons\\activeQuestIcon");
             end
         end
     end
@@ -693,7 +680,7 @@ local function UpdateQuestIcons()
         if button and button:IsVisible() then
             local iconTexture = button:GetRegions(); -- Gets the first region (your texture)
             if iconTexture and iconTexture.SetTexture then
-                iconTexture:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\availableQuestIcon");
+                iconTexture:SetTexture("Interface\\AddOns\\DialogUI\\Assets\\art\\icons\\availableQuestIcon");
             end
         end
     end
