@@ -1,0 +1,9 @@
+---
+description: General rules for Cursor.
+globs:
+alwaysApply: true
+---
+
+# Project description
+
+- We're using lua 5.0 and World of Warcraft 1.12.1 client to create a addon.
