@@ -6,7 +6,8 @@ QUEST_DESCRIPTION_GRADIENT_LENGTH = 30;
 QUEST_DESCRIPTION_GRADIENT_CPS = 40;
 QUESTINFO_FADE_IN = 1;
 
-local SetFontColor = DIALOG_UI_SHARED and DIALOG_UI_SHARED.SetFontColor or function() end
+local Shared = DIALOG_UI_SHARED
+local SetFontColor = Shared.SetFontColor
 
 function DQuestFrame_OnLoad()
     this:RegisterEvent("QUEST_GREETING");
@@ -17,13 +18,8 @@ function DQuestFrame_OnLoad()
     this:RegisterEvent("QUEST_ITEM_UPDATE");
 end
 
-local function HideDefaultFrames()
-    QuestFrameGreetingPanel:Hide()
-    QuestFrameDetailPanel:Hide()
-    QuestFrameProgressPanel:Hide()
-    QuestFrameRewardPanel:Hide()
-    QuestNpcNameFrame:Hide()
-    QuestFramePortrait:SetTexture()
+function HideDefaultFrames()
+    Shared.HideDefaultQuestFrames()
 end
 
 function DQuestFrame_OnEvent(event)
@@ -72,10 +68,7 @@ function DQuestFrame_OnEvent(event)
 end
 
 function DQuestFrame_SetPortrait()
-    DQuestFrameNpcNameText:SetText(UnitName("npc"));
-    if DIALOG_UI_SHARED and DIALOG_UI_SHARED.SafeSetPortraitTexture then
-        DIALOG_UI_SHARED.SafeSetPortraitTexture(DQuestFramePortrait, "npc")
-    end
+    Shared.SetHeader(DQuestFrameNpcNameText, DQuestFramePortrait, "npc")
 end
 
 function DQuestFrameRewardPanel_OnShow()

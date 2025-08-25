@@ -10,6 +10,8 @@
 Assets\font\fonts.xml
 
 
+Core\Utils\shared.lua
+
 # Money frame
 Core\moneyFrame\money.frame.xml
 

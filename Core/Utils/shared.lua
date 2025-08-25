@@ -20,6 +20,34 @@ function DUIShared.SafeSetPortraitTexture(texture, unit)
     end
 end
 
+function DUIShared.SetHeader(nameFontObject, portraitTexture, unit, nameText)
+    if nameFontObject and nameFontObject.SetText then
+        if nameText then
+            nameFontObject:SetText(nameText)
+        else
+            nameFontObject:SetText(UnitName(unit or "npc"))
+        end
+    end
+    DUIShared.SafeSetPortraitTexture(portraitTexture, unit or "npc")
+end
+
+function DUIShared.HideDefaultGossipFrames()
+    GossipFrameGreetingPanel:Hide()
+    GossipNpcNameFrame:Hide()
+    GossipFrameCloseButton:Hide()
+    GossipFramePortrait:Hide()
+    GossipFramePortrait:SetTexture()
+end
+
+function DUIShared.HideDefaultQuestFrames()
+    QuestFrameGreetingPanel:Hide()
+    QuestFrameDetailPanel:Hide()
+    QuestFrameProgressPanel:Hide()
+    QuestFrameRewardPanel:Hide()
+    QuestNpcNameFrame:Hide()
+    QuestFramePortrait:SetTexture()
+end
+
 DIALOG_UI_SHARED = DUIShared
 
 

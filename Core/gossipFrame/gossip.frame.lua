@@ -3,14 +3,11 @@ NUMGOSSIPBUTTONS = 32;
 
 local totalGossipButtons = 0
 
-local SetFontColor = DIALOG_UI_SHARED and DIALOG_UI_SHARED.SetFontColor or function() end
+local Shared = DIALOG_UI_SHARED
+local SetFontColor = Shared.SetFontColor
 
 local function HideDefaultFrames()
-    GossipFrameGreetingPanel:Hide()
-    GossipNpcNameFrame:Hide()
-    GossipFrameCloseButton:Hide()
-    GossipFramePortrait:Hide()
-    GossipFramePortrait:SetTexture()
+    Shared.HideDefaultGossipFrames()
 end
 
 
@@ -184,12 +181,7 @@ function DGossipFrameUpdate()
     for i = DGossipFrame.buttonIndex, NUMGOSSIPBUTTONS do
         getglobal("DGossipTitleButton" .. i):Hide();
     end
-    DGossipFrameNpcNameText:SetText(UnitName("npc"));
-    if (UnitExists("npc")) then
-        SetPortraitTexture(DGossipFramePortrait, "npc");
-    else
-        DGossipFramePortrait:SetTexture("Interface\\QuestFrame\\UI-QuestLog-BookIcon");
-    end
+    Shared.SetHeader(DGossipFrameNpcNameText, DGossipFramePortrait, "npc")
 
     -- Set Spacer
     if (DGossipFrame.buttonIndex > 1) then
