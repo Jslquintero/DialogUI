@@ -1,9 +1,15 @@
 ---
-description: General rules for Cursor.
-globs:
 alwaysApply: true
 ---
 
-# Project description
+# WoW Addon Project Guide
 
-- We're using lua 5.0 and World of Warcraft 1.12.1 client to create a addon.
+## Project Overview
+
+We are developing a World of Warcraft addon for the 1.12 client (Classic/Vanilla) using Lua 5.0. This project emphasizes clean, readable code that follows industry best practices.
+
+## Technical Specifications
+
+- **Target Client**: World of Warcraft 1.12 (Classic/Vanilla)
+- **Programming Language**: Lua 5.0
+- **License**: Open Source

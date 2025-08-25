@@ -1,0 +1,20 @@
+---
+description: Project Structure Rules for the project
+alwaysApply: true
+---
+
+### File Organization
+
+- All new files should respect the following structure:
+
+```
+
+/AddonName
+├── /Core -- Main addon functionality
+├── /Modules -- Feature-specific modules
+├── /Utils -- Utility functions
+├── /Documentation -- User guides and API docs
+| /en.md -- English documentation
+| /es.md -- Spanish documentation
+└── README.md -- Project overview and setup
+```

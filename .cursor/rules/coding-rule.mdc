@@ -1,0 +1,46 @@
+---
+description: Coding Rules for the project
+globs:
+alwaysApply: false
+---
+
+## Development Principles
+
+### SOLID Principles
+
+Our codebase must adhere to SOLID principles to ensure maintainability and scalability:
+
+- **Single Responsibility Principle**: Each function/module should have one reason to change
+- **Open/Closed Principle**: Code should be open for extension, closed for modification
+- **Liskov Substitution Principle**: Objects should be replaceable with instances of their subtypes
+- **Interface Segregation Principle**: Many specific interfaces are better than one general-purpose interface
+- **Dependency Inversion Principle**: Depend on abstractions, not concretions
+
+### Code Readability Standards
+
+Since this is an open-source project, our code must be accessible to both technical and non-technical contributors:
+
+#### Naming Conventions
+
+- Use descriptive, self-explanatory variable and function names
+- Avoid abbreviations unless they're from the World of Warcraft API or universally understood
+- Use consistent naming patterns throughout the project
+
+```lua
+-- Good
+local playerHealthPercentage = GetPlayerHealth() / GetPlayerMaxHealth()
+local function UpdateHealthDisplay(healthValue)
+
+-- Avoid
+local php = GetHP() / GetMHP()
+local function UpdHD(hv)
+```
+
+### Code Cleanliness
+
+Since our project is open source, maintain high standards:
+
+- **Consistent Formatting**: Use consistent indentation and spacing
+- **Remove Debug Code**: No leftover debugging prints or temporary code
+- **Clear Structure**: Organize files logically with clear directory structure
+- **Version Control**: Meaningful commit messages and proper branching

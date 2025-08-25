@@ -1,0 +1,62 @@
+---
+description: Documentation Rules for the project
+globs:
+alwaysApply: true
+---
+
+#### Documentation Requirements
+
+- Documentation should be written in their corresponding language file as the following example:
+
+### `DGossipFrame_OnLoad()`
+
+**Purpose**: Initializes the custom gossip frame system
+**Called**: Automatically on addon load
+**Events**: Registers GOSSIP_SHOW and GOSSIP_CLOSED
+**Creates**: DGossipKeyFrame for keyboard input handling
+**Errors**: Safe if called multiple times (prevents duplicate frames)
+
+```lua
+function DGossipFrame_OnLoad()
+    HideDefaultFrames()
+    this:RegisterEvent("GOSSIP_SHOW");
+    this:RegisterEvent("GOSSIP_CLOSED");
+    -- Creates keyboard handler frame if it doesn't exist
+    if not DGossipKeyFrame then
+        CreateFrame("Frame", "DGossipKeyFrame", UIParent)
+        DGossipKeyFrame:SetScript("OnKeyDown", DGossipFrame_OnKeyDown)
+        DGossipKeyFrame:EnableKeyboard(false)
+        DGossipKeyFrame:SetToplevel(true)
+        DGossipKeyFrame:SetAllPoints(UIParent)
+        DGossipKeyFrame:SetFrameStrata("TOOLTIP")
+    end
+end
+```
+
+---
+
+## Error Handling & User Documentation
+
+### Error Documentation
+
+All potential errors must be documented for end users, including:
+
+#### Technical Errors
+
+- Include error codes and descriptions
+- Provide troubleshooting steps
+- Link to common solutions
+
+### Error Handling in Code
+
+```lua
+local function SafelyExecuteFunction(func, ...)
+    local success, result = pcall(func, ...)
+    if not success then
+        -- Log error for debugging
+        DEFAULT_CHAT_FRAME:AddMessage("Error: " .. tostring(result))
+        return nil
+    end
+    return result
+end
+```
