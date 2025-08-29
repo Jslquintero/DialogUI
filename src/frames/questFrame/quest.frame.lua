@@ -383,6 +383,9 @@ end
 
 function DQuestFrame_OnShow()
     PlaySound("igQuestListOpen");
+    -- fix by github.com/moiian
+    DQuestFrame:EnableKeyboard(true);
+    DQuestFrame:SetScript("OnKeyDown", DQuestFrame_OnKeyDown);
 end
 
 function DQuestFrame_OnHide()
