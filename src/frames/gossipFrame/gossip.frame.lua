@@ -382,27 +382,28 @@ function DGossipFrameOptionsUpdate(...)
         
         local iconMap = {
             ["banker"] = "bankerGossipIcon",
-            ["battlemaster"] = "battlemasterGossipIcon", 
+            ["battlemaster"] = "battlemasterGossipIcon",
             ["binder"] = "binderGossipIcon",
-            ["gossip"] = nil,
-            ["healer"] = nil,
+            ["gossip"] = "gossipGossipIcon",
+            ["healer"] = "gossipGossipIcon",
             ["tabard"] = "guild masterGossipIcon",
             ["taxi"] = "flightGossipIcon",
             ["trainer"] = "trainerGossipIcon",
             ["unlearn"] = "unlearnGossipIcon",
             ["vendor"] = "vendorGossipIcon",
         }
-        
+
         if iconType == "gossip" then
             local specificType = DetermineGossipIconType(arg[i])
             texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. specificType .. "GossipIcon"
-        elseif iconMap[iconType] then
+        end
+        
+        if iconMap[iconType] then
             texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. iconMap[iconType]
         else
             DEFAULT_CHAT_FRAME:AddMessage("Unknown icon type, report it to the author: " .. tostring(iconType))
             texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\petitionGossipIcon"
         end
-        
         gossipIcon:SetTexture(texturePath);
         gossipIcon:Show()
         
