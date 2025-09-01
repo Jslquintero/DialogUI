@@ -57,10 +57,12 @@ Para cambiar el estilo de los botones puedes dirigirte a :
 > DialogUI/src/assets/art/parchment/ParchmentLayout.xcf
 
 <h3>Gallery</h3>
+<img width="630" height="619" alt="image" src="https://github.com/user-attachments/assets/f7998967-420b-4de2-a222-0a80f23538c6" />
 
-![image](https://github.com/user-attachments/assets/e8f119c3-cd0b-42ff-aa83-3d19dd23e76a)
-![image](https://github.com/user-attachments/assets/9182f8e1-173c-4893-974c-781adf200ad1)
-![image](https://github.com/user-attachments/assets/2efac0ce-e4c5-4cf7-8b75-c7eedaedad58)
-![image](https://github.com/user-attachments/assets/85c79713-e84a-45ad-8484-5d586b2220bc)
+<img width="630" height="619" alt="image" src="https://github.com/user-attachments/assets/d23dfb9d-bfb3-4ce4-9432-90fa2f106bd9" />
+
+<img width="630" height="619" alt="image" src="https://github.com/user-attachments/assets/f07b2963-c993-41ec-a190-3142728aa7ef" />
+
+<img width="630" height="619" alt="image" src="https://github.com/user-attachments/assets/93c285e3-2b06-4219-8db0-de227777b5f1" />
 
 [DialogueUI](https://www.curseforge.com/wow/addons/dialogueui) was obviously the inspiration for this new look.
