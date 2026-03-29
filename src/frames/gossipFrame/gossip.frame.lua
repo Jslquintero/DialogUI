@@ -241,8 +241,8 @@ function DGossipFrameAvailableQuestsUpdate(...)
 
         titleButton = getglobal("DGossipTitleButton" .. DGossipFrame.buttonIndex)
         
-        -- Add numbering to the text
-        local numberedText = DGossipFrame.buttonIndex .. ". " .. arg[i]
+        -- Add numbering to the text (only for first 9 options)
+        local numberedText = (DGossipFrame.buttonIndex <= 9 and (DGossipFrame.buttonIndex .. ". ") or "") .. arg[i]
         titleButton:SetText(numberedText)
         totalGossipButtons = totalGossipButtons + 1
 
@@ -296,8 +296,8 @@ function DGossipFrameActiveQuestsUpdate(...)
         end
         titleButton = getglobal("DGossipTitleButton" .. DGossipFrame.buttonIndex);
         
-        -- Add numbering to the text
-        local numberedText = DGossipFrame.buttonIndex .. ". " .. arg[i]
+        -- Add numbering to the text (only for first 9 options)
+        local numberedText = (DGossipFrame.buttonIndex <= 9 and (DGossipFrame.buttonIndex .. ". ") or "") .. arg[i]
         titleButton:SetText(numberedText);
         totalGossipButtons = totalGossipButtons + 1
 
@@ -349,8 +349,8 @@ function DGossipFrameOptionsUpdate(...)
         end
         titleButton = getglobal("DGossipTitleButton" .. DGossipFrame.buttonIndex);
 
-        -- Add numbering to the text
-        local numberedText = DGossipFrame.buttonIndex .. ". " .. arg[i]
+        -- Add numbering to the text (only for first 9 options)
+        local numberedText = (DGossipFrame.buttonIndex <= 9 and (DGossipFrame.buttonIndex .. ". ") or "") .. arg[i]
         titleButton:SetText(numberedText);
         totalGossipButtons = totalGossipButtons + 1
         
