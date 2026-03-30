@@ -23,7 +23,23 @@
         <HighlightTexture
             file="Interface\AddOns\DialogUI\src\assets\art\parchment\ButtonHighlight-Gossip"
             alphaMode="ADD" />
-        <ButtonText>
+        <Layers>
+            <Layer level="OVERLAY">
+                <Texture name="$parentGossipIcon">
+                    <Size>
+                        <AbsDimension x="20" y="20" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="5" y="-6" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+        <ButtonText inherits="DQuestButtonTitleGossip" justifyH="LEFT">
             <Size x="275" y="0" />
             <Anchors>
                 <Anchor point="LEFT">
@@ -34,15 +50,6 @@
                 </Anchor>
             </Anchors>
         </ButtonText>
-        <NormalFont inherits="DQuestButtonTitleGossip" justifyH="LEFT">
-            <Anchors>
-                <Anchor point="LEFT">
-                    <Offset>
-                        <AbsDimension x="20" y="0" />
-                    </Offset>
-                </Anchor>
-            </Anchors>
-        </NormalFont>
     </Button>
     <Frame name="DGossipFrame" toplevel="true" parent="UIParent" movable="true" enableMouse="true"
         hidden="true">

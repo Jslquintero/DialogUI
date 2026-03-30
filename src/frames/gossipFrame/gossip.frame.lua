@@ -249,29 +249,18 @@ function DGossipFrameAvailableQuestsUpdate(...)
         titleButton:SetID(titleIndex)
         titleButton.type = "Available"
 
-        -- CLEAR ANY EXISTING GOSSIP ICON FIRST
         local gossipIcon = getglobal(titleButton:GetName() .. "GossipIcon")
-        if gossipIcon then
-            gossipIcon:Hide()
-        end
 
-        if not gossipIcon then
-            gossipIcon = titleButton:CreateTexture(titleButton:GetName() .. "GossipIcon", "OVERLAY")
-            gossipIcon:SetWidth(16)
-            gossipIcon:SetHeight(16)
-            gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 3, -5)
+        if gossipIcon then
+            gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\availableQuestIcon.tga")
+            gossipIcon:Show()
         end
-        
-        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\availableQuestIcon")
-        gossipIcon:Show()
 
         titleButton:SetNormalTexture(
             "Interface\\AddOns\\DialogUI\\src\\assets\\art\\parchment\\OptionBackground-common")
         SetFontColor(titleButton, "Ivory")
 
         titleButton:SetHeight(titleButton:GetTextHeight() + 20)
-        gossipIcon:SetWidth(20)
-        gossipIcon:SetHeight(20)
 
         DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1
         titleIndex = titleIndex + 1
@@ -301,35 +290,23 @@ function DGossipFrameActiveQuestsUpdate(...)
         titleButton:SetText(numberedText);
         totalGossipButtons = totalGossipButtons + 1
 
-        titleButton:SetID(titleIndex);
-        titleButton.type = "Active";
-        
-        local gossipIconName = titleButton:GetName() .. "GossipIcon"
-        local gossipIcon = getglobal(gossipIconName)
-        
+        titleButton:SetID(titleIndex)
+        titleButton.type = "Active"
+
+        local gossipIcon = getglobal(titleButton:GetName() .. "GossipIcon")
+
         if gossipIcon then
-            gossipIcon:Hide()
-        end
-        
-        if not gossipIcon then
-            gossipIcon = titleButton:CreateTexture(gossipIconName, "OVERLAY")
-            gossipIcon:SetWidth(16)
-            gossipIcon:SetHeight(16)
-            gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 3, -5)
+            gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\activeQuestIcon.tga")
+            gossipIcon:Show()
         end
 
-        gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\activeQuestIcon");
-        gossipIcon:Show()
-
-        DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1;
-        titleIndex = titleIndex + 1;
-        titleButton:Show();
+        DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1
+        titleIndex = titleIndex + 1
+        titleButton:Show()
 
         titleButton:SetNormalTexture(
             "Interface\\AddOns\\DialogUI\\src\\assets\\art\\parchment\\OptionBackground-common")
         titleButton:SetHeight(titleButton:GetTextHeight() + 20)
-        gossipIcon:SetHeight(20)
-        gossipIcon:SetWidth(20)
         SetFontColor(titleButton, "Ivory")
     end
 
@@ -341,34 +318,70 @@ function DGossipFrameActiveQuestsUpdate(...)
 end
 
 function DGossipFrameOptionsUpdate(...)
-    local titleButton;
-    local titleIndex = 1;
+    local titleButton
+    local titleIndex = 1
+
+    local options = {}
+
     for i = 1, arg.n, 2 do
-        if (DGossipFrame.buttonIndex > NUMGOSSIPBUTTONS) then
-            message("This NPC has too many quests and/or gossip options.");
+        table.insert(options, {
+            text = arg[i],
+            iconType = arg[i + 1],
+            originalIndex = i
+        })
+    end
+
+    table.sort(options, function(a, b)
+        local aPriority = 10
+        local bPriority = 10
+
+        local aText = string.lower(a.text)
+        local bText = string.lower(b.text)
+
+        if a.iconType == "trainer" or string.find(aText, "trainer") then
+            if string.find(aText, "class") then
+                aPriority = 1
+            elseif string.find(aText, "profession") then
+                aPriority = 2
+            else
+                aPriority = 3
+            end
         end
-        titleButton = getglobal("DGossipTitleButton" .. DGossipFrame.buttonIndex);
 
-        -- Add numbering to the text (only for first 9 options)
-        local numberedText = (DGossipFrame.buttonIndex <= 9 and (DGossipFrame.buttonIndex .. ". ") or "") .. arg[i]
-        titleButton:SetText(numberedText);
+        if b.iconType == "trainer" or string.find(bText, "trainer") then
+            if string.find(bText, "class") then
+                bPriority = 1
+            elseif string.find(bText, "profession") then
+                bPriority = 2
+            else
+                bPriority = 3
+            end
+        end
+
+        if aPriority ~= bPriority then
+            return aPriority < bPriority
+        end
+
+        return a.originalIndex < b.originalIndex
+    end)
+
+    for i, option in ipairs(options) do
+        if (DGossipFrame.buttonIndex > NUMGOSSIPBUTTONS) then
+            message("This NPC has too many quests and/or gossip options.")
+        end
+        titleButton = getglobal("DGossipTitleButton" .. DGossipFrame.buttonIndex)
+
+        local numberedText = (DGossipFrame.buttonIndex <= 9 and (DGossipFrame.buttonIndex .. ". ") or "") .. option.text
+        titleButton:SetText(numberedText)
         totalGossipButtons = totalGossipButtons + 1
-        
-        titleButton:SetID(titleIndex);
-        titleButton.type = "Gossip";
 
-        local gossipIconName = titleButton:GetName() .. "GossipIcon"
-        local gossipIcon = getglobal(gossipIconName)
-        
+        titleButton:SetID(titleIndex)
+        titleButton.type = "Gossip"
+
+        local gossipIcon = getglobal(titleButton:GetName() .. "GossipIcon")
+
         if gossipIcon then
             gossipIcon:Hide()
-        end
-        
-        if not gossipIcon then
-            gossipIcon = titleButton:CreateTexture(gossipIconName, "OVERLAY")
-            gossipIcon:SetWidth(20)
-            gossipIcon:SetHeight(20)
-            gossipIcon:SetPoint("TOPLEFT", titleButton, "TOPLEFT", 5, -6)
         end
 
         if titleButton.type == "Gossip" then
@@ -377,74 +390,83 @@ function DGossipFrameOptionsUpdate(...)
             SetFontColor(titleButton, "DarkBrown")
         end
 
-        local iconType = arg[i + 1]
+        local iconType = option.iconType
         local texturePath
-        
+        local specificType
+
         local iconMap = {
-            ["banker"] = "bankerGossipIcon",
-            ["battlemaster"] = "battlemasterGossipIcon",
-            ["binder"] = "binderGossipIcon",
-            ["gossip"] = "gossipGossipIcon",
-            ["healer"] = "gossipGossipIcon",
-            ["tabard"] = "guild masterGossipIcon",
-            ["taxi"] = "flightGossipIcon",
-            ["trainer"] = "trainerGossipIcon",
-            ["unlearn"] = "unlearnGossipIcon",
-            ["vendor"] = "vendorGossipIcon",
+            ["banker"] = "bankerGossipIcon.tga",
+            ["battlemaster"] = "battlemasterGossipIcon.tga",
+            ["binder"] = "binderGossipIcon.tga",
+            ["gossip"] = "gossipGossipIcon.tga",
+            ["healer"] = "gossipGossipIcon.tga",
+            ["tabard"] = "guildMasterGossipIcon.tga",
+            ["taxi"] = "flightGossipIcon.tga",
+            ["trainer"] = "trainerGossipIcon.tga",
+            ["unlearn"] = "unlearnGossipIcon.tga",
+            ["vendor"] = "vendorGossipIcon.tga",
+            ["pet"] = "petTrainer.tga",
         }
 
         if iconType == "gossip" then
-            local specificType = DetermineGossipIconType(arg[i])
-            texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. specificType .. "GossipIcon"
-        end
-        
-        if iconMap[iconType] then
+            specificType = DetermineGossipIconType(option.text)
+
+            if specificType == "petTrainer" then
+                texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\petTrainer.tga"
+            else
+                texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. specificType .. "GossipIcon.tga"
+            end
+        elseif iconMap[iconType] then
             texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. iconMap[iconType]
         else
-            DEFAULT_CHAT_FRAME:AddMessage("Unknown icon type, report it to the author: " .. tostring(iconType))
-            texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\petitionGossipIcon"
+            specificType = DetermineGossipIconType(option.text)
+
+            if specificType == "petTrainer" then
+                texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\petTrainer.tga"
+            else
+                texturePath = "Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\" .. specificType .. "GossipIcon.tga"
+            end
         end
-        gossipIcon:SetTexture(texturePath);
+
+        gossipIcon:SetTexture(texturePath)
         gossipIcon:Show()
-        
+
         if not gossipIcon:GetTexture() then
-            DEFAULT_CHAT_FRAME:AddMessage("Texture failed to load: " .. texturePath .. ", using fallback")
-            gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\petitionGossipIcon");
+            gossipIcon:SetTexture("Interface\\AddOns\\DialogUI\\src\\assets\\art\\icons\\PetitionGossipIcon.tga")
         end
-        
-        DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1;
-        titleIndex = titleIndex + 1;
-        titleButton:Show();
+
+        DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1
+        titleIndex = titleIndex + 1
+        titleButton:Show()
     end
 end
 
--- Rest of your functions remain the same
 function DetermineGossipIconType(gossipText)
     local text = string.lower(gossipText)
-    
+
     local professions = {
-        "alchemy", "blacksmithing", "enchanting", "engineering", 
-        "herbalism", "leatherworking", "mining", "skinning", 
+        "alchemy", "blacksmithing", "enchanting", "engineering",
+        "herbalism", "leatherworking", "mining", "skinning",
         "tailoring", "jewelcrafting", "inscription", "cooking", "fishing", "first aid"
     }
-    
+
     for _, profession in pairs(professions) do
         if string.find(text, profession) then
             return profession
         end
     end
-    
+
     local classes = {
-        "warrior", "paladin", "hunter", "rogue", "priest", 
+        "warrior", "paladin", "hunter", "rogue", "priest",
         "shaman", "mage", "warlock", "druid", "death knight"
     }
-    
+
     for _, class in pairs(classes) do
         if string.find(text, class) then
             return class
         end
     end
-    
+
     if string.find(text, "profession") and string.find(text, "trainer") then
         return "professionTrainer"
     elseif string.find(text, "class") and string.find(text, "trainer") then
@@ -452,27 +474,31 @@ function DetermineGossipIconType(gossipText)
     elseif string.find(text, "stable") then
         return "stablemaster"
     elseif string.find(text, "inn") then
-        return "innkeeper"
+        return "innKeeper"
     elseif string.find(text, "mailbox") then
         return "mailbox"
     elseif string.find(text, "guild master") then
         return "guildMaster"
     elseif string.find(text, "trainer") and string.find(text, "pet") then
-        return "pettrainer"
+        return "petTrainer"
     elseif string.find(text, "auction") then
         return "auctionHouse"
     elseif string.find(text, "weapon") and string.find(text, "trainer") then
         return "weaponsTrainer"
     elseif string.find(text, "deeprun") then
         return "deeprunTram"
-    elseif string.find(text, "bat handler") or 
-           string.find(text, "wind rider master") or 
-           string.find(text, "gryphon master") or 
-           string.find(text, "hippogryph master") or 
+    elseif string.find(text, "bat handler") or
+           string.find(text, "wind rider master") or
+           string.find(text, "gryphon master") or
+           string.find(text, "hippogryph master") or
            string.find(text, "flight master") then
         return "flight"
     elseif string.find(text, "bank") then
         return "banker"
+    elseif string.find(text, "battleground") then
+        return "battlemaster"
+    elseif string.find(text, "spirit healer") or string.find(text, "spirithealer") then
+        return "binder"
     else
         return "gossip"
     end
