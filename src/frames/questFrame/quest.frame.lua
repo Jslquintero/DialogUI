@@ -146,6 +146,30 @@ function DQuestItem_OnClick()
     end
 end
 
+function DQuestReward_SelectChoice(choiceIndex)
+    if (not DQuestFrameRewardPanel:IsVisible()) then
+        return nil;
+    end
+    if (choiceIndex < 1 or choiceIndex > GetNumQuestChoices()) then
+        return nil;
+    end
+
+    local rewardItem = getglobal("DQuestRewardItem" .. choiceIndex);
+    if (not rewardItem or not rewardItem:IsVisible() or rewardItem.type ~= "choice") then
+        return nil;
+    end
+
+    DQuestRewardItemHighlight:ClearAllPoints();
+    DQuestRewardItemHighlight:SetPoint("TOPLEFT", rewardItem, "TOPLEFT", -2, 5);
+    DQuestRewardItemHighlight:Show();
+    DQuestFrameRewardPanel.itemChoice = rewardItem:GetID();
+
+    GameTooltip:SetOwner(rewardItem, "ANCHOR_RIGHT");
+    GameTooltip:SetQuestItem(rewardItem.type, rewardItem:GetID());
+
+    return 1;
+end
+
 function DQuestRewardItem_OnClick()
     if (IsControlKeyDown()) then
         if (this.rewardType ~= "spell") then
@@ -156,9 +180,7 @@ function DQuestRewardItem_OnClick()
             ChatFrameEditBox:Insert(GetQuestItemLink(this.type, this:GetID()));
         end
     elseif (this.type == "choice") then
-        DQuestRewardItemHighlight:SetPoint("TOPLEFT", this, "TOPLEFT", -2, 5);
-        DQuestRewardItemHighlight:Show();
-        DQuestFrameRewardPanel.itemChoice = this:GetID();
+        DQuestReward_SelectChoice(this:GetID());
     end
 end
 
@@ -205,12 +227,14 @@ function DQuestFrameProgressItems_Update()
             DQuestProgressRequiredMoneyFrame:Show();
 
             -- Reanchor required item
-            getglobal(questItemName .. 1):SetPoint("TOPLEFT", "DQuestProgressRequiredMoneyText", "BOTTOMLEFT", 0, -10);
+            getglobal(questItemName .. 1):ClearAllPoints();
+            getglobal(questItemName .. 1):SetPoint("TOPLEFT", "DQuestProgressRequiredMoneyText", "BOTTOMLEFT", 0, -12);
         else
             DQuestProgressRequiredMoneyText:Hide();
             DQuestProgressRequiredMoneyFrame:Hide();
 
-            getglobal(questItemName .. 1):SetPoint("TOPLEFT", "DQuestProgressRequiredItemsText", "BOTTOMLEFT", -3, -5);
+            getglobal(questItemName .. 1):ClearAllPoints();
+            getglobal(questItemName .. 1):SetPoint("TOPLEFT", "DQuestProgressRequiredItemsText", "BOTTOMLEFT", -3, -12);
         end
 
         for i = 1, numRequiredItems, 1 do
@@ -222,6 +246,14 @@ function DQuestFrameProgressItems_Update()
             requiredItem:Show();
             getglobal(questItemName .. i .. "Name"):SetText(name);
 
+            if (i > 1) then
+                requiredItem:ClearAllPoints();
+                if (mod(i, 2) == 1) then
+                    requiredItem:SetPoint("TOPLEFT", questItemName .. (i - 2), "BOTTOMLEFT", 0, -20);
+                else
+                    requiredItem:SetPoint("TOPLEFT", questItemName .. (i - 1), "TOPRIGHT", 50, 0);
+                end
+            end
         end
     else
         DQuestProgressRequiredMoneyText:Hide();
@@ -367,6 +399,12 @@ end
     -- Handle number keys 1-9 for direct quest selection
     if (key >= "1" and key <= "9") then
         local buttonNum = tonumber(key);
+
+        if (DQuestFrameRewardPanel:IsVisible()) then
+            DQuestReward_SelectChoice(buttonNum);
+            return;
+        end
+
         local numActiveQuests = GetNumActiveQuests();
         local numAvailableQuests = GetNumAvailableQuests();
         local totalQuests = numActiveQuests + numAvailableQuests;
@@ -561,7 +599,7 @@ function DQuestFrameItems_Update(questState)
         if (numQuestSpellRewards > 0) then
             questItemReceiveText:SetText(TEXT(REWARD_ITEMS));
             questItemReceiveText:ClearAllPoints();
-            questItemReceiveText:SetPoint("TOPLEFT", questItemName .. rewardsCount, "BOTTOMLEFT", 3, -5);
+            questItemReceiveText:SetPoint("TOPLEFT", questItemName .. rewardsCount, "BOTTOMLEFT", 3, -12);
         elseif (numQuestChoices > 0) then
             questItemReceiveText:SetText(TEXT(REWARD_ITEMS));
             local index = numQuestChoices;
@@ -569,11 +607,11 @@ function DQuestFrameItems_Update(questState)
                 index = index - 1;
             end
             questItemReceiveText:ClearAllPoints();
-            questItemReceiveText:SetPoint("TOPLEFT", questItemName .. index, "BOTTOMLEFT", 3, -5);
+            questItemReceiveText:SetPoint("TOPLEFT", questItemName .. index, "BOTTOMLEFT", 3, -12);
         else
             questItemReceiveText:SetText(TEXT(REWARD_ITEMS_ONLY));
             questItemReceiveText:ClearAllPoints();
-            questItemReceiveText:SetPoint("TOPLEFT", questState .. "RewardTitleText", "BOTTOMLEFT", 3, -5);
+            questItemReceiveText:SetPoint("TOPLEFT", questState .. "RewardTitleText", "BOTTOMLEFT", 3, -12);
         end
         questItemReceiveText:Show();
         QuestFrame_SetAsLastShown(questItemReceiveText, spacerFrame);

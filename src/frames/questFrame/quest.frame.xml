@@ -503,7 +503,7 @@
                                         <Anchors>
                                             <Anchor point="TOPLEFT" relativeTo="DQuestProgressRequiredItemsText" relativePoint="BOTTOMLEFT">
                                                 <Offset>
-                                                    <AbsDimension x="-3" y="-5"/>
+                                                    <AbsDimension x="-3" y="-12"/>
                                                 </Offset>
                                             </Anchor>
                                         </Anchors>
@@ -512,16 +512,16 @@
                                         <Anchors>
                                             <Anchor point="LEFT" relativeTo="DQuestProgressItem1" relativePoint="RIGHT">
                                                 <Offset>
-                                                    <AbsDimension x="2" y="0"/>
+                                                    <AbsDimension x="50" y="0"/>
                                                 </Offset>
                                             </Anchor>
                                         </Anchors>
                                     </Button>
                                     <Button name="DQuestProgressItem3" inherits="DQuestItemTemplate" id="3">
                                         <Anchors>
-                                            <Anchor point="TOP" relativeTo="DQuestProgressItem1" relativePoint="BOTTOM">
+                                            <Anchor point="TOPLEFT" relativeTo="DQuestProgressItem1" relativePoint="BOTTOMLEFT">
                                                 <Offset>
-                                                    <AbsDimension x="0" y="-3"/>
+                                                    <AbsDimension x="0" y="-20"/>
                                                 </Offset>
                                             </Anchor>
                                         </Anchors>
@@ -530,16 +530,16 @@
                                         <Anchors>
                                             <Anchor point="LEFT" relativeTo="DQuestProgressItem3" relativePoint="RIGHT">
                                                 <Offset>
-                                                    <AbsDimension x="2" y="0"/>
+                                                    <AbsDimension x="50" y="0"/>
                                                 </Offset>
                                             </Anchor>
                                         </Anchors>
                                     </Button>
                                     <Button name="DQuestProgressItem5" inherits="DQuestItemTemplate" id="5">
                                         <Anchors>
-                                            <Anchor point="TOP" relativeTo="DQuestProgressItem3" relativePoint="BOTTOM">
+                                            <Anchor point="TOPLEFT" relativeTo="DQuestProgressItem3" relativePoint="BOTTOMLEFT">
                                                 <Offset>
-                                                    <AbsDimension x="0" y="-3"/>
+                                                    <AbsDimension x="0" y="-20"/>
                                                 </Offset>
                                             </Anchor>
                                         </Anchors>
@@ -548,7 +548,7 @@
                                         <Anchors>
                                             <Anchor point="LEFT" relativeTo="DQuestProgressItem5" relativePoint="RIGHT">
                                                 <Offset>
-                                                    <AbsDimension x="2" y="0"/>
+                                                    <AbsDimension x="50" y="0"/>
                                                 </Offset>
                                             </Anchor>
                                         </Anchors>
