@@ -497,13 +497,15 @@ function DQuestFrameItems_Update(questState)
             end
             -- Changes how the reward columns are positioned
             if (i > 1) then
+                questItem:ClearAllPoints();
                 if (mod(i, 2) == 1) then
                     questItem:SetPoint("TOPLEFT", questItemName .. (index - 2), "BOTTOMLEFT", 0,-20);
                 else
                     questItem:SetPoint("TOPLEFT", questItemName .. (index - 1), "TOPRIGHT", 50, 0);
                 end
             else
-                questItem:SetPoint("TOPLEFT", itemChooseText, "BOTTOMLEFT", -3, -5);
+                questItem:ClearAllPoints();
+                questItem:SetPoint("TOPLEFT", itemChooseText, "BOTTOMLEFT", -3, -12);
             end
             rewardsCount = rewardsCount + 1;
         end
@@ -519,6 +521,7 @@ function DQuestFrameItems_Update(questState)
         QuestFrame_SetAsLastShown(learnSpellText, spacerFrame);
 
         -- Anchor learnSpellText if there were choosable rewards
+        learnSpellText:ClearAllPoints();
         if (rewardsCount > 0) then
             learnSpellText:SetPoint("TOPLEFT", questItemName .. rewardsCount, "BOTTOMLEFT", 3, -5);
         else
@@ -545,7 +548,8 @@ function DQuestFrameItems_Update(questState)
         SetItemButtonCount(questItem, 0);
         SetItemButtonTexture(questItem, texture);
         getglobal(questItemName .. rewardsCount .. "Name"):SetText(name);
-        questItem:SetPoint("TOPLEFT", learnSpellText, "BOTTOMLEFT", -3, -5);
+        questItem:ClearAllPoints();
+        questItem:SetPoint("TOPLEFT", learnSpellText, "BOTTOMLEFT", -3, -12);
     else
         getglobal(questState .. "SpellLearnText"):Hide();
     end
@@ -556,6 +560,7 @@ function DQuestFrameItems_Update(questState)
         -- Anchor the reward text differently if there are choosable rewards
         if (numQuestSpellRewards > 0) then
             questItemReceiveText:SetText(TEXT(REWARD_ITEMS));
+            questItemReceiveText:ClearAllPoints();
             questItemReceiveText:SetPoint("TOPLEFT", questItemName .. rewardsCount, "BOTTOMLEFT", 3, -5);
         elseif (numQuestChoices > 0) then
             questItemReceiveText:SetText(TEXT(REWARD_ITEMS));
@@ -563,9 +568,11 @@ function DQuestFrameItems_Update(questState)
             if (mod(index, 2) == 0) then
                 index = index - 1;
             end
+            questItemReceiveText:ClearAllPoints();
             questItemReceiveText:SetPoint("TOPLEFT", questItemName .. index, "BOTTOMLEFT", 3, -5);
         else
             questItemReceiveText:SetText(TEXT(REWARD_ITEMS_ONLY));
+            questItemReceiveText:ClearAllPoints();
             questItemReceiveText:SetPoint("TOPLEFT", questState .. "RewardTitleText", "BOTTOMLEFT", 3, -5);
         end
         questItemReceiveText:Show();
@@ -600,13 +607,15 @@ function DQuestFrameItems_Update(questState)
             end
 
             if (i > 1) then
+                questItem:ClearAllPoints();
                 if (mod(i, 2) == 1) then
-                    questItem:SetPoint("TOPLEFT", questItemName .. (index - 2), "BOTTOMLEFT", 0, -02);
+                    questItem:SetPoint("TOPLEFT", questItemName .. (index - 2), "BOTTOMLEFT", 0, -20);
                 else
                     questItem:SetPoint("TOPLEFT", questItemName .. (index - 1), "TOPRIGHT", 50, 0);
                 end
             else
-                questItem:SetPoint("TOPLEFT", questState .. "ItemReceiveText", "BOTTOMLEFT", -3, -5);
+                questItem:ClearAllPoints();
+                questItem:SetPoint("TOPLEFT", questState .. "ItemReceiveText", "BOTTOMLEFT", -3, -12);
             end
             rewardsCount = rewardsCount + 1;
         end
