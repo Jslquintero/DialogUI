@@ -115,25 +115,27 @@ local function DialogUI_SetButtonKeyText(buttonName, command, defaultKey)
         keyBackground = button:CreateTexture(buttonName .. "KeyBackground", "ARTWORK");
         keyBackground:SetPoint("LEFT", button, "LEFT", 8, 0);
         keyBackground:SetHeight(22);
-        keyBackground:SetTexture(0.08, 0.07, 0.05, 0.88);
     end
+    keyBackground:SetTexture(0, 0, 0);
+    keyBackground:SetAlpha(0.90);
 
     local keyBorder = getglobal(buttonName .. "KeyBorder");
     if (not keyBorder) then
         keyBorder = button:CreateTexture(buttonName .. "KeyBorder", "OVERLAY");
         keyBorder:SetPoint("CENTER", keyBackground, "CENTER", 0, 0);
         keyBorder:SetHeight(24);
-        keyBorder:SetTexture(0.87, 0.78, 0.55, 0.75);
     end
+    keyBorder:SetTexture(0, 0, 0);
+    keyBorder:SetAlpha(1.0);
 
     local keyText = getglobal(buttonName .. "KeyText");
     if (not keyText) then
-        keyText = button:CreateFontString(buttonName .. "KeyText", "OVERLAY", "DQuestFontNormalSmall");
+        keyText = button:CreateFontString(buttonName .. "KeyText", "OVERLAY", "DGameFontNormal");
         keyText:SetPoint("LEFT", keyBackground, "LEFT", 4, 0);
         keyText:SetPoint("RIGHT", keyBackground, "RIGHT", -4, 0);
         keyText:SetJustifyH("CENTER");
-        keyText:SetTextColor(1.0, 0.93, 0.72);
     end
+    keyText:SetTextColor(1.0, 1.0, 1.0);
 
     local bindingText = DialogUI_GetBindingDisplayText(command, defaultKey);
     local keyWidth = string.len(bindingText) * 7 + 14;
