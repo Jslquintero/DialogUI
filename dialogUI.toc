@@ -9,6 +9,9 @@
 # Fonts used for the frames
 src\assets\font\fonts.xml
 
+# Keybindings
+src\bindings.lua
+
 
 # Money frame
 # src\frames\moneyFrame\money.frame.lua

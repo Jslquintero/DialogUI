@@ -51,6 +51,7 @@ function DGossipFrame_OnEvent()
             end
         end
         DGossipFrameUpdate();
+        DialogUI_UpdateKeyBindingLabels();
         -- Enable key capture when gossip frame is shown
         DGossipKeyFrame:EnableKeyboard(true)
     elseif (event == "GOSSIP_CLOSED") then
@@ -64,14 +65,12 @@ end
 function DGossipFrame_OnKeyDown()
     local key = arg1
     
-    -- Handle ESC key to close gossip
-    if key == "ESCAPE" then
+    if DialogUI_IsBindingKey(DIALOGUI_DECLINE_BINDING, key, "ESCAPE") then
         CloseGossip()
         return
     end
     
-    -- Handle spacebar to select first option
-    if key == "SPACE" then
+    if DialogUI_IsBindingKey(DIALOGUI_ACCEPT_BINDING, key, "SPACE") then
         DGossipSelectOption(1)
         return
     end

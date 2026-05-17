@@ -1,0 +1,8 @@
+<Bindings>
+    <Binding name="DIALOGUI_ACCEPT_OR_COMPLETE" header="DIALOGUI" key1="SPACE">
+        DialogUI_AcceptOrComplete();
+    </Binding>
+    <Binding name="DIALOGUI_DECLINE_OR_CANCEL" key1="ESCAPE">
+        DialogUI_DeclineOrCancel();
+    </Binding>
+</Bindings>
