@@ -14,6 +14,18 @@ local COLORS = {
     Ivory = {0.87, 0.86, 0.75}
 };
 
+local function DQuestButton_IsEnabled(button)
+    if (not button) then
+        return nil;
+    end
+
+    if (not button.IsEnabled) then
+        return 1;
+    end
+
+    return button:IsEnabled();
+end
+
 function SetFontColor(fontObject, key)
     local color = COLORS[key];
     fontObject:SetTextColor(color[1], color[2], color[3]);
@@ -116,6 +128,10 @@ function DQuestRewardCancelButton_OnClick()
 end
 
 function DQuestRewardCompleteButton_OnClick()
+    if (not DQuestFrameRewardPanel:IsVisible() or not DQuestButton_IsEnabled(DQuestFrameCompleteQuestButton)) then
+        return;
+    end
+
     if (DQuestFrameRewardPanel.itemChoice == 0 and GetNumQuestChoices() > 0) then
         QuestChooseRewardError();
     else
@@ -125,6 +141,10 @@ function DQuestRewardCompleteButton_OnClick()
 end
 
 function DQuestProgressCompleteButton_OnClick()
+    if (not DQuestFrameProgressPanel:IsVisible() or not DQuestButton_IsEnabled(DQuestFrameCompleteButton) or not IsQuestCompletable()) then
+        return;
+    end
+
     CompleteQuest();
     PlaySound("igQuestListComplete");
 end
@@ -723,6 +743,10 @@ function DQuestFrameDetailPanel_OnUpdate(elapsed)
 end
 
 function DQuestDetailAcceptButton_OnClick()
+    if (not DQuestFrameDetailPanel:IsVisible() or not DQuestButton_IsEnabled(DQuestFrameAcceptButton)) then
+        return;
+    end
+
     AcceptQuest();
 end
 
