@@ -2,6 +2,15 @@
 BINDING_HEADER_DIALOGUI = "DialogUI";
 BINDING_NAME_DIALOGUI_ACCEPT_OR_COMPLETE = "Accept / Complete / Select First";
 BINDING_NAME_DIALOGUI_DECLINE_OR_CANCEL = "Decline / Cancel / Close";
+BINDING_NAME_DIALOGUI_GOSSIP_OPTION_1 = "Gossip Option 1";
+BINDING_NAME_DIALOGUI_GOSSIP_OPTION_2 = "Gossip Option 2";
+BINDING_NAME_DIALOGUI_GOSSIP_OPTION_3 = "Gossip Option 3";
+BINDING_NAME_DIALOGUI_GOSSIP_OPTION_4 = "Gossip Option 4";
+BINDING_NAME_DIALOGUI_GOSSIP_OPTION_5 = "Gossip Option 5";
+BINDING_NAME_DIALOGUI_GOSSIP_OPTION_6 = "Gossip Option 6";
+BINDING_NAME_DIALOGUI_GOSSIP_OPTION_7 = "Gossip Option 7";
+BINDING_NAME_DIALOGUI_GOSSIP_OPTION_8 = "Gossip Option 8";
+BINDING_NAME_DIALOGUI_GOSSIP_OPTION_9 = "Gossip Option 9";
 
 DIALOGUI_ACCEPT_BINDING = "DIALOGUI_ACCEPT_OR_COMPLETE";
 DIALOGUI_DECLINE_BINDING = "DIALOGUI_DECLINE_OR_CANCEL";
@@ -197,5 +206,34 @@ function DialogUI_DeclineOrCancel()
 
     if (DGossipFrame and DGossipFrame:IsVisible()) then
         CloseGossip();
+    end
+end
+
+function DialogUI_GossipOption(n)
+    if (DGossipFrame and DGossipFrame:IsVisible()) then
+        DGossipSelectOption(n);
+    end
+end
+
+local savedNumberBindings = {};
+local gossipNumberKeysActive = false;
+
+function DialogUI_GossipBindNumberKeys()
+    if gossipNumberKeysActive then return; end
+    gossipNumberKeysActive = true;
+    for i = 1, 9 do
+        local key = tostring(i);
+        savedNumberBindings[i] = GetBindingAction(key);
+        SetBinding(key, "DIALOGUI_GOSSIP_OPTION_" .. i);
+    end
+end
+
+function DialogUI_GossipRestoreNumberKeys()
+    if not gossipNumberKeysActive then return; end
+    gossipNumberKeysActive = false;
+    for i = 1, 9 do
+        local key = tostring(i);
+        SetBinding(key, savedNumberBindings[i]);
+        savedNumberBindings[i] = nil;
     end
 end
