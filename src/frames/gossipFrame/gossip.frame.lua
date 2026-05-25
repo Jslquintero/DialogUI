@@ -136,9 +136,6 @@ function DGossipSelectOption(buttonIndex)
                         SelectGossipOption(titleButton:GetID())
                     end
                     
-                    -- Also try the direct mouse click approach as backup
-                    -- DEFAULT_CHAT_FRAME:AddMessage("Also trying direct button click")
-                    DGossipTitleButton_OnClick_Direct(titleButton)
                     return
                 end
             end
@@ -318,7 +315,6 @@ end
 
 function DGossipFrameOptionsUpdate(...)
     local titleButton
-    local titleIndex = 1
 
     local options = {}
 
@@ -326,7 +322,7 @@ function DGossipFrameOptionsUpdate(...)
         table.insert(options, {
             text = arg[i],
             iconType = arg[i + 1],
-            originalIndex = i
+            originalIndex = ((i + 1) / 2)
         })
     end
 
@@ -374,7 +370,7 @@ function DGossipFrameOptionsUpdate(...)
         titleButton:SetText(numberedText)
         totalGossipButtons = totalGossipButtons + 1
 
-        titleButton:SetID(titleIndex)
+        titleButton:SetID(option.originalIndex)
         titleButton.type = "Gossip"
 
         local gossipIcon = getglobal(titleButton:GetName() .. "GossipIcon")
@@ -435,7 +431,6 @@ function DGossipFrameOptionsUpdate(...)
         end
 
         DGossipFrame.buttonIndex = DGossipFrame.buttonIndex + 1
-        titleIndex = titleIndex + 1
         titleButton:Show()
     end
 end
