@@ -29,16 +29,6 @@ function DGossipFrame_OnLoad()
     HideDefaultFrames()
     this:RegisterEvent("GOSSIP_SHOW");
     this:RegisterEvent("GOSSIP_CLOSED");
-    
-    -- Create simplified key handler frame
-    if not DGossipKeyFrame then
-        CreateFrame("Frame", "DGossipKeyFrame", UIParent)
-        DGossipKeyFrame:SetScript("OnKeyDown", DGossipFrame_OnKeyDown)
-        DGossipKeyFrame:EnableKeyboard(false) -- Start disabled
-        DGossipKeyFrame:SetToplevel(true)
-        DGossipKeyFrame:SetAllPoints(UIParent)
-        DGossipKeyFrame:SetFrameStrata("TOOLTIP")
-    end
 end
 
 function DGossipFrame_OnEvent()
@@ -52,50 +42,32 @@ function DGossipFrame_OnEvent()
         end
         DGossipFrameUpdate();
         DialogUI_UpdateKeyBindingLabels();
-        -- Enable key capture when gossip frame is shown
-        DGossipKeyFrame:EnableKeyboard(true)
+        DGossipFrame:EnableKeyboard(true);
+        DGossipFrame:SetScript("OnKeyDown", DGossipFrame_OnKeyDown);
     elseif (event == "GOSSIP_CLOSED") then
         HideUIPanel(DGossipFrame);
-        -- Disable key capture when gossip frame is closed
-        DGossipKeyFrame:EnableKeyboard(false)
+        DGossipFrame:EnableKeyboard(false);
     end
 end
 
--- Simplified key handler - only handles what we need
 function DGossipFrame_OnKeyDown()
     local key = arg1
-    
+
     if DialogUI_IsBindingKey(DIALOGUI_DECLINE_BINDING, key, "ESCAPE") then
         CloseGossip()
         return
     end
-    
+
     if DialogUI_IsBindingKey(DIALOGUI_ACCEPT_BINDING, key, "SPACE") then
         DGossipSelectOption(1)
         return
     end
-    
-    -- Handle number keys 1-9 for gossip options
+
     if key >= "1" and key <= "9" then
         local buttonIndex = tonumber(key)
         DGossipSelectOption(buttonIndex)
         return
     end
-    
-    -- For all other keys, let the game handle them normally
-    -- We do this by temporarily disabling our keyboard capture
-    DGossipKeyFrame:EnableKeyboard(false)
-    
-    -- Re-enable after a brief moment using a simple timer
-    local reEnableTime = GetTime() + 0.05
-    DGossipKeyFrame:SetScript("OnUpdate", function()
-        if GetTime() >= reEnableTime then
-            if DGossipFrame:IsVisible() then
-                DGossipKeyFrame:EnableKeyboard(true)
-            end
-            DGossipKeyFrame:SetScript("OnUpdate", nil)
-        end
-    end)
 end
 
 -- Simplified option selection function
